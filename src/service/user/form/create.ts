@@ -35,7 +35,6 @@ export function useFormUserCreate():UserCreateForm{
     })
     return user;
    } catch (error:any) {
-    console.log('error :>> ', error);
     const { forToast } = catchAll(error);
     setDisabled(false);
     toast(forToast);

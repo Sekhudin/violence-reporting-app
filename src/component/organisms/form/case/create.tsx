@@ -66,15 +66,14 @@ export function FormCaseCreate({ className, itemClassName, submitClassName, forc
                   placeholder="Alamat sesuai ktp"
                   {...field} />
               )} />
-            
+
             <FormField
               name="phone"
               control={form.control}
               render={({ field }) => (
-                <ItemTextArea
+                <ItemInput
                   itemClassName={cn('px-4', itemClassName)}
                   label="Telepon/WA"
-                  rows={rows}
                   placeholder="Nomor telephone"
                   {...field} />
               )} />
