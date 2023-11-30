@@ -1,0 +1,5 @@
+.item:hover, .item_active, .item_active:hover {
+  background-color: var(--primary-blue);
+  color: #fff;
+  cursor: pointer;
+}
