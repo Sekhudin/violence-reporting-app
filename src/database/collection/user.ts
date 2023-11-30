@@ -51,7 +51,8 @@ export class UserCollection extends Collection {
     const { uid } = this.WithUser()
     const q = query(this.docRef(uid));
     const result = (await get(q)).toJSON() as User.Entity | null;
-    const isSuperAdmin:boolean = result ? result.role.includes('super admin') : false;
+    const roles: string[] = result ? Object.values(result.role) : [];
+    const isSuperAdmin:boolean = roles.includes('super admin');
     if(!isSuperAdmin) throw new UnAuthorizedException();
     return true;
   }

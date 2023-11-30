@@ -28,8 +28,14 @@ export function useFormUserCreate():UserCreateForm{
     const user = await UserService.creaateAdmin(values);
     form.reset();
     setDisabled(false);
+    toast({
+      variant: "success",
+      title: "Sukses",
+      description: "Admin baru berhasil ditambahkan"
+    })
     return user;
    } catch (error:any) {
+    console.log('error :>> ', error);
     const { forToast } = catchAll(error);
     setDisabled(false);
     toast(forToast);

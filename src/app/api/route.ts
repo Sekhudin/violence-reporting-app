@@ -9,13 +9,11 @@ export async function POST (request: Request) {
   const fileName = formData.get("filename") as string | undefined;
   const folderName = formData.get("folder") as string | undefined;
 
-  console.log('api: formData :>> ', formData);
   try {
     const uploadDir = path.join(process.cwd(), 'public/uploads', folderName || '');
     console.log('api: uploadDir :>> ', uploadDir);
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir);
-      console.log('api: created uploadDir ', uploadDir);
     }
     
     if(imageFile && fileName){
@@ -23,7 +21,6 @@ export async function POST (request: Request) {
       const buffer = await imageFile.arrayBuffer();
       const imageBuffer = Buffer.from(buffer);
       fs.writeFileSync(imagePath, imageBuffer);
-      console.log('api: success (berenti disini):>> ');
       return res.json({
         code: 201,
         message: "Created",
@@ -31,14 +28,12 @@ export async function POST (request: Request) {
       })
     }
 
-    console.log('api: error 400:>> ');
     return res.json({
       code: 400,
       message: "Bad Request",
       description: "image atau filename tidak boleh kosong"
     })
   } catch (error) {
-    console.log('api: error ketika upload image :>> ', error);
     return res.json({
       code: 500,
       message: "Internal Server Error",

@@ -24,11 +24,9 @@ export class Collection {
         body: form
       })
       const result = await request.json() as Type.ResApiRoute;
-      console.log('updaload image handler => result :>> ', result);
       if(!this.successCode.includes(result.code)) throw new InternalServerErrorException("Gambar gagal diupload");
       return result;
     } catch (error) {
-      console.log('updaload image handler => error :>> ', error);
       throw new InternalServerErrorException()
     }
   }
