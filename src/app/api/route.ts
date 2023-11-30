@@ -11,7 +11,8 @@ export async function POST (request: Request) {
 
   console.log('api: formData :>> ', formData);
   try {
-    const uploadDir = path.join(process.cwd(), 'public/uploads', folderName || '');
+    // const uploadDir = path.join(process.cwd(), 'public/uploads', folderName || '');
+    const uploadDir = path.join('/tmp', 'public/uploads', folderName || '');
     console.log('api: uploadDir :>> ', uploadDir);
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir);
