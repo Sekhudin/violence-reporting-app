@@ -22,7 +22,7 @@ export async function POST (request: Request) {
       const imagePath = path.join(uploadDir, fileName);
       const buffer = await imageFile.arrayBuffer();
       const imageBuffer = Buffer.from(buffer);
-      fs.writeFileSync(`/tmp/${imagePath}`, imageBuffer);
+      fs.writeFileSync(`/tmp${imagePath}`, imageBuffer);
       console.log('api: success (berenti disini):>> ');
       return res.json({
         code: 201,
