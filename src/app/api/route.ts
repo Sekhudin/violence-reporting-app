@@ -20,18 +20,22 @@ export async function POST (request: Request) {
       const buffer = await imageFile.arrayBuffer();
       const imageBuffer = Buffer.from(buffer);
       fs.writeFileSync(imagePath, imageBuffer);
+      console.log('api: success (berenti disini):>> ');
       return res.json({
         code: 201,
         message: "Created",
         description: "image berhasil di unggah"
       })
     }
+
+    console.log('api: error 400:>> ');
     return res.json({
       code: 400,
       message: "Bad Request",
       description: "image atau filename tidak boleh kosong"
     })
   } catch (error) {
+    console.log('api: error ketika upload image :>> ', error);
     return res.json({
       code: 500,
       message: "Internal Server Error",

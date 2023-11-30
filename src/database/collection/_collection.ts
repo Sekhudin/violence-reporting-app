@@ -6,6 +6,7 @@ import { FirebaseType as Type } from './_type'
 export class Collection {
   protected readonly auth!: Auth;
   protected readonly db!: Database;
+  private readonly successCode: number[] = [200, 201, 204];
   
   constructor(db: Database, auth:Auth){
     this.db = db
@@ -23,9 +24,11 @@ export class Collection {
         body: form
       })
       const result = await request.json() as Type.ResApiRoute;
-      if(result.code !== 201) throw new InternalServerErrorException("Gambar gagal diupload");
+      console.log('updaload image handler => result :>> ', result);
+      if(!this.successCode.includes(result.code)) throw new InternalServerErrorException("Gambar gagal diupload");
       return result;
     } catch (error) {
+      console.log('updaload image handler => error :>> ', error);
       throw new InternalServerErrorException()
     }
   }
