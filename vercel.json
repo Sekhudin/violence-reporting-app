@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "public", "use": "@vercel/static-build" }
+  ],
+  "postbuild": {
+    "chmod": "-R",
+    "arguments": ["766", "public"]
+  }
+}
