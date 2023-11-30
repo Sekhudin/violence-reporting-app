@@ -9,12 +9,15 @@ export async function POST (request: Request) {
   const fileName = formData.get("filename") as string | undefined;
   const folderName = formData.get("folder") as string | undefined;
 
-  const uploadDir = path.join(process.cwd(), 'public/uploads', folderName || '');
-  if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir)
-  }
-
+  console.log('api: formData :>> ', formData);
   try {
+    const uploadDir = path.join(process.cwd(), 'public/uploads', folderName || '');
+    console.log('api: uploadDir :>> ', uploadDir);
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+      console.log('api: created uploadDir ', uploadDir);
+    }
+    
     if(imageFile && fileName){
       const imagePath = path.join(uploadDir, fileName);
       const buffer = await imageFile.arrayBuffer();
