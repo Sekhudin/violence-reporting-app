@@ -14,7 +14,7 @@ export async function POST (request: Request) {
     const uploadDir = path.join(process.cwd(), 'public/uploads', folderName || '');
     console.log('api: uploadDir :>> ', uploadDir);
     if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync('/tmp',uploadDir);
+      fs.mkdirSync(uploadDir);
       console.log('api: created uploadDir ', uploadDir);
     }
     
@@ -22,7 +22,7 @@ export async function POST (request: Request) {
       const imagePath = path.join(uploadDir, fileName);
       const buffer = await imageFile.arrayBuffer();
       const imageBuffer = Buffer.from(buffer);
-      fs.writeFileSync(imagePath, imageBuffer);
+      fs.writeFileSync(`/tmp/${imagePath}`, imageBuffer);
       console.log('api: success (berenti disini):>> ');
       return res.json({
         code: 201,
