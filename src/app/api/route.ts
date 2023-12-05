@@ -5,21 +5,20 @@ import fs from 'fs';
 export async function POST (request: Request) {
   const res = NextResponse;
   const formData = await request.formData();
-  const imageFile = formData.get("image") as File | undefined;
-  const fileName = formData.get("filename") as string | undefined;
-  const folderName = formData.get("folder") as string | undefined;
+  const file = formData.get("image") as File | undefined;
+  const fullpath = formData.get("fullpath") as string | undefined;
 
   try {
-    const uploadDir = path.join(process.cwd(), 'public/uploads', folderName || '');
+    const uploadDir = path.join(process.cwd(), 'public');
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir);
     }
     
-    if(imageFile && fileName){
-      const imagePath = path.join(uploadDir, fileName);
-      const buffer = await imageFile.arrayBuffer();
+    if(file && fullpath){
+      const pathLocation = path.join(uploadDir, fullpath);
+      const buffer = await file.arrayBuffer();
       const imageBuffer = Buffer.from(buffer);
-      fs.writeFileSync(imagePath, imageBuffer);
+      fs.writeFileSync(pathLocation, imageBuffer);
       return res.json({
         code: 201,
         message: "Created",

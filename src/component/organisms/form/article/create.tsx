@@ -7,7 +7,7 @@ import { Button } from "src/component/ui/button";
 import { ItemInput } from 'src/component/molecules/form-item/input';
 import { ItemTextArea } from 'src/component/molecules/form-item/text-area';
 import { useToast } from 'src/component/ui/use-toast';
-import { cn, FromCom } from "src/util";
+import { cn, FunComponent } from "src/util";
 
 export type FormArticleCreateProps = {
   className?: string;
@@ -19,7 +19,7 @@ export type FormArticleCreateProps = {
 
 export function FormArticleCreate({ className, itemClassName, submitClassName, forceMsgBox, rows }: FormArticleCreateProps) {
   const { toast } = useToast();
-  const [form, onSubmit, disable, onValidationError] = useFormArticleCreate();
+  const [form, onSubmit, onValidationError, disable,] = useFormArticleCreate();
 
   return (
     <>
@@ -71,7 +71,7 @@ export function FormArticleCreate({ className, itemClassName, submitClassName, f
                     forceMsgBox={forceMsgBox}
                     onChange={(e) => {
                       field.onChange(e);
-                      const image = FromCom.getImageFile(e);
+                      const image = FunComponent.getImageFile(e);
                       form.setValue('imageFile', image)
                       if (!image) {
                         toast({

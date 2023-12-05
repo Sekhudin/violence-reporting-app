@@ -1,5 +1,4 @@
 import { onAuthStateChanged, User, NextOrObserver } from "firebase/auth";
-import { onValue } from "firebase/database";
 import { DatabaseService } from 'src/database/database';
 
 export type CurrentUser = User;

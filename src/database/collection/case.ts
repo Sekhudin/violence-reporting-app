@@ -1,94 +1,56 @@
-import { Auth } from 'firebase/auth';
-import { Database, DatabaseReference, child, equalTo, get, orderByChild, push, query, ref, remove, set, update } from 'firebase/database';
-import { BadRequestException, InternalServerErrorException, NotFoundException } from 'src/util/exception/http.exception';
+import { FirebaseOptions } from 'firebase/app';
+import { set, get, update, remove, query, equalTo, orderByChild, } from 'firebase/database';
+import { Case } from './case.entity'
+import { DatabaseCollection } from './_collection';
 import { Helper } from './_helper';
-import { Collection } from './_collection';
-import { FirebaseType as Type } from './_type';
+import { Firebase} from './_type';
 
-export namespace Case {
-  export type TypeCase = Type.CaseType;
-  export type Status = Type.CaseStatus;
-  export const TYPE_CASE: TypeCase[] = ['verbal', 'fisik', 'psikologis', 'seksual', 'kekerasan dalam rumah tangga', 'lainya'];
-  export const STATUS: Status[] = ['masuk', 'proses', 'selesai', 'tolak'];
-
-  export type UniqueField = Pick<Entity, 'id' >
-  export class Entity {
-    readonly id!:string;
-    readonly id_card!: string;
-    readonly name!: string;
-    readonly address!: string;
-    readonly phone!: string;
-    readonly status!: Status;
-    readonly title!: string;
-    readonly date_incident!: Date;
-    readonly type_incident!: TypeCase;
-    readonly location_incident!: string;
-    readonly description!: string;
-    readonly evidence?: string;
-    readonly evidence_img?: string;
-
-    constructor(values: Entity){
-      Object.assign(this, values)
-    }
-  }
-}
-
-export class CaseCollection extends Collection implements Type.Collection {
-  readonly _name: Type.CollectionName ='cases';
-  readonly colRef: DatabaseReference = ref(this.db, this._name);
-  readonly docRef: Type.DocRefFn = (docId) => child(this.colRef, `${docId}`);
-
-  constructor(db:Database, auth: Auth){
-    super(db, auth)
+export class CaseCollectionService extends DatabaseCollection implements Firebase.Collection.Service {
+  constructor(config: FirebaseOptions){
+    super(config);
   }
 
-  async create(dto: Omit<Case.Entity, 'id' | 'status'>, imageFile: File | null): Promise<Type.Data> {
-    const id = push(child(this.colRef, '/')).key;
-    if(!id) throw new InternalServerErrorException();
-    let evidenImg:string = ''
+  async create(dto: Case.Create, imageFile: File | null): Promise<Firebase.Collection.Data<Case.Expose>> {
+    const id = this.getId('cases');
+    let evidence_img = '';
     if(imageFile){
-      const { folder, fileName, fullPath  } = Helper.savePath(imageFile, '/cases', id);
-      evidenImg = fullPath;
-      await this.uploadImage(imageFile, fileName, folder);
+      const { fullpath, folder, filename } = Helper.savePath(imageFile, 'cases', id);
+      evidence_img = fullpath;
+      // upload here
     }
     const date_incident = dto.date_incident.toISOString() as unknown as Date;
-    const theCase = new Case.Entity({ ...dto, id, status: 'masuk', date_incident, evidence_img: evidenImg  })
-    await set(this.docRef(id), theCase);
-    return Helper.transform(theCase);
-  }
-  
-  async find(): Promise<Type.Data> {
-    const theCases = (await get(this.colRef)).toJSON()
-    return Helper.transform(theCases);
+    const caseDto = new Case.Entity({ ...dto, status: "masuk", id, date_incident, evidence_img});
+    await set(this.caseRef(id), caseDto);
+    return Helper.transformAs<Case.Expose>(caseDto);
   }
 
-  async findWhere(key: keyof Case.Entity, value: any): Promise<Type.Data> {
-    if(!key || !value) throw new BadRequestException();
-
-    const q = query(this.colRef, orderByChild(key), equalTo(value));
-    const theCases = (await get(q)).toJSON();
-    return Helper.transform(theCases);
+  async find(): Promise<Firebase.Collection.Data<Record<string, Case.Expose>>> {
+    const result = await get(this.caseRef());
+    return Helper.transform<Record<string, Case.Expose>>(result);
   }
 
-  async findId(id: string): Promise<Type.Data> {
-    const q = query(this.docRef(id));
-    const theCase = (await get(q)).toJSON();
-
-    if(!theCase) throw new NotFoundException();
-    return Helper.transform(theCase);
+  async findWhere(key: string, value: any): Promise<Firebase.Collection.Data<Record<string, Case.Expose>>> {
+    const q = query(this.caseRef(), orderByChild(key), equalTo(value));
+    const result = await get(q)
+    return Helper.transform<Record<string, Case.Expose>>(result);
   }
 
-  async updateId(id: string, dto: Pick<Case.Entity, 'status'>): Promise<Type.Data> {
-    await this.findId(id);
-    const clean = Helper.cleanDto(dto);
-    await update(this.docRef(id), clean);
+  async findId(id: string): Promise<Firebase.Collection.Data<Case.Expose>> {
+    const q = query(this.caseRef(id));
+    const result = await get(q)
+    return Helper.transform<Case.Expose>(result);
+  }
+
+  async updateId(id: string, dto: Case.Update): Promise<Firebase.Collection.Data<Case.Expose>> {
+    this.WithUser();
+    const clean = Helper.clean<Case.Update>(dto);
+    await update(this.caseRef(id), clean);
     return await this.findId(id);
   }
 
-  async removeId(id: string): Promise<Type.Data> {
-    const forDelete = await this.findId(id);
-    await remove(this.docRef(id));
-    return forDelete;
+  async removeId(id: string): Promise<Firebase.Collection.Data<Case.Expose>> {
+    const result = await this.findId(id);
+    await remove(this.caseRef(id));
+    return result;
   }
-  
 }

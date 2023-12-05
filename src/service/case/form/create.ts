@@ -1,19 +1,17 @@
 "use client"
 import { useState } from 'react';
-import { useForm, UseFormReturn, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "src/component/ui/use-toast";
-import { catchAll } from 'src/util/exception/catch-all';
+import { catchError } from 'src/util/exception/catch';
+import { HookForm, UseForm } from 'src/util/hook-form/catch';
 import { CaseDto } from "../case.dto";
 import { CaseSchema } from "../case.schema";
 import { CaseService } from '../case.service';
 
-export type TypeCase = CaseDto.TypeCase;
-type CaseCreate = {
-  imageFile: any
-} & CaseDto.Create
-type UserLoginForm = [UseFormReturn<CaseCreate>, SubmitHandler<CaseCreate>, boolean ];
-export function useFormCaseCreate(): UserLoginForm {
+export type CaseType = CaseDto.Type;
+type CaseCreate = { imageFile: any } & CaseDto.Create;
+export function useFormCaseCreate(): UseForm<CaseCreate> {
   const [disabled, setDisabled] = useState<boolean>(false)
   const { toast } = useToast();
   const form = useForm<CaseCreate>({
@@ -37,21 +35,22 @@ export function useFormCaseCreate(): UserLoginForm {
   const onSubmit = async ({ imageFile, ...values}: CaseCreate) => {
    try {
     setDisabled(true);
-    const newCase = await CaseService.create(values, imageFile);
+    const result = await CaseService.create(values, imageFile);
     setDisabled(false);
     form.reset();
-    toast({
-      variant: "success",
-      title: "Berhasil",
-      description: "Aduan berhasil dikirim"
-    });
-    return newCase;
+    toast(HookForm.successMessage("Aduan berhasil dikirim"));
+    return result;
    } catch (error:any) {
-    const { forToast } = catchAll(error);
+    const { forToast } = catchError(error);
     setDisabled(false);
     toast(forToast);
    }
   }
 
-  return [form, onSubmit, disabled]
+  const onValidationError = (error: any) =>{
+    const message = HookForm.catchErrorMessage(error);
+    toast(message);
+  }
+
+  return [form, onSubmit, onValidationError, disabled]
 }

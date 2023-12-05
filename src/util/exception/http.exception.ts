@@ -1,39 +1,15 @@
-interface ExceptionMessage {
-  code: number;
-  message: string;
+import { Exception } from './type';
+
+const HttpCode: Exception.HttpCode = {
+  BAD_REQUEST: { code: 400, message: "bad request" },
+  UNAUTHORIZED: { code: 401, message: "unauthorized", },
+  FORBIDDEN: { code: 403, message: "forbiden" },
+  NOT_FOUND: { code: 404, message: "not found" },
+  CONFLICT: { code: 409, message: "conflict" },
+  INTERNAL_SERVER_ERROR: { code: 500, message: "internal server error" }
 }
 
-type ExceptionType = "BAD_REQUEST" | "UNAUTHORIZED" | "FORBIDDEN" | "NOT_FOUND" | "CONFLICT" | "INTERNAL_SERVER_ERROR"
-type HttpCode = Record<ExceptionType, ExceptionMessage>
-
-const HttpCode: HttpCode = {
-  BAD_REQUEST: {
-    code: 400,
-    message: "bad request",
-  },
-  UNAUTHORIZED: {
-    code: 401,
-    message: "unauthorized",
-  },
-  FORBIDDEN: {
-    code: 403,
-    message: "forbiden"
-  },
-  NOT_FOUND: {
-    code: 404,
-    message: "not found"
-  },
-  CONFLICT: {
-    code: 409,
-    message: "conflict"
-  },
-  INTERNAL_SERVER_ERROR: {
-    code: 500,
-    message: "internal server error"
-  }
-}
-
-export class HttpException implements ExceptionMessage {
+export class HttpException implements Exception.HttpMessage {
   readonly code!:number;
   readonly message!:string;
   readonly description!: string;

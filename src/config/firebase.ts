@@ -2,14 +2,14 @@ import { FirebaseOptions } from 'firebase/app';
 
 export namespace FirebaseConfig {
   export const config: FirebaseOptions = {
-    apiKey: "AIzaSyBhMhLPGmtDMzQtc0kmS9vVQXlYNn77lVU",
-    authDomain: "lawan-project-id-7640f.firebaseapp.com",
-    databaseURL: "https://lawan-project-id-7640f-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "lawan-project-id-7640f",
-    storageBucket: "lawan-project-id-7640f.appspot.com",
-    messagingSenderId: "970172179735",
-    appId: "1:970172179735:web:b2e5d9295c4cb76ed6c352",
-    measurementId: "G-KQMSZSQRTQ"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DB_URL,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
   }
 }
 

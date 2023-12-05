@@ -1,30 +1,21 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, Auth } from 'firebase/auth';
-import { getDatabase,  } from 'firebase/database';
-// import { getAnalytics } from 'firebase/analytics';
-// import { getStorage } from 'firebase/storage';
-import { ArticleCollection } from './collection/article';
-import { CaseCollection } from './collection/case';
-import { UserCollection } from './collection/user';
+import { Auth as FirebaseAuth } from 'firebase/auth';
 import { FirebaseConfig } from 'src/config/firebase';
-
-const app = initializeApp(FirebaseConfig.config);
-const database = getDatabase(app);
-// const storage = getStorage(app);
-// const analytics = getAnalytics(app);
-const auth = getAuth(app);
+import { ArticleCollectionService } from './collection/article';
+import { CaseCollectionService } from './collection/case';
+import { UserCollectionService } from './collection/user';
 
 export class DatabaseService {
-  readonly article!: ArticleCollection;
-  readonly cases!: CaseCollection;
-  readonly user!: UserCollection;
+  readonly article!: ArticleCollectionService;
+  readonly cases!: CaseCollectionService;
+  readonly user!: UserCollectionService;
 
-  readonly auth!: Auth;
+  readonly auth!: FirebaseAuth;
 
   constructor (){
-    this.article = new ArticleCollection(database, auth);
-    this.cases = new CaseCollection(database, auth);
-    this.user = new UserCollection(database, auth);
-    this.auth = auth;
+    this.article = new ArticleCollectionService(FirebaseConfig.config);
+    this.cases = new CaseCollectionService(FirebaseConfig.config);
+    this.user = new UserCollectionService(FirebaseConfig.config);
+
+    this.auth = this.user.getAuth();
   }
 }

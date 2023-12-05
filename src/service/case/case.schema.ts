@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { TypeZod } from 'src/util/zod';
+import { TypeZod } from 'src/util/types';
 import { CaseDto } from './case.dto';
 
 export namespace CaseSchema {

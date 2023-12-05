@@ -9,7 +9,7 @@ import {
   ToastViewport,
 } from "src/component/ui/toast";
 import { useToast } from "src/component/ui/use-toast";
-import { cNode } from 'src/util'
+import { FunComponent } from 'src/util'
 
 export function Toaster() {
   const { toasts } = useToast();
@@ -20,9 +20,9 @@ export function Toaster() {
         return (
           <Toast key={id} {...props}>
             <div className="grid gap-1">
-              {title && <ToastTitle>{cNode.parse(title)}</ToastTitle>}
+              {title && <ToastTitle>{FunComponent.parseNode(title)}</ToastTitle>}
               {description && (
-                <ToastDescription>{cNode.parse(description)}</ToastDescription>
+                <ToastDescription>{FunComponent.parseNode(description)}</ToastDescription>
               )}
             </div>
             {action}

@@ -1,8 +1,8 @@
 import { create, createStore } from 'zustand';
-import { User } from 'src/database/collection/user'
+import { User } from 'src/database/collection/user.entity'
 
 type UserState = {
-  user: User.Payload;
+  user: User.Expose;
   isAutenticated: boolean;
   showBarier: boolean;
   passToDashboard: boolean;

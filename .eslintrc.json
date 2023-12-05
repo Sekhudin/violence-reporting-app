@@ -1,7 +1,6 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "no-console": ["error", { "allow": ["error"] }],
-    "react/jsx-pascal-case": "off"
+    "no-console": ["error", { "allow": ["error"] }]
   }
 }

@@ -1,9 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# upaloads path
-/public/uploads/articles/.*
-/public/uploads/cases/.*
-/public/uploads/users/.*
+# custom ignore
+.env.development
+.env.producton
 
 # dependencies
 /node_modules

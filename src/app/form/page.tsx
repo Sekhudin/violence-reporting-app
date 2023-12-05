@@ -1,14 +1,18 @@
 "use client"
 import React from 'react';
 import { PdfCaseCreate } from 'src/component/molecules/pdf/case-create';
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 export default function Page() {
+  const [isClient, setIsClient] = React.useState<boolean>(false);
+
+  React.useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   return (
-    <main className="flex flex-col justify-center items-center min-h-screen py-12">
-      <div>
-        {/* <PdfCaseCreate /> */}
-      </div>
+    <main className="w-screen flex justify-center p-10">
+      <PdfCaseCreate />
     </main>
   )
 }

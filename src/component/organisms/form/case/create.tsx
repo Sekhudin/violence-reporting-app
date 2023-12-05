@@ -1,6 +1,6 @@
 "use client"
 import { Form, FormField } from "src/component/ui/form";
-import { useFormCaseCreate, TypeCase } from "src/service/case/form/create";
+import { useFormCaseCreate, CaseType } from "src/service/case/form/create";
 import { Button } from "src/component/ui/button";
 import { ScrollArea } from 'src/component/ui/scroll-area';
 import { ItemInput } from 'src/component/molecules/form-item/input';
@@ -8,7 +8,7 @@ import { ItemTextArea } from 'src/component/molecules/form-item/text-area';
 import { ItemCombobox } from 'src/component/molecules/form-item/combo-box';
 import { ItemDateTimePicker } from 'src/component/molecules/form-item/datetime-picker';
 import { useToast } from "src/component/ui/use-toast";
-import { FromCom, cn } from "src/util";
+import { cn, FunComponent } from "src/util";
 import { Constant } from './case.constant';
 
 export type FormCaseCreateProps = {
@@ -20,7 +20,7 @@ export type FormCaseCreateProps = {
 }
 
 export function FormCaseCreate({ className, itemClassName, submitClassName, forceMsgBox, rows }: FormCaseCreateProps) {
-  const [form, onSubmit, disable] = useFormCaseCreate();
+  const [form, onSubmit, onValidationError, disable] = useFormCaseCreate();
   const { toast } = useToast();
 
   return (
@@ -29,7 +29,7 @@ export function FormCaseCreate({ className, itemClassName, submitClassName, forc
         <form
           method="POST"
           className={cn('flex flex-col', className)}
-          onSubmit={form.handleSubmit(onSubmit)}>
+          onSubmit={form.handleSubmit(onSubmit, onValidationError)}>
           <ScrollArea className='relative max-h-96 flex flex-col'>
             <FormField
               name="id_card"
@@ -99,7 +99,7 @@ export function FormCaseCreate({ className, itemClassName, submitClassName, forc
                   label="Jenis Kekerasan"
                   placeholder="Cari tipe..."
                   listValue={Constant.typeCaseList}
-                  onSelect={(val) => form.setValue('type_incident', val as TypeCase)}
+                  onSelect={(val) => form.setValue('type_incident', val as CaseType)}
                   {...field}
                 />
               )} />
@@ -172,7 +172,7 @@ export function FormCaseCreate({ className, itemClassName, submitClassName, forc
                     forceMsgBox={forceMsgBox}
                     onChange={(e) => {
                       field.onChange(e);
-                      const image = FromCom.getImageFile(e);
+                      const image = FunComponent.getImageFile(e);
                       form.setValue('imageFile', image);
                       if (!image) {
                         toast({

@@ -8,10 +8,10 @@ export namespace UserService {
   }
 
   export async function creaateAdmin(dto: UserDto.Create) {
-    return await db.user.signUp(dto);
+    return await db.user.create(dto);
   }
 
   export async function createSuperAdmin(dto: UserDto.Create) {
-    return await db.user.signUpSuperAdmin(dto);
+    return await db.user.createSuperAdmin(dto);
   }
 }

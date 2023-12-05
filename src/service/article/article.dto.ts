@@ -1,7 +1,7 @@
-import { Article } from 'src/database/collection/article'
+import { Article } from 'src/database/collection/article.entity'
 
 export namespace ArticleDto {
-  export class Create implements Pick<Article.Entity, 'title' | 'article' | 'image' >{
+  export class Create implements Article.Create{
     title!: string;
     article!: string;
     image!: string;

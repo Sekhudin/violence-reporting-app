@@ -1,131 +1,64 @@
-import { Database, DatabaseReference, child, get, query, ref, remove, set, update } from 'firebase/database';
-import { 
-  Auth, 
-  deleteUser,
-  User as AuthUser,
-  setPersistence,
-  browserSessionPersistence,
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword
- } from 'firebase/auth';
-import { ForbiddenException, UnAuthorizedException } from 'src/util/exception/http.exception';
+import { FirebaseOptions } from 'firebase/app';
+import { set, get, update, query, } from 'firebase/database';
+import { User } from './user.entity'
+import { DatabaseCollection } from './_collection';
 import { Helper } from './_helper';
-import { Collection } from './_collection';
-import { FirebaseType as Type } from "./_type";
-
-export namespace User {
-  export type UniqueField = Pick<Entity, 'id' | 'username' >;
-  export type Payload = Omit<Entity, 'password'>
-  export class Entity {
-    readonly id!:string;
-    readonly id_card!:string;
-    readonly name!: string;
-    readonly username!: string;
-    readonly email!: string;
-    readonly password!: string;
-    readonly role!: Type.UserRole[];
-    constructor(values: Entity){
-      Object.assign(this, values)
-    }
-  }
-}
+import { Firebase} from './_type';
 
 
-export class UserCollection extends Collection {
-  readonly _name: Type.CollectionName ='users';
-  readonly colRef: DatabaseReference = ref(this.db, this._name);
-  readonly docRef: Type.DocRefFn = (docId) => child(this.colRef, `${docId}`);
-
-  constructor(db: Database, auth:Auth){
-    super(db, auth);
+export class UserCollectionService extends DatabaseCollection {
+  constructor(config: FirebaseOptions){
+    super(config);
   }
 
-  private WithUser(): AuthUser {
-    const signedUser = this.auth.currentUser;
-    if(!signedUser) throw new ForbiddenException();
-    return signedUser;
+  private async findId(id:string): Promise<User.Expose>{
+    const q = query(this.userRef(id));
+    const result = await get(q);
+    const { password, ...exposed} = result.toJSON() as User.Entity;
+    return exposed;
   }
 
-  private async WithSuperAdmin(): Promise<true>{
-    /** @description auth permission */
-    const { uid } = this.WithUser()
-    const q = query(this.docRef(uid));
-    const result = (await get(q)).toJSON() as User.Entity | null;
-    const roles: string[] = result ? Object.values(result.role) : [];
-    const isSuperAdmin:boolean = roles.includes('super admin');
-    if(!isSuperAdmin) throw new UnAuthorizedException();
-    return true;
-  }
-
-  async findId(id: string ): Promise<Type.Data> {
-    const q = query(this.docRef(id));
-    const user = await get(q);
-    const { password, ...result} = user.toJSON() as any;
-    return Helper.transform(result)
-  }
-
-  async signUp(dto: Omit<User.Entity, 'id' | 'username' | 'role'>): Promise<Type.Data> {
-    /** @description auth permission */
+  async create(dto: User.Create): Promise<Firebase.Collection.Data<User.Expose>> {
     await this.WithSuperAdmin();
-
-    const { user } = await createUserWithEmailAndPassword(this.auth, dto.email, dto.password);
-    // const name = dto.email.trim().toLocaleLowerCase().split('@')[0];
-    const id = user.uid;
-    const info = user as any
-    const password = info.reloadUserInfo.passwordHash as string
-    if(!password) throw new ForbiddenException('failed to create new account')
-
-    const entity = new User.Entity({ ...dto, id, username: "", password, role: ['admin' ]});
-    await set(this.docRef(id), entity);
-    const {password: hiddenPass, ...result} = entity;
-    return Helper.transform(result);
+    const { id, hashedPassword: password} = await this.signUpAccount(dto.email, dto.password);
+    const entity = new User.Entity({ ...dto, id, password, username: "", role: ['admin' ]});
+    await set(this.userRef(id), entity);
+    const { password: hidden, ...result} = entity;
+    return Helper.transformAs<User.Expose>(result);
   }
 
-  async signUpSuperAdmin(dto: Omit<User.Entity, 'id' | 'username' | 'role'>): Promise<Type.Data> {
-    /** @description super admin permission */
-    this.WithUser();
-
-    const { user } = await createUserWithEmailAndPassword(this.auth, dto.email, dto.password);
-    // const name = dto.email.trim().toLocaleLowerCase().split('@')[0];
-    const id = user.uid;
-    const info = user as any
-    const password = info.reloadUserInfo.passwordHash as string
-    if(!password) throw new ForbiddenException('failed to create new account')
-
-    const entity = new User.Entity({ ...dto, id, username: "", password, role: ['admin', 'super admin']});
-    await set(this.docRef(id), entity);
-    const {password: hiddenPass, ...result} = entity;
-    return Helper.transform(result);
+  async createSuperAdmin(dto:User.Create): Promise<Firebase.Collection.Data<User.Expose>> {
+    const { id, hashedPassword: password} = await this.signUpAccount(dto.email, dto.password);
+    const entity = new User.Entity({ ...dto, id, password, username: "", role: ['admin', 'super admin']});
+    await set(this.userRef(id), entity);
+    const { password: hidden, ...result} = entity;
+    return Helper.transformAs<User.Expose>(result);
   }
 
-  async signIn(email: string, password: string): Promise<Type.Data> {
-    await setPersistence(this.auth, browserSessionPersistence);
-    const login = await signInWithEmailAndPassword(this.auth, email, password);
-    const profile = await this.findId(login.user.uid)
-    return profile;
+  async signIn(email:string, password: string): Promise<Firebase.Collection.Data<User.Expose>> {
+    const { user } = await this.signInAccount(email, password);
+    const result = await this.findId(user.uid);
+    return Helper.transformAs<User.Expose>(result);
   }
 
-  async signOut(): Promise<boolean> {
-     /** @description auth permission */
-    this.WithUser()
-    await this.auth.signOut()
-    return true;
-  }
-
-  async update(dto: Partial<Omit<User.Entity, 'id' | 'role'>>): Promise<Type.Data> {
-    /** @description auth permission */
+  async signOut(): Promise<Firebase.Collection.Data<User.Expose>> {
     const { uid } = this.WithUser();
-    const clean = Helper.cleanDto(dto);
-    await update(this.docRef(uid), clean);
-    const newProfile = await this.findId(uid);
-    return newProfile;
+    const result = await this.findId(uid);
+    await this.signOutAccount();
+    return Helper.transformAs<User.Expose>(result);
   }
 
-  async deleteAccount(): Promise<boolean> {
-    /** @description user permission */
-    const user = this.WithUser()
-    await deleteUser(user)
-    await remove(this.docRef(user.uid))
-    return true;
+  async update(dto: User.Update): Promise<Firebase.Collection.Data<User.Expose>> {
+    const { uid } = this.WithUser();
+    const clean = Helper.clean(dto);
+    await update(this.userRef(uid), clean);
+    const result = await this.findId(uid);
+    return Helper.transformAs<User.Expose>(result);
+  }
+
+  async remove(): Promise<Firebase.Collection.Data<User.Expose>> {
+    const id = await this.deleteAccount();
+    const result = await this.findId(id);
+    return Helper.transformAs<User.Expose>(result);
   }
 }

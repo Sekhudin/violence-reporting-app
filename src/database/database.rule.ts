@@ -1,15 +1,10 @@
 import { FirebaseRules } from 'src/config/firebase';
-import { FirebaseType } from './collection/_type';
-import { Article } from './collection/article';
-import { Case  } from './collection/case';
-import { User } from './collection/user';
+import { Firebase } from './collection/_type';
+import { Article } from './collection/article.entity';
+import { Case  } from './collection/case.entity';
+import { User } from './collection/user.entity';
 
- /**
- * @description firebaseDefaultRules:
- * @description by default this is default rules provide by firebase.
- * @description Note: always use double quotes, is json.
- */
- export const firebaseDefaultRules: FirebaseRules.BasicRules =
+export const defaultRules: FirebaseRules.BasicRules =
 {
   "rules": {
     ".read": true,
@@ -17,12 +12,7 @@ import { User } from './collection/user';
   }
 }
 
-/**
- * @description firebaseCustomRules:
- * @description recomendation rules include collection rule.
- * @description Note: always use double quotes, is json.
- */
-export const firebaseCustomRules: FirebaseRules.ConsoleRule<FirebaseType.CollectionName,
+export const customRules: FirebaseRules.ConsoleRule<Firebase.Collection.Name,
   Article.Entity
   & Case.Entity
   & User.Entity

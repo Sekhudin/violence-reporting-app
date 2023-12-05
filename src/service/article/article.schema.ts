@@ -1,5 +1,5 @@
 import * as z from 'zod';
-import { TypeZod } from 'src/util/zod';
+import { TypeZod } from 'src/util/types';
 import { ArticleDto } from './article.dto';
 
 export namespace ArticleShcema {

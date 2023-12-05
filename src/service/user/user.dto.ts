@@ -1,18 +1,12 @@
-import { User } from "src/database/collection/user";
+import { User } from "src/database/collection/user.entity";
 
 export namespace UserDto {
-  export type Payload = User.Payload;
-  export class Login implements Pick<User.Entity, 'email' | 'password'>{
+  export class Login implements Pick<User.Create, 'email' | 'password'>{
     email!: string;
     password!: string;
   }
 
-  export class Create implements Pick<User.Entity,
-  'id_card' 
-  | 'name' 
-  | 'email' 
-  | 'password'
-  >{
+  export class Create implements User.Create{
     id_card!: string;
     name!: string;
     email!: string;

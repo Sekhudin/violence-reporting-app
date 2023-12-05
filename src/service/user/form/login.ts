@@ -1,16 +1,16 @@
 "use client"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
-import { useForm, UseFormReturn, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "src/component/ui/use-toast";
-import { catchAll } from 'src/util/exception/catch-all';
+import { catchError } from 'src/util/exception/catch';
+import { HookForm, UseForm } from 'src/util/hook-form/catch';
 import { UserDto } from "../user.dto";
 import { UserSchema } from "../user.schema";
 import { UserService } from '../user.service';
 
-type UserLoginForm = [UseFormReturn<UserDto.Login>, SubmitHandler<any>, boolean ]
-export function useFormUserLogin():UserLoginForm{
+export function useFormUserLogin():UseForm<UserDto.Login>{
   const [disabled, setDisabled] = useState<boolean>(false)
   const router = useRouter()
   const { toast } = useToast();
@@ -29,18 +29,22 @@ export function useFormUserLogin():UserLoginForm{
     form.reset();
     router.push("/dashboard");
     setDisabled(false);
-    const user = result?.values as UserDto.Payload;
     toast({
       variant: "show",
-      title: `Hello, ${user.name || 'Admin'}`,
+      title: `Hello, ${result.values.name}`,
       description: "Mari bersama melawan kekerasan"
     })
     return result;
    } catch (error:any) {
-    const { forToast } = catchAll(error);
+    const { forToast } = catchError(error);
     setDisabled(false);
     toast(forToast);
    }
   }
-  return [form, onSubmit, disabled]
+  const onValidationError = (error: any) =>{
+    const message = HookForm.catchErrorMessage(error);
+    toast(message);
+  }
+
+  return [form, onSubmit, onValidationError, disabled]
 }

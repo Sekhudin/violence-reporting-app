@@ -13,7 +13,7 @@ export type FormUserLoginProps = {
 }
 
 export function FormUserLogin({ className, itemClassName, forceMsgBox }: FormUserLoginProps) {
-  const [form, onSubmit, disable] = useFormUserLogin()
+  const [form, onSubmit, onValidationError, disable] = useFormUserLogin()
 
   return (
     <>
@@ -21,7 +21,7 @@ export function FormUserLogin({ className, itemClassName, forceMsgBox }: FormUse
         <form
           method="POST"
           className={cn('flex flex-col space-y-4', className)}
-          onSubmit={form.handleSubmit(onSubmit)}>
+          onSubmit={form.handleSubmit(onSubmit, onValidationError)}>
           <FormField
             name="email"
             control={form.control}

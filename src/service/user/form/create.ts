@@ -1,15 +1,15 @@
 "use client"
 import { useState } from 'react';
-import { useForm, UseFormReturn, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "src/component/ui/use-toast";
-import { catchAll } from 'src/util/exception/catch-all';
+import { catchError } from 'src/util/exception/catch';
+import { HookForm, UseForm } from 'src/util/hook-form/catch';
 import { UserDto } from "../user.dto";
 import { UserSchema } from "../user.schema";
 import { UserService } from '../user.service';
 
-type UserCreateForm = [UseFormReturn<UserDto.Create>, SubmitHandler<any>, boolean ]
-export function useFormUserCreate():UserCreateForm{
+export function useFormUserCreate():UseForm<UserDto.Create>{
   const [disabled, setDisabled] = useState<boolean>(false)
   const { toast } = useToast();
   const form = useForm<UserDto.Create>({
@@ -25,20 +25,22 @@ export function useFormUserCreate():UserCreateForm{
   const onSubmit = async (values: UserDto.Create) => {
    try {
     setDisabled(true);
-    const user = await UserService.creaateAdmin(values);
+    const result = await UserService.creaateAdmin(values);
     form.reset();
     setDisabled(false);
-    toast({
-      variant: "success",
-      title: "Sukses",
-      description: "Admin baru berhasil ditambahkan"
-    })
-    return user;
+    toast(HookForm.successMessage("Admin baru berhasil ditambahkan"))
+    return result;
    } catch (error:any) {
-    const { forToast } = catchAll(error);
+    const { forToast } = catchError(error);
     setDisabled(false);
     toast(forToast);
    }
   }
-  return [form, onSubmit, disabled]
+
+  const onValidationError = (error: any) =>{
+    const message = HookForm.catchErrorMessage(error);
+    toast(message);
+  }
+
+  return [form, onSubmit, onValidationError, disabled]
 }

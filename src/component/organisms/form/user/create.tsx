@@ -16,7 +16,7 @@ export type FormUserCreateProps = {
 }
 
 export function FormUserCreate({ className, itemClassName, submitClassName, forceMsgBox }: FormUserCreateProps) {
-  const [form, onSubmit, disable] = useFormUserCreate();
+  const [form, onSubmit, onValidationError, disable] = useFormUserCreate();
 
   return (
     <>
@@ -24,7 +24,7 @@ export function FormUserCreate({ className, itemClassName, submitClassName, forc
         <form
           method="POST"
           className={cn('flex flex-col', className)}
-          onSubmit={form.handleSubmit(onSubmit)}>
+          onSubmit={form.handleSubmit(onSubmit, onValidationError)}>
           <ScrollArea className='relative max-h-[400px] flex flex-col'>
             <FormField
               name="id_card"
