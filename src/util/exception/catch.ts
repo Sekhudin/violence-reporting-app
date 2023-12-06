@@ -1,16 +1,25 @@
+import { FirebaseError } from 'firebase/app';
 import { HttpException } from './http.exception';
 import { FunStr } from 'src/util/str';
 import { Exception } from './type';
 export * from './http.exception';
 
 export function catchError(error: any): Exception.Catch {
+  let title: string = "error";
+  let description: string = "internal server error";
 
   if(error instanceof HttpException){
-    return {
-      forToast: {
-        variant: "error",
-        title: FunStr.capitalFirst(error.message),
-        description: FunStr.capitalFirst(error.description)
+    title = error.message;
+    description = error.description;
+  }
+
+  if(error instanceof FirebaseError){
+    const { code } = error;
+    if(code.includes("auth")){
+      title = "autentication failed";
+      description = "terja kesalahan saat autentikasi";
+      if(code.includes("invalid")){
+        description = "email atau password tidak cocok/tidak terdaftar";
       }
     }
   }
@@ -18,8 +27,8 @@ export function catchError(error: any): Exception.Catch {
   return {
     forToast: {
       variant: "error",
-      title: FunStr.capitalFirst("error"),
-      description: FunStr.capitalFirst("internal server error")
+      title: FunStr.capitalFirst(title),
+      description: FunStr.capitalFirst(description)
     }
   }
 

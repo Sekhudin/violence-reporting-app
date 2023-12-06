@@ -1,6 +1,7 @@
 import { FieldErrors, FieldValues } from 'react-hook-form';
 import { ForToast } from 'src/component/ui/use-toast';
 import { FunStr } from 'src/util/str';
+import { TemplateMsgType } from './type'
 export * from './type';
 
 export namespace HookForm {
@@ -22,5 +23,16 @@ export namespace HookForm {
   export function successMessage(message?: string):ForToast {
     const description = FunStr.capitalFirst(message || "berhasil")
     return { variant: "success", title: "Sukses", description };
+  }
+
+  export function templateMessage(type: TemplateMsgType, fillable:string): ForToast {
+    let variant: ForToast['variant'] = "show";
+    let title: ForToast['title'] = "notification";
+    let description: ForToast['description'] = "Hello";
+    if(type=== 'login'){
+      title = `Hello, ${fillable}`;
+      description = "Mari bersama melawan kekerasan";
+    }
+    return { variant, title: FunStr.capitalFirst(title), description: FunStr.capitalFirst(description)};
   }
 }
