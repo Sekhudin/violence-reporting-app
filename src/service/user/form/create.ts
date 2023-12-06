@@ -14,12 +14,7 @@ export function useFormUserCreate():UseForm<UserDto.Create>{
   const { toast } = useToast();
   const form = useForm<UserDto.Create>({
     resolver: zodResolver(UserSchema.create),
-    defaultValues: {
-      id_card: "",
-      name: "",
-      email: "",
-      password: "",
-    }
+    defaultValues: new UserDto.Create()
   })
 
   const onSubmit = async (values: UserDto.Create) => {

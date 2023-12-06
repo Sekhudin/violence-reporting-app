@@ -5,7 +5,7 @@ import { ArticleDto } from './article.dto';
 export namespace ArticleShcema {
   const MAX_FILE_SIZE = 3000000; //3 MB
   const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
-  const _create: TypeZod<ArticleDto.Create & { imageFile: any }> = {
+  const _create: TypeZod<ArticleDto.Create> = {
     title: z.string().min(10, { message: "Judul terlalu singkat"}).trim().toLowerCase(),
     article: z.string().min(20, { message: "Artikel terlalu singkat"}).trim().toLowerCase(),
     image: z.string().min(1, {message: 'Illustrasi tidak boleh kosong'}),

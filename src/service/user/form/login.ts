@@ -16,10 +16,7 @@ export function useFormUserLogin():UseForm<UserDto.Login>{
   const { toast } = useToast();
   const form = useForm<UserDto.Login>({
     resolver: zodResolver(UserSchema.login),
-    defaultValues: {
-      email: "",
-      password: ""
-    }
+    defaultValues: new UserDto.Login(),
   })
 
   const onSubmit = async (values: UserDto.Login) => {
@@ -29,11 +26,7 @@ export function useFormUserLogin():UseForm<UserDto.Login>{
     form.reset();
     router.push("/dashboard");
     setDisabled(false);
-    toast({
-      variant: "show",
-      title: `Hello, ${result.values.name}`,
-      description: "Mari bersama melawan kekerasan"
-    })
+    toast(HookForm.templateMessage('login', result.values.name));
     return result;
    } catch (error:any) {
     const { forToast } = catchError(error);

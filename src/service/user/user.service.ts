@@ -1,4 +1,5 @@
 import { DatabaseService } from 'src/database/database';
+import { BadRequestException } from 'src/util/exception/catch';
 import { UserDto } from './user.dto';
 
 export namespace UserService {
@@ -7,8 +8,9 @@ export namespace UserService {
     return db.user.signIn(dto.email, dto.password);
   }
 
-  export async function creaateAdmin(dto: UserDto.Create) {
-    return await db.user.create(dto);
+  export async function creaateAdmin({ imageFile, ...dto}: UserDto.Create) {
+    if(!imageFile) throw new BadRequestException("Photo tidak ditemukan")
+    return await db.user.create(dto, imageFile);
   }
 
   export async function createSuperAdmin(dto: UserDto.Create) {

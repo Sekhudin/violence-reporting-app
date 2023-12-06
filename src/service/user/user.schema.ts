@@ -3,7 +3,10 @@ import { TypeZod } from 'src/util/types';
 import { UserDto } from './user.dto';
 
 export namespace UserSchema {
+  const MAX_FILE_SIZE = 3000000; //3 MB
+  const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
   const passwordPattern:RegExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+  
   const _login: TypeZod<UserDto.Login> = {
     email: z.string().email("Invalid email").toLowerCase().trim(),
     password: z.string().min(8, {message: "Pnvalid password"})
@@ -16,7 +19,10 @@ export namespace UserSchema {
     password: z.string().min(8, { message: "Password minimal 8 karakter"}).regex(passwordPattern, {
       message: "Password harus terdiri dari kombinasi angka, Uppercase, lowercase, dan karakter"
     }),
-  }
+    image: z.string().min(1, {message: 'foto tidak boleh kosong'}),
+    imageFile: z.any().refine((file) => file?.size <= MAX_FILE_SIZE, `Maksimal ukuran gambar 3MB.`).refine(
+      (file) => ACCEPTED_IMAGE_TYPES.includes(file?.type), "Only .jpg, .jpeg, .png and .webp formats are supported.")
+  } as any
 
 
   export const login = z.object(_login).required();

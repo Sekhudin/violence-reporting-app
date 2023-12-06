@@ -3,7 +3,7 @@ import { CaseDto } from './case.dto';
 
 export namespace CaseService {
   const db = new DatabaseService();
-  export async function create(dto: CaseDto.Create, imageFile: File | null){
+  export async function create({ imageFile, ...dto}: CaseDto.Create){
     return await db.cases.create(dto, imageFile);
   }
 

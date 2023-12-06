@@ -10,32 +10,18 @@ import { CaseSchema } from "../case.schema";
 import { CaseService } from '../case.service';
 
 export type CaseType = CaseDto.Type;
-type CaseCreate = { imageFile: any } & CaseDto.Create;
-export function useFormCaseCreate(): UseForm<CaseCreate> {
+export function useFormCaseCreate(): UseForm<CaseDto.Create> {
   const [disabled, setDisabled] = useState<boolean>(false)
   const { toast } = useToast();
-  const form = useForm<CaseCreate>({
+  const form = useForm<CaseDto.Create>({
     resolver: zodResolver(CaseSchema.create),
-    defaultValues: {
-      id_card: '',
-      name: '',
-      address: '',
-      phone: '',
-      title: '',
-      type_incident: 'verbal',
-      location_incident: '',
-      date_incident: new Date(),
-      description: '',
-      evidence: '',
-      evidence_img: '',
-      imageFile: null
-    }
+    defaultValues: new CaseDto.Create()
   })
 
-  const onSubmit = async ({ imageFile, ...values}: CaseCreate) => {
+  const onSubmit = async (values: CaseDto.Create) => {
    try {
     setDisabled(true);
-    const result = await CaseService.create(values, imageFile);
+    const result = await CaseService.create(values);
     setDisabled(false);
     form.reset();
     toast(HookForm.successMessage("Aduan berhasil dikirim"));
