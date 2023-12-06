@@ -7,7 +7,6 @@ import { ItemInput } from 'src/component/molecules/form-item/input';
 import { ItemTextArea } from 'src/component/molecules/form-item/text-area';
 import { ItemCombobox } from 'src/component/molecules/form-item/combo-box';
 import { ItemDateTimePicker } from 'src/component/molecules/form-item/datetime-picker';
-import { useToast } from "src/component/ui/use-toast";
 import { cn, FunComponent } from "src/util";
 import { Constant } from './case.constant';
 
@@ -21,7 +20,6 @@ export type FormCaseCreateProps = {
 
 export function FormCaseCreate({ className, itemClassName, submitClassName, forceMsgBox, rows }: FormCaseCreateProps) {
   const [form, onSubmit, onValidationError, disable] = useFormCaseCreate();
-  const { toast } = useToast();
 
   return (
     <>
@@ -174,15 +172,6 @@ export function FormCaseCreate({ className, itemClassName, submitClassName, forc
                       field.onChange(e);
                       const image = FunComponent.getImageFile(e);
                       form.setValue('imageFile', image);
-                      if (!image) {
-                        toast({
-                          variant: "error",
-                          title: "File Not Found",
-                          description: "Lokasi gambar tidak ditemukan"
-                        })
-
-                      }
-
                     }}
                     {...inputProps} />
                 )

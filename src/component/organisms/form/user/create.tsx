@@ -6,7 +6,7 @@ import { ScrollArea } from 'src/component/ui/scroll-area';
 import { Button } from "src/component/ui/button";
 import { ItemInput } from 'src/component/molecules/form-item/input';
 import { ItemPassword } from 'src/component/molecules/form-item/password';
-import { cn } from "src/util";
+import { cn, FunComponent } from "src/util";
 
 export type FormUserCreateProps = {
   className?: string;
@@ -73,6 +73,29 @@ export function FormUserCreate({ className, itemClassName, submitClassName, forc
                   placeholder="Password"
                   {...field} />
               )} />
+
+            <FormField
+              name="image"
+              control={form.control}
+              render={({ field }) => {
+                const { onChange, ...inputProps } = field;
+                return (
+                  <ItemInput
+                    className={`file:text-cyan-800 file:hover:cursor-pointer
+                    file:font-semibold font-light bg-cyan-800/10`}
+                    itemClassName={cn('px-4', itemClassName)}
+                    type="file"
+                    accept="image/jpeg, image/jpg, image/png"
+                    label="Foto"
+                    forceMsgBox={forceMsgBox}
+                    onChange={(e) => {
+                      field.onChange(e);
+                      const image = FunComponent.getImageFile(e);
+                      form.setValue('imageFile', image)
+                    }}
+                    {...inputProps} />
+                )
+              }} />
           </ScrollArea>
 
           <Button

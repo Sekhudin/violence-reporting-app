@@ -18,7 +18,6 @@ export type FormArticleCreateProps = {
 }
 
 export function FormArticleCreate({ className, itemClassName, submitClassName, forceMsgBox, rows }: FormArticleCreateProps) {
-  const { toast } = useToast();
   const [form, onSubmit, onValidationError, disable,] = useFormArticleCreate();
 
   return (
@@ -73,13 +72,6 @@ export function FormArticleCreate({ className, itemClassName, submitClassName, f
                       field.onChange(e);
                       const image = FunComponent.getImageFile(e);
                       form.setValue('imageFile', image)
-                      if (!image) {
-                        toast({
-                          variant: "error",
-                          title: "File Not Found",
-                          description: "Lokasi gambar tidak ditemukan"
-                        })
-                      }
                     }}
                     {...inputProps} />
                 )
