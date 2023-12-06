@@ -13,8 +13,8 @@ export class ArticleCollectionService extends DatabaseCollection implements Fire
   async create(dto: Article.Create, imageFile: File): Promise<Firebase.Collection.Data<Article.Expose>> {
     const { uid: author_id } = this.WithUser();
     const id = this.getId('articles');
-    const { fullpath: image, folder, filename } = Helper.savePath(imageFile, 'articles', id);
-    // uploading here
+    const { fullpath: image } = Helper.savePath(imageFile, 'uploads/articles', id);
+    await this.uploadFile(imageFile, image);
     const article = new Article.Entity({ ...dto, id, author_id, image  });
     await set(this.articleRef(id), article);
     return Helper.transformAs<Article.Expose>(article);

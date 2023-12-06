@@ -9,6 +9,7 @@ export namespace User {
     readonly email!: string;
     readonly password!: string;
     readonly role!: Role[];
+    readonly image!: string;
     constructor(values: Entity){
       Object.assign(this, values)
     };

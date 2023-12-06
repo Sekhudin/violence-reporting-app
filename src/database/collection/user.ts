@@ -18,10 +18,12 @@ export class UserCollectionService extends DatabaseCollection {
     return exposed;
   }
 
-  async create(dto: User.Create): Promise<Firebase.Collection.Data<User.Expose>> {
+  async create(dto: User.Create, imageFile: File): Promise<Firebase.Collection.Data<User.Expose>> {
     await this.WithSuperAdmin();
     const { id, hashedPassword: password} = await this.signUpAccount(dto.email, dto.password);
-    const entity = new User.Entity({ ...dto, id, password, username: "", role: ['admin' ]});
+    const { fullpath: image } = Helper.savePath(imageFile, 'uploads/users', id);
+    await this.uploadFile(imageFile, image);
+    const entity = new User.Entity({ ...dto, id, password, username: "", image, role: ['admin' ]});
     await set(this.userRef(id), entity);
     const { password: hidden, ...result} = entity;
     return Helper.transformAs<User.Expose>(result);

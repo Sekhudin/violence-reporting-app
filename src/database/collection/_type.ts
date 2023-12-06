@@ -1,5 +1,6 @@
-import { DataSnapshot, DatabaseReference } from "firebase/database";
 import { Auth as FirebaseAuth, User as AuthUser } from "firebase/auth";
+import { DataSnapshot, DatabaseReference } from "firebase/database";
+import { StorageReference, UploadResult, ref } from "firebase/storage";
 
 export namespace Firebase {
   export namespace Case {
@@ -22,6 +23,10 @@ export namespace Firebase {
       articleRef(path?: string): DatabaseReference;
       caseRef(path?: string): DatabaseReference;
       userRef(path?: string): DatabaseReference;
+      storageRef(path?:string): StorageReference;
+
+      uploadFile(file: File | null, fullpath:string): Promise<UploadResult>;
+      viewFile(fullpath:string):Promise<string>;
 
       getId(collectionName: Name): string;
       getAuth(): FirebaseAuth;
@@ -43,7 +48,7 @@ export namespace Firebase {
   }
 
   export namespace Folder {
-    export type Upload = "articles" | "cases" | "users";
+    export type Upload = "uploads/articles" | "uploads/cases" | "uploads/users";
   }
 
   export namespace Functions {

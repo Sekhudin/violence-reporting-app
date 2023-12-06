@@ -49,7 +49,7 @@ export namespace Helper {
 
   export const savePath: Firebase.Functions.SavePath = (file, folder, saveAs)=> {
     const filename = rename(file, saveAs);
-    const fullpath = `/uploads/${folder}/${filename}`.trim();
+    const fullpath = `/${folder}/${filename}`.trim();
     return { fullpath, folder, filename };
   }
 }

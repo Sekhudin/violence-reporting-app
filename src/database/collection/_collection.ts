@@ -1,6 +1,20 @@
 import { initializeApp, FirebaseApp, FirebaseOptions } from 'firebase/app';
-import { getDatabase, Database as FirebaseDatabase, DatabaseReference, ref, child, query, get, push, ThenableReference, orderByChild, equalTo, remove } from "firebase/database";
-import { ForbiddenException, InternalServerErrorException, UnAuthorizedException } from "src/util/exception/catch";
+// import { getAnalytics, Analytics as FirebaseAnalytics} from 'firebase/analytics';
+import { getStorage, ref as sgRef, uploadBytes, getDownloadURL, FirebaseStorage, UploadResult, StorageReference } from 'firebase/storage';
+import { 
+  getDatabase, 
+  ref, 
+  child, 
+  query, 
+  get, 
+  push, 
+  orderByChild, 
+  equalTo, 
+  remove, 
+  Database as FirebaseDatabase, 
+  DatabaseReference,
+  ThenableReference
+} from "firebase/database";
 import { 
   getAuth, 
   signOut, 
@@ -12,6 +26,7 @@ import {
   User as FirebaseUser, 
   UserCredential as FirebaseUserCredential
 } from 'firebase/auth';
+import { BadRequestException, ForbiddenException, InternalServerErrorException, UnAuthorizedException } from "src/util/exception/catch";
 import { User } from './user.entity';
 import { Firebase } from './_type'
 
@@ -20,8 +35,8 @@ export class DatabaseCollection implements Firebase.Collection.Base {
     this._app = initializeApp(config);
     this._auth = getAuth(this._app);
     this._db = getDatabase(this._app);
-    // this.storage = getStorage(this.app);
-    // this.analythics = getAnalytics(this.app);
+    this.storage = getStorage(this._app);
+    // this.analythics = getAnalytics(this._app);
 
     this.articles = this.refTo('articles');
     this.cases = this.refTo('cases');
@@ -30,8 +45,8 @@ export class DatabaseCollection implements Firebase.Collection.Base {
   private readonly _app!: FirebaseApp;
   private readonly _auth!: FirebaseAuth;
   private readonly _db!: FirebaseDatabase;
-  // private readonly storage!: FirebaseStorage;
-  // private readonly analythics!: Analytics
+  private readonly storage!: FirebaseStorage;
+  // private readonly analythics!: FirebaseAnalytics;
   private readonly articles!: DatabaseReference;
   private readonly cases!: DatabaseReference;
   private readonly users!: DatabaseReference;
@@ -68,7 +83,6 @@ export class DatabaseCollection implements Firebase.Collection.Base {
     return uid;
   }
 
-
   getAuth(): FirebaseAuth { return this._auth; }
   getId(collectionName: Firebase.Collection.Name): string {
       let document: ThenableReference | null = null;
@@ -84,6 +98,22 @@ export class DatabaseCollection implements Firebase.Collection.Base {
       }
     if(!document || !document.key) throw new InternalServerErrorException("failed to generate id");
     return document.key;
+  }
+
+  async uploadFile(file: File | null, fullpath: string): Promise<UploadResult> {
+    if(!file) throw new BadRequestException("failed, empty file");
+    const result = await uploadBytes(this.storageRef(fullpath), file);
+    return result;
+  }
+
+  async viewFile(fullpath:string): Promise<string> {
+    const result = await getDownloadURL(this.storageRef(fullpath));
+    return result;
+  }
+
+  storageRef(path?: string | undefined): StorageReference {
+    if(!path) return sgRef(this.storage);
+    return sgRef(this.storage, path);
   }
 
   createRef(ref: DatabaseReference, path: string): DatabaseReference {

@@ -14,9 +14,9 @@ export class CaseCollectionService extends DatabaseCollection implements Firebas
     const id = this.getId('cases');
     let evidence_img = '';
     if(imageFile){
-      const { fullpath, folder, filename } = Helper.savePath(imageFile, 'cases', id);
+      const { fullpath } = Helper.savePath(imageFile, 'uploads/cases', id);
       evidence_img = fullpath;
-      // upload here
+      await this.uploadFile(imageFile, fullpath)
     }
     const date_incident = dto.date_incident.toISOString() as unknown as Date;
     const caseDto = new Case.Entity({ ...dto, status: "masuk", id, date_incident, evidence_img});
