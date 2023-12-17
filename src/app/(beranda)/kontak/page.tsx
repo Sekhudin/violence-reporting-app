@@ -4,7 +4,7 @@ import { Constant } from './page.constant';
 
 export default function Page() {
   return (
-    <main className='min-h-screen relative flex flex-col items-center bg-white pb-24'>
+    <main className='min-h-screen max-w-[100vw] overflow-x-hidden relative flex flex-col items-center bg-white pb-24'>
       <section className="py-5 flex flex-col px-12 lg:px-24 xl:px-32 2xl:px-44">
         <h2 className="text-center text-lg md:text-2xl lg:text-3xl
           md:px-12 lg:px-24 2xl:px-56">

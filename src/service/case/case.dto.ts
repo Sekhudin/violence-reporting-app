@@ -2,6 +2,7 @@ import { Case } from 'src/database/collection/case.entity';
 
 export namespace CaseDto {
   export type Type = Case.Type;
+  export type Status = Case.Status;
   const [type, ...otherType] = [...Case.TYPES] as const;
   export const TYPE_CASE: readonly[string, ...string[]] = [type, ...otherType] as const;
   export class Create implements Case.Create{

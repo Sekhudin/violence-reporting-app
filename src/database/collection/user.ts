@@ -7,6 +7,7 @@ import { Firebase} from './_type';
 
 
 export class UserCollectionService extends DatabaseCollection {
+  private readonly defaultImage: string = "/uploads/users/default.jpg";
   constructor(config: FirebaseOptions){
     super(config);
   }
@@ -18,20 +19,34 @@ export class UserCollectionService extends DatabaseCollection {
     return exposed;
   }
 
-  async create(dto: User.Create, imageFile: File): Promise<Firebase.Collection.Data<User.Expose>> {
+  async create(dto: User.Create, imageFile: File | null): Promise<Firebase.Collection.Data<User.Expose>> {
     await this.WithSuperAdmin();
     const { id, hashedPassword: password} = await this.signUpAccount(dto.email, dto.password);
-    const { fullpath: image } = Helper.savePath(imageFile, 'uploads/users', id);
-    await this.uploadFile(imageFile, image);
+    
+    let image:string = this.defaultImage;
+    if(imageFile){
+      const { fullpath } = Helper.savePath(imageFile, 'uploads/users', id);
+      await this.uploadFile(imageFile, fullpath);
+      image = fullpath;
+    }
+
     const entity = new User.Entity({ ...dto, id, password, username: "", image, role: ['admin' ]});
     await set(this.userRef(id), entity);
     const { password: hidden, ...result} = entity;
     return Helper.transformAs<User.Expose>(result);
   }
 
-  async createSuperAdmin(dto:User.Create): Promise<Firebase.Collection.Data<User.Expose>> {
+  async createSuperAdmin(dto:User.Create, imageFile: File | null): Promise<Firebase.Collection.Data<User.Expose>> {
     const { id, hashedPassword: password} = await this.signUpAccount(dto.email, dto.password);
-    const entity = new User.Entity({ ...dto, id, password, username: "", role: ['admin', 'super admin']});
+
+    let image:string = this.defaultImage;
+    if(imageFile){
+      const { fullpath } = Helper.savePath(imageFile, 'uploads/users', id);
+      await this.uploadFile(imageFile, fullpath);
+      image = fullpath;
+    }
+
+    const entity = new User.Entity({ ...dto, id, password, image, username: "", role: ['admin', 'super admin']});
     await set(this.userRef(id), entity);
     const { password: hidden, ...result} = entity;
     return Helper.transformAs<User.Expose>(result);

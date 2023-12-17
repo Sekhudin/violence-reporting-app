@@ -28,7 +28,7 @@ export function FormCaseCreate({ className, itemClassName, submitClassName, forc
           method="POST"
           className={cn('flex flex-col', className)}
           onSubmit={form.handleSubmit(onSubmit, onValidationError)}>
-          <ScrollArea className='relative max-h-96 flex flex-col'>
+          <ScrollArea className='relative max-h-[70vh] flex flex-col'>
             <FormField
               name="id_card"
               control={form.control}
@@ -80,10 +80,9 @@ export function FormCaseCreate({ className, itemClassName, submitClassName, forc
               name="title"
               control={form.control}
               render={({ field }) => (
-                <ItemTextArea
+                <ItemInput
                   itemClassName={cn('px-4', itemClassName)}
                   label="Judul"
-                  rows={rows}
                   placeholder="Judul aduan"
                   {...field} />
               )} />

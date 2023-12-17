@@ -6,6 +6,7 @@ export function HeaderDashboard() {
     <div className='flex items-center justify-between px-12 py-2 bg_blue'>
       <a href="/">
         <Image
+          className="w-10 lg:w-12"
           src={PngLogo.largeWhite}
           alt="Logo" />
       </a>

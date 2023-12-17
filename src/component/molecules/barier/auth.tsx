@@ -1,6 +1,6 @@
 import Image from 'next/image';
-import { DotIcon } from 'lucide-react'
-import { PngLogo } from 'src/component/static-file/logo'
+import { DotIcon } from 'lucide-react';
+import { PngLogo } from 'src/component/static-file/logo';
 import { cn } from "src/util";
 
 
@@ -10,7 +10,7 @@ type AuthShieldProps = {
   className?: string;
 } & React.PropsWithChildren;
 
-export function AuthShield({ children, show, authorized, className }: AuthShieldProps) {
+export function BarierAuthShield({ children, show, authorized, className }: AuthShieldProps) {
   return (
     <>
       <div className={cn(`fixed z-50 inset-0 flex flex-col justify-center items-center

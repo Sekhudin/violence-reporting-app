@@ -6,15 +6,22 @@ import { Helper } from './_helper';
 import { Firebase } from './_type';
 
 export class ArticleCollectionService extends DatabaseCollection implements Firebase.Collection.Service {
+  private readonly defaultImage: string = "/uploads/articles/default.jpg";
   constructor(config: FirebaseOptions){
     super(config);
   }
 
-  async create(dto: Article.Create, imageFile: File): Promise<Firebase.Collection.Data<Article.Expose>> {
+  async create(dto: Article.Create, imageFile: File | null): Promise<Firebase.Collection.Data<Article.Expose>> {
     const { uid: author_id } = this.WithUser();
     const id = this.getId('articles');
-    const { fullpath: image } = Helper.savePath(imageFile, 'uploads/articles', id);
-    await this.uploadFile(imageFile, image);
+
+    let image:string = this.defaultImage;
+    if(imageFile){
+      const { fullpath } = Helper.savePath(imageFile, 'uploads/articles', id);
+      await this.uploadFile(imageFile, fullpath);
+      image = fullpath;
+    }
+    
     const article = new Article.Entity({ ...dto, id, author_id, image  });
     await set(this.articleRef(id), article);
     return Helper.transformAs<Article.Expose>(article);

@@ -1,3 +1,5 @@
+"use client"
+import React from "react"
 import { PlusIcon, PencilLineIcon, UserPlusIcon } from 'lucide-react'
 import { Button } from 'src/component/ui/button';
 import { DropdownMenu } from "src/component/ui/dropdown-menu";
@@ -15,16 +17,23 @@ export function FloatButtonDashboard({
   className,
   itemClassName = "w-fit h-fit m-0 p-2.5 rounded-full cursor-pointer",
 }: FloatButtonDashboardProps) {
+  const [open, setOpen] = React.useState<boolean>();
+
+  const closeHandler = () => {
+    setOpen(false);
+  }
+
   return (
-    <DropdownMenu modal>
-      <DropdownMenuTrigger
-        asChild
-        className={cn('', className)}>
+    <DropdownMenu
+      modal={true}
+      open={open}
+      onOpenChange={setOpen}>
+      <DropdownMenuTrigger asChild>
         <Button
-          className="fixed z-50 rounded-full m-0 p-3 w-fit h-fit bottom-32 right-12
-          lg:bottom-20"
+          className={cn(`fixed z-50 rounded-full m-0 p-3 w-fit h-fit bottom-20 right-4
+          lg:bottom-10 lg:right-6 2xl:right-10`, className)}
           variant="amber">
-          <PlusIcon className='w-8 h-8' />
+          <PlusIcon className='w-6 h-6' />
         </Button>
       </DropdownMenuTrigger>
 
@@ -34,7 +43,7 @@ export function FloatButtonDashboard({
         align='end'
         side='top'>
 
-        <DialogUserCreate>
+        <DialogUserCreate onClose={closeHandler}>
           <Button
             className={cn('', itemClassName)}
             variant="blue">
@@ -42,7 +51,7 @@ export function FloatButtonDashboard({
           </Button>
         </DialogUserCreate>
 
-        <DialogArticleCreate>
+        <DialogArticleCreate onClose={closeHandler}>
           <Button
             className={cn('', itemClassName)}
             variant="blue">

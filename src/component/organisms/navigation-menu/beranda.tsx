@@ -35,7 +35,7 @@ export function NavigationMenuBeranda() {
               <DropdownMenuTrigger className='block md:hidden cursor-pointer focus:outline-none'>
                 <Menu />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className='block md:hidden w-screen border-none rounded-none mt-4 mx-0 bg-white'>
+              <DropdownMenuContent className='block md:hidden w-screen border-none rounded-none mt-2 mx-0 bg-white'>
                 {navigation.map(({ title, href }, key) => (
                   <Link href={href} key={key}>
                     <DropdownMenuItem className={`${pathname === href ? css['item_active'] : css['item']}

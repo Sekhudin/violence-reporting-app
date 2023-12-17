@@ -1,11 +1,10 @@
 "use client"
 import React from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { AuthShield } from "src/component/molecules/barier/auth";
-import { ObserveOn, CurrentUser } from 'src/service/observer';
+import { BarierAuthShield } from "src/component/molecules/barier/auth";
+import { UserService, CurrentUser } from 'src/service/user/user.service';
 import { InternalServerErrorException } from 'src/util/exception/http.exception';
 import { FloatButtonDashboard } from "src/component/organisms/float-button/dashboard";
-import { useToast } from "../ui/use-toast";
 
 
 type AuthorizedCtx = {
@@ -26,7 +25,6 @@ export function AuthorizedContextProvider({ children }: React.PropsWithChildren)
   const [isAuthorized, setIsAuthorized] = React.useState<boolean>(false);
   const [barierShow, setBarierShow] = React.useState<boolean>(true);
 
-  const { toast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
   const isDashboardPage: boolean = pathname.startsWith('/dashboard');
@@ -34,7 +32,6 @@ export function AuthorizedContextProvider({ children }: React.PropsWithChildren)
 
   const authorizedHandler = React.useCallback((currentUser: CurrentUser | null) => {
     if (!currentUser) return;
-    // ada user
     setIsAuthorized(true);
     if (isLoginPage) {
       setBarierShow(true);
@@ -47,7 +44,6 @@ export function AuthorizedContextProvider({ children }: React.PropsWithChildren)
 
   const unAuthorizedHandler = React.useCallback((currentUser: CurrentUser | null) => {
     if (currentUser) return;
-    // tidak ada user
     setIsAuthorized(false);
     if (isLoginPage) {
       setBarierShow(false);
@@ -58,16 +54,16 @@ export function AuthorizedContextProvider({ children }: React.PropsWithChildren)
     }
   }, [router, isDashboardPage, isLoginPage])
 
-  React.useEffect(() => ObserveOn.AuthStateChange((currentUser) => {
+  React.useEffect(() => UserService.onAuthStateChange((currentUser) => {
     authorizedHandler(currentUser);
     unAuthorizedHandler(currentUser);
   }), [authorizedHandler, unAuthorizedHandler])
 
   return (
     <AuthorizedContext.Provider value={{ isAuthorized }}>
-      <AuthShield show={barierShow} authorized={isAuthorized}>
+      <BarierAuthShield show={barierShow} authorized={isAuthorized}>
         {children}
-      </AuthShield>
+      </BarierAuthShield>
       <FloatButtonDashboard className={!barierShow && isDashboardPage ? 'block' : 'hidden'} />
     </AuthorizedContext.Provider>
   )

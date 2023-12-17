@@ -27,7 +27,7 @@ export function FormArticleCreate({ className, itemClassName, submitClassName, f
           method="POST"
           className={cn('flex flex-col', className)}
           onSubmit={form.handleSubmit(onSubmit, onValidationError)}>
-          <ScrollArea className='relative max-h-[400px] flex flex-col'>
+          <ScrollArea className='relative flex flex-col max-h-[70vh]'>
             <FormField
               name="title"
               control={form.control}

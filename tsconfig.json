@@ -24,5 +24,5 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/component/molecules/card/image.tsx", "src/component/molecules/form-item/combo-box.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
 }

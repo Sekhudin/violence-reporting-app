@@ -28,8 +28,8 @@ export default function Layout({ children: dashboard, masuk, proses, selesai, to
 
         <Tabs className='grow flex py-0'
           defaultValue={'dashboard'}>
-          <TabsList className='relative overflow-hidden h-full lg:w-3/12 max-w-xs hidden lg:flex flex-col
-          justify-start bg-white shadow-md px-2'>
+          <TabsList className='relative overflow-hidden h-full min-w-[250px] lg:w-3/12 max-w-xs hidden lg:flex flex-col
+            justify-start bg-white rounded-none shadow-md px-2'>
             <TabTriggerDashboard
               className='w-full my-1 px-10 py-3'
               values={Constant.triggerValues} />
@@ -40,8 +40,8 @@ export default function Layout({ children: dashboard, masuk, proses, selesai, to
               <TabTriggerDashboard
                 className='group rounded-none data-[state=active]:rounded-lg
               data-[state=inactive]:hover:bg-gray-200'
-                triggerClassName='p-1.5 px-3'
-                imgIconClassName='w-6 h-6'
+                triggerClassName='p-1.5 px-1.5 md:px-2'
+                imgIconClassName='w-5 h-5 sm:w-6 sm:h-6'
                 labelClassName='hidden'
                 withTooltip
                 tooltipLabelClass='mb-3 font-light'
@@ -50,7 +50,7 @@ export default function Layout({ children: dashboard, masuk, proses, selesai, to
           </TabsList>
 
           <TabContentDashboard
-            className='pb-24 lg:pb-0'
+            className='pb-24 lg:pb-0 px-2 sm:px-4'
             values={contentValue}
             childrens={contentChild} />
         </Tabs>

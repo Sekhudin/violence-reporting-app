@@ -8,7 +8,7 @@ import { Constant } from './page.constant';
 
 export default function Page() {
   return (
-    <main className='min-h-screen relative bg-white flex flex-col pb-24'>
+    <main className='min-h-screen max-w-[100vw] overflow-x-hidden relative bg-white flex flex-col pb-24'>
       <section className="sticky top-0 flex flex-col md:items-center lg:flex-row bg-black">
         <Image
           className="flex-none"

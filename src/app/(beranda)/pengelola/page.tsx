@@ -6,7 +6,7 @@ import css from './style.module.css';
 
 export default function Page() {
   return (
-    <main className='min-h-screen relative bg-white flex flex-col pb-24'>
+    <main className='min-h-screen max-w-[100vw] overflow-x-hidden relative bg-white flex flex-col pb-24'>
       <section className={`${css['section_1']} sticky top-0 flex flex-none justify-center items-center`}>
         <div className={`${css['container_section']} text-center`}>
           <h1>Kepolisian Republik Indonesia</h1>

@@ -10,7 +10,7 @@ import { Constant } from './page.constant';
 
 export default function Page() {
   return (
-    <main className='min-h-screen relative bg-white pb-24'>
+    <main className='min-h-screen max-w-[100vw] overflow-x-hidden relative bg-white pb-24'>
       <section className="sticky top-0 flex flex-col items-center px-12 md:px-24">
         <h2 className='mt-6 semi_heading_1'>
           Lawan!
@@ -79,7 +79,7 @@ export default function Page() {
           alt='image' />
 
         <div className='flex flex-col items-start lg:items-center lg:justify-center px-4'>
-          <p className='text-start lg:text-center normal_heading_3'>
+          <p className='text-start lg:text-center text-lg md:text-2xl'>
             Tidak ada yang lebih
             <span className='text-red-500'>{" berbahaya "}</span>daripada
             <span className='text-red-500'>{" kekerasan "}</span>

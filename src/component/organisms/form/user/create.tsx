@@ -25,7 +25,7 @@ export function FormUserCreate({ className, itemClassName, submitClassName, forc
           method="POST"
           className={cn('flex flex-col', className)}
           onSubmit={form.handleSubmit(onSubmit, onValidationError)}>
-          <ScrollArea className='relative max-h-[400px] flex flex-col'>
+          <ScrollArea className='relative max-h-[70vh] flex flex-col'>
             <FormField
               name="id_card"
               control={form.control}

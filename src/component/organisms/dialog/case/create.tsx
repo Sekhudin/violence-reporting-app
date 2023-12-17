@@ -20,7 +20,7 @@ export function DialogCaseCreate({ children, className, ...props }: DialogCaseCr
         {children}
       </DialogTrigger>
       <DialogContent
-        className={cn('w-11/12 bg-white rounded-xl', className)}
+        className={cn('bg-white rounded-xl w-11/12 md:max-w-full xl:max-w-6xl', className)}
         onPointerDownOutside={(e) => e.preventDefault()}>
         <DialogHeader className='flex flex-col items-center mt-4 text-center'>
           <DialogTitle className='mt-4'>Laporkan Kekerasan</DialogTitle>

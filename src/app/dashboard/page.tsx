@@ -1,7 +1,6 @@
 "use client"
 import { useEffect } from "react";
 import { CardBasic } from "src/component/molecules/card/basic";
-import { UseService } from 'src/service/hooks';
 
 export default function Page() {
 
@@ -25,7 +24,7 @@ export default function Page() {
         </CardBasic>
       </section>
 
-      <CardBasic className="grow h-full">
+      <CardBasic className="grow h-full lg:rounded-b-none">
         Sekhudin
       </CardBasic>
     </main>

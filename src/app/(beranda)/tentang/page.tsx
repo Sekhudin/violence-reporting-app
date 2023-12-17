@@ -4,7 +4,7 @@ import { Constant } from './page.contant';
 
 export default function Page() {
   return (
-    <main className='min-h-screen relative bg-white flex flex-col pb-24'>
+    <main className='min-h-screen max-w-[100vw] overflow-x-hidden relative bg-white flex flex-col pb-24'>
       <section className="sticky top-0 flex flex-col items-center md:flex-row md:items-stretch">
         <div className="lg:grow w-full md:w-6/12 flex flex-col items-center md:items-end md:justify-center">
           <h1 className="semi_heading_1">

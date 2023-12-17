@@ -23,6 +23,7 @@ export function HeaderBeranda() {
       <div className='flex items-center justify-between px-12 py-2 bg-white'>
         <a href="/">
           <Image
+            className='w-12 lg:w-14'
             src={PngLogo.large}
             alt="Logo" />
         </a>

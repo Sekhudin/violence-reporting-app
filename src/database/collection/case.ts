@@ -1,5 +1,5 @@
 import { FirebaseOptions } from 'firebase/app';
-import { set, get, update, remove, query, equalTo, orderByChild, } from 'firebase/database';
+import { set, get, update, remove, query, equalTo, orderByChild } from 'firebase/database';
 import { Case } from './case.entity'
 import { DatabaseCollection } from './_collection';
 import { Helper } from './_helper';
@@ -10,14 +10,20 @@ export class CaseCollectionService extends DatabaseCollection implements Firebas
     super(config);
   }
 
+  ref(id?:string){
+    return this.caseRef(id);
+  }
+
   async create(dto: Case.Create, imageFile: File | null): Promise<Firebase.Collection.Data<Case.Expose>> {
     const id = this.getId('cases');
-    let evidence_img = '';
+
+    let evidence_img = dto.evidence_img || '';
     if(imageFile){
       const { fullpath } = Helper.savePath(imageFile, 'uploads/cases', id);
       evidence_img = fullpath;
       await this.uploadFile(imageFile, fullpath)
     }
+    
     const date_incident = dto.date_incident.toISOString() as unknown as Date;
     const caseDto = new Case.Entity({ ...dto, status: "masuk", id, date_incident, evidence_img});
     await set(this.caseRef(id), caseDto);
@@ -29,7 +35,7 @@ export class CaseCollectionService extends DatabaseCollection implements Firebas
     return Helper.transform<Record<string, Case.Expose>>(result);
   }
 
-  async findWhere(key: string, value: any): Promise<Firebase.Collection.Data<Record<string, Case.Expose>>> {
+  async findWhere(key: keyof Case.Expose, value: any): Promise<Firebase.Collection.Data<Record<string, Case.Expose>>> {
     const q = query(this.caseRef(), orderByChild(key), equalTo(value));
     const result = await get(q)
     return Helper.transform<Record<string, Case.Expose>>(result);
