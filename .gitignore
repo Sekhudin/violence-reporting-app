@@ -3,7 +3,7 @@
 # custom ignore
 .env
 .env.development
-.env.producton
+.env.production
 
 # dependencies
 /node_modules

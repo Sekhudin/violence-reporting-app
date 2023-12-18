@@ -29,7 +29,7 @@ export function TabTriggerDashboard({
                   <div className={cn('grow flex items-center space-x-2', triggerClassName, triggerClass)}>
                     {src && (<Image src={src} alt="-" className={cn('', imgIconClassName)} />)}
                     {Icon && (<Icon className={cn('w-5', imgIconClassName)} />)}
-                    <span className={cn('', labelClassName)}>{label}</span>
+                    <span className={cn('text-sm lg:text-base', labelClassName)}>{label}</span>
                   </div>
                 </TooltipTrigger>
                 <TooltipContent className={cn('', tooltipLabelClass)}>{label}</TooltipContent>
@@ -39,7 +39,7 @@ export function TabTriggerDashboard({
             <div className={cn('grow flex items-center space-x-2', triggerClassName, triggerClass)}>
               {src && (<Image src={src} alt="-" className={cn('', imgIconClassName)} />)}
               {Icon && (<Icon className={cn('w-5', imgIconClassName)} />)}
-              <span className={cn('', labelClassName)}>{label}</span>
+              <span className={cn('text-sm lg:text-base', labelClassName)}>{label}</span>
             </div>
           )}
         </TabsTrigger>

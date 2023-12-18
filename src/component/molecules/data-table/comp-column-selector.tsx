@@ -33,10 +33,13 @@ export function DataTableColumnSelector<DT extends Record<string, any>>({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          className={cn("p-0 flex disabled:opacity-100", className)}
+          className={cn("p-0 flex disabled:opacity-100 space-x-1", className)}
           variant="outline"
           disabled={isEmpty}>
-          <span className="hidden md:block">{textTrigger}</span><ChevronDown className="h-4 w-4" />
+          <span className="hidden md:block text-sm lg:text-base">
+            {textTrigger}
+          </span>
+          <ChevronDown className="h-4 w-4 lg:w-5 lg:h-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className={cn('', contentClassName)}>
@@ -45,7 +48,7 @@ export function DataTableColumnSelector<DT extends Record<string, any>>({
           return (
             <DropdownMenuCheckboxItem
               key={key}
-              className={cn(`capitalize`, itemClassName)}
+              className={cn(`text-sm lg:text-base capitalize`, itemClassName)}
               checked={column.getIsVisible()}
               onCheckedChange={(value) => column.toggleVisibility(!!value)}>
               {itemName}

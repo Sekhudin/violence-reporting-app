@@ -8,10 +8,8 @@ async function seed(seedNumber:number) {
   for (let i = 1; i <= seedNumber; i++) {
     const newCase = CreateFake.newCase(i);
     const article = CreateFake.article(i);
-    const user = CreateFake.user(i);
     await db.cases.create(newCase, null);
     await db.article.create(article, null);
-    await db.user.create(user, null);
   }
   console.debug("Seeding Successfull");
   process.exit(1);

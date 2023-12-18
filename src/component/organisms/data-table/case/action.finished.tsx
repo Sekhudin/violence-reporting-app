@@ -30,18 +30,18 @@ export function ActionFinishedCase<DT extends Case.Expose, DV = unknown>({
         open={open}
         onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-fit w-fit px-2 py-1">
-            <MoreHorizontal className="h-4 w-4" />
+          <Button variant="ghost" className="h-fit w-fit p-2">
+            <MoreHorizontal className="h-6 w-6" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="relative flex flex-col space-y-0.5">
-          <DropdownMenuLabel className="text-xs lg:text-sm font-medium py-1">
+          <DropdownMenuLabel className="text-sm lg:text-base font-medium py-1">
             Aksi
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
 
           <DropdownMenuItem
-            className="text-xs lg:text-sm font-light cursor-pointer p-0"
+            className="cursor-pointer p-0"
             onSelect={(e) => e.preventDefault()}>
             <DialogCasePdfIncoming
               values={ctx.row.original}

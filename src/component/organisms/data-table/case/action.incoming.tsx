@@ -56,12 +56,12 @@ export function ActionIncomingCase<DT extends Case.Expose, DV = unknown>({
         open={open}
         onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-fit w-fit px-2 py-1">
-            <MoreHorizontal className="h-4 w-4" />
+          <Button variant="ghost" className="h-fit w-fit p-2">
+            <MoreHorizontal className="h-6 w-6" />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="relative flex flex-col space-y-0.5">
-          <DropdownMenuLabel className="text-xs lg:text-sm font-medium py-1">
+          <DropdownMenuLabel className="text-sm lg:text-base font-medium py-1">
             Aksi
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -79,9 +79,9 @@ export function ActionIncomingCase<DT extends Case.Expose, DV = unknown>({
             className="p-0"
             onSelect={(e) => e.preventDefault()}>
             <AlertActionCancel
-              className="text-xs lg:text-sm font-light text-cyan-600 hover:cursor-pointer hover:bg-transparent
+              className="text-sm lg:text-base font-light text-cyan-600 hover:cursor-pointer hover:bg-transparent
             hover:text-cyan-500 focus:text-cyan-600 focus:bg-cyan-600/10 px-2 py-1
-            flex justify-start w-full h-full rounded-sm"
+              flex justify-start w-full h-full rounded-sm"
               variant={"ghost"}
               title={`aduan ${ctx.row.original.name}`}
               description={`terima aduan dari ${ctx.row.original.name}?`}
@@ -98,9 +98,9 @@ export function ActionIncomingCase<DT extends Case.Expose, DV = unknown>({
             className="p-0"
             onSelect={(e) => e.preventDefault()}>
             <AlertActionCancel
-              className="text-xs lg:text-sm font-light text-pink-600 hover:cursor-pointer hover:bg-transparent
+              className="text-sm lg:text-base font-light text-pink-600 hover:cursor-pointer hover:bg-transparent
             hover:text-pink-500 focus:text-pink-600 focus:bg-pink-600/10 px-2 py-1
-            flex justify-start w-full h-full rounded-sm"
+              flex justify-start w-full h-full rounded-sm"
               variant={"ghost"}
               title={`aduan ${ctx.row.original.name}`}
               description={`lanjutkan tolak aduan dari ${ctx.row.original.name}?`}

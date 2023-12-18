@@ -1,7 +1,7 @@
 "use client";
 import React from 'react';
 import { DownloadCloud, BookOpen } from 'lucide-react';
-import { Dialog, DialogTrigger, DialogContent, DialogHeader } from 'src/component/ui/dialog';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, } from 'src/component/ui/dialog';
 import { ScrollArea, ScrollBar } from 'src/component/ui/scroll-area';
 import { TooltipButton } from 'src/component/molecules/tooltip/button';
 import { Barierloader } from "src/component/molecules/barier/loader";
@@ -50,11 +50,11 @@ export function DialogCasePdfIncoming<DT extends Case.Expose>({
 
   return (
     <Dialog modal>
-      <DialogTrigger className={cn('text-start w-full h-full rounded-sm px-2 py-1', className)}>
+      <DialogTrigger className={cn('w-full h-full rounded-sm first-letter:text-sm lg:text-base font-light text-start px-2 py-1', className)}>
         {textTrigger || "Lihat"}
       </DialogTrigger>
       <DialogContent
-        className='bg-white rounded-lg w-fit max-w-[95vw]'
+        className='bg-white rounded-lg w-fit max-w-[95vw] flex flex-col'
         onPointerDownOutside={(e) => e.preventDefault()}
         onOpenAutoFocus={(e) => e.preventDefault()}
         onCloseAutoFocus={onClose}>
@@ -83,7 +83,7 @@ export function DialogCasePdfIncoming<DT extends Case.Expose>({
           </TooltipButton>
         </DialogHeader>
 
-        <ScrollArea className='relative w-fit max-w-[75vw] max-h-[80vh] pr-2'>
+        <ScrollArea className='w-fit max-w-[85vw] h-[85vh] pr-2'>
           <Barierloader isLoading={loading} />
           <PdfIncomingCase
             ref={pdfTargetRef}

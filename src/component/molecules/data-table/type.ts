@@ -7,12 +7,14 @@ export type ColumnHeadProps<DT extends Record<string, any>, DV = unknown> = {
   ctx: HeaderContext<DT, DV>;
   header: string;
   headerType: HeaderType;
+  className?: string;
 }
 
 export type ColumnCellProps<DT extends Record<string, any>, DV = unknown> = {
   ctx: CellContext<DT, DV>;
   cellId: string;
-  cellType: CellType,
+  cellType: CellType;
+  className?: string;
 }
 
 export type ColumnProps<DT extends Record<string, any>, DV = unknown> = {
@@ -20,6 +22,8 @@ export type ColumnProps<DT extends Record<string, any>, DV = unknown> = {
   header: string;
   cellType?: CellType,
   headerType?: HeaderType;
+  headerClassName?: string;
+  cellClassName?: string;
 } & Omit<ColumnDef<DT, DV>, "headerType">;
 
 export type ColumnExtraDef<DT extends Record<string, any>, DV = unknown> = {

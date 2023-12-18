@@ -89,9 +89,9 @@ export function DataTableCases({
           table={table}
           isEmpty={isEmpty} />
         <DataTableColumnSelector<CaseDetail>
-          className="px-2 rounded-l-none rounded-r-lg text-sm font-light lg:rounded-l-lg"
+          className="px-2 rounded-l-none rounded-r-lg font-light lg:rounded-l-lg"
           contentClassName="flex flex-col space-y-1"
-          itemClassName="py-1 cursor-pointer text-sm font-light"
+          itemClassName="py-1 cursor-pointer font-light"
           textTrigger="Kolom"
           table={table}
           isEmpty={isEmpty} />

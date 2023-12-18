@@ -25,7 +25,7 @@ export function DataTableNextPrev<DT extends Record<string, any>>({ table, isEmp
   return (
     <div className={cn("flex justify-start items-center space-x-2 mt-4", className)}>
       <Button
-        className={cn("py-1 px-2 h-fit font-medium disabled:opacity-100", clPrev)}
+        className={cn("py-1 px-2 h-fit font-medium disabled:opacity-100 text-sm lg:text-base", clPrev)}
         variant="outline"
         size="sm"
         onClick={() => table.previousPage()}
@@ -34,7 +34,7 @@ export function DataTableNextPrev<DT extends Record<string, any>>({ table, isEmp
         {titlePrev || "Previous"}
       </Button>
       <Button
-        className={cn("py-1 px-2 h-fit font-medium disabled:opacity-100", clNext)}
+        className={cn("py-1 px-2 h-fit font-medium disabled:opacity-100 text-sm lg:text-base", clNext)}
         variant="outline"
         size="sm"
         onClick={() => table.nextPage()}
@@ -43,7 +43,7 @@ export function DataTableNextPrev<DT extends Record<string, any>>({ table, isEmp
         {titleNext || "Next"}
       </Button>
       {pageSize && (
-        <p className="text-sm font-medium">
+        <p className="text-sm lg:text-base font-medium">
           {`Page ${currentPage} of ${pageCount}`}
         </p>
       )}

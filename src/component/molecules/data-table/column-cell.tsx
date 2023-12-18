@@ -4,23 +4,38 @@ import { ColumnCellProps } from "./type";
 export function ColumnCell<DT extends Record<string, any>, DV = unknown>({
   ctx,
   cellId,
-  cellType
+  cellType,
+  className
 }: ColumnCellProps<DT, DV>) {
   const value: unknown = ctx.row.getValue(cellId);
+  const strValue = typeof value === "string" ? FunStr.capitalFirst(value) : "";
+
   switch (cellType) {
     case "string":
-      return (<div className={cn("", "")}>{value as React.ReactNode}</div>);
+      return (<div className={cn("", className)}>
+        {strValue}
+      </div>);
     case "fold-wrd":
-      return (<div className={cn("", "")}>{FunStr.foldWord(value as string, 6)}</div>);
+      return (<div className={cn("", className)}>
+        {FunStr.foldWord(strValue, 6)}
+      </div>);
     case "fold-stc":
-      return (<div className={cn("", "")}>{FunStr.foldSentence(value as string, 4, " ")}</div>);
+      return (<div className={cn("", className)}>
+        {FunStr.foldSentence(strValue, 4, " ")}
+      </div>);
     case "abbrev":
-      return (<div className={cn("", "")}>{FunStr.abbrev(value as string, 10)}</div>);
+      return (<div className={cn("", className)}>
+        {FunStr.abbrev(strValue, 10)}
+      </div>);
     case "abbrev-name":
-      return (<div className={cn("", "")}>{FunStr.abbrevName(value as string, 15)}</div>);
+      return (<div className={cn("", className)}>
+        {FunStr.abbrevName(strValue, 15)}
+      </div>);
     case "date":
-      return (<div className={cn("", "")}>{FunDate.ISOtoLocal(value as string)}</div>);
+      return (<div className={cn("", className)}>
+        {FunDate.ISOtoLocal(strValue)}
+      </div>);
     default:
-      return (<div className={cn("", "")}>invalid</div>);
+      return (<div className={cn("", className)}>Invalid</div>);
   }
 }

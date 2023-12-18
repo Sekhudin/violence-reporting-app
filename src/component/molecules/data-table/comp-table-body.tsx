@@ -34,7 +34,7 @@ export function DataTableBody<DT extends Record<string, any>>({
         ))) : (
         <TableRow className="hover:bg-transparent">
           <TableCell
-            className="h-24 text-center w-full"
+            className="w-full h-24 text-center text-sm lg:text-base"
             colSpan={columns.length}>
             Tidak ditemukan.
           </TableCell>

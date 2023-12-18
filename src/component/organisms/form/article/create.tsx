@@ -6,7 +6,6 @@ import { ScrollArea } from 'src/component/ui/scroll-area';
 import { Button } from "src/component/ui/button";
 import { ItemInput } from 'src/component/molecules/form-item/input';
 import { ItemTextArea } from 'src/component/molecules/form-item/text-area';
-import { useToast } from 'src/component/ui/use-toast';
 import { cn, FunComponent } from "src/util";
 
 export type FormArticleCreateProps = {

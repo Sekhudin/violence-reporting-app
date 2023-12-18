@@ -55,7 +55,7 @@ export function DataTableSearchbox<DT extends Record<string, any>>({
         <DropdownMenuTrigger asChild>
           <Button
             className="bg-cyan-900 hover:bg-cyan-900/90 text-white hover:text-white
-            font-light rounded-l-lg border-r-0 rounded-r-none disabled:opacity-100"
+            font-light rounded-l-lg border-r-0 rounded-r-none disabled:opacity-100 text-sm lg:text-base"
             variant="outline"
             disabled={isEmpty}>
             {searchAs}
@@ -69,7 +69,7 @@ export function DataTableSearchbox<DT extends Record<string, any>>({
               const itemName = getHeaderName<DT>(column);
               return (
                 <DropdownMenuRadioItem key={key}
-                  className="font-light py-1"
+                  className="text-sm lg:text-base font-light py-1"
                   value={colDef.accessorKey}>
                   {itemName}
                 </DropdownMenuRadioItem>
@@ -81,7 +81,7 @@ export function DataTableSearchbox<DT extends Record<string, any>>({
 
       <Input
         className={cn(`focus-visible:ring-transparent focus-visible:ring-0
-        focus-visible:ring-offset-0 rounded-l-none disabled:opacity-100`, className)}
+        focus-visible:ring-offset-0 rounded-l-none disabled:opacity-100 text-sm lg:text-base`, className)}
         value={(table.getColumn(searchBy as string)?.getFilterValue() as string) ?? ""}
         placeholder={`Cari ${searchAs}...`}
         onChange={searchBoxOnChange}
