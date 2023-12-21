@@ -6,7 +6,7 @@ import { ArticleStorage } from "src/service/article/article.service";
 
 export function useFireStorageUrl(path: string){
   const { toast } = useToast();
-  const [src, setSrc] = React.useState<string>("");
+  const [src, setSrc] = React.useState<string>("/");
   const [loading, setLoading] = React.useState<boolean>(true);
   const [error, setError] = React.useState<HttpErrorDetail | null>(null);
 
@@ -16,13 +16,14 @@ export function useFireStorageUrl(path: string){
       const source = await ArticleStorage.getUrl(path);
       setSrc(source);
       setLoading(false);
+      return source;
     } catch (error) {
-      console.log('error :>> ', error);
-      const { forToast, errorDetail } = catchError(error);
+      const { forToast, errorDetail } = catchError(error,
+        "gagal mendapatkan resource");
       setError(errorDetail);
       toast(forToast);
     }
-  }, [path, toast])
+  }, [path, toast]);
 
   React.useEffect(() => {
     sourceHandler();

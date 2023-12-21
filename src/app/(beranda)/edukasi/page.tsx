@@ -1,12 +1,11 @@
-import { CardArticle } from 'src/component/atoms/card/article';
 import { TextBorder, TextBlock, EmptyBorderBox } from "src/component/molecules/special/atoms";
 import { LawanCrossText } from "src/component/molecules/special/lawan-cross-text";
 import { SelfAvoidViolence } from "src/component/molecules/special/self-avoid-violence";
 import { IllustrationEdukasiBeranda } from "src/component/molecules/special/illustration-edukasi-beranda";
 import { AccordionViolenceLaw, TitleAccordionVlaw } from "src/component/molecules/special/accordion-violence-law";
 import { SelfAvoidViolenceIllustration } from "src/component/molecules/special/self-avoid-violence-illustration";
-import { CardListArticleEdukasi, TitleCardListArticleEdukasi } from 'src/component/organisms/cardlist/article/edukasi'
-import { Constant } from './page.constant';
+import { CardListArticleEdukasi, TitleCardListArticleEdukasi } from 'src/component/organisms/cardlist/article/edukasi';
+import { ArticleProvider } from 'src/component/context/provider';
 
 export default function Page() {
   return (
@@ -17,7 +16,7 @@ export default function Page() {
         px-12 xl:px-44 2xl:px-72">
         <SelfAvoidViolenceIllustration />
         <div className="flex flex-col items-center md:items-start mt-10 md:mt-0 px-12">
-          <h3 className="semi_heading_3 text_blue">
+          <h3 className="text-center md:text-start semi_heading_3 text_blue">
             Menghindari diri dari kekerasan
           </h3>
           <SelfAvoidViolence />
@@ -63,18 +62,13 @@ export default function Page() {
         </div>
       </section>
 
-      <section className=" relative z-10 py-12 bg-white px-6 md:px-12 2xl:px-56">
+      <section className=" relative z-10 py-12 bg-white px-6 md:px-12">
         <TitleCardListArticleEdukasi>
           Artikel
         </TitleCardListArticleEdukasi>
-        <CardListArticleEdukasi />
-        <CardArticle
-          className="flex flex-wrap justify-center sm:space-x-4 lg:space-x-6"
-          itemClassName="overflow-hidden w-10/12 sm:w-2/5 lg:w-72
-          rounded-lg lg:rounded-xl shadow-md mb-4 lg:mb-6"
-          imageClassName="object-cover"
-          textClassName="p-5 text-center"
-          articleList={Constant.articleList} />
+        <ArticleProvider>
+          <CardListArticleEdukasi />
+        </ArticleProvider>
       </section>
     </>
   )

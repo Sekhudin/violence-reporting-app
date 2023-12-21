@@ -22,7 +22,7 @@ export const SelfAvoidViolenceIllustration = ({ className }: { className?: strin
   <ul className={cn(`grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2
     lg:grid-rows-2 gap-4 md:gap-6 lg:gap-10 lg:mt-14`, className)}>{
       avoidIllustation.map((v, key) => (
-        <li className="w-44 md:w-56" key={key}>
+        <li className="w-32 sm:40 md:w-56" key={key}>
           <Image
             className="object-cover"
             src={v.src}

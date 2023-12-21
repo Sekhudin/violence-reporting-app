@@ -33,6 +33,9 @@ export default function Layout({
 
       <main className='relative h-screen w-screen overflow-hidden pt-16 pb-16 md:pb-10 px-5'>
         <section className='relative h-full w-full max-h-full bg-blue-400'>
+          <div className='absolute top-0 inset-x-0 p-5 bg-red-500 text-lg text-white font-semibold z-[100]'>
+            {"HALAMAN DASHBOARD SEDANG DALAM PERBAIKAN (ONPROCESS)"}
+          </div>
           <Tabs className=''
             defaultValue={'masuk'}>
             <TabsList asChild>

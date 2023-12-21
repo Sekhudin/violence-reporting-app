@@ -1,30 +1,30 @@
-import { CardBasic } from "src/component/atoms/card/basic";
+import { PlainCard } from 'src/component/molecules/special/plain-card';
 
 export default function Page() {
 
   return (
     <section className="h-full flex flex-col space-y-2 lg:space-y-4">
-      <CardBasic>
+      <PlainCard>
         Sekhudin
-      </CardBasic>
+      </PlainCard>
 
       <section className="flex space-x-2 lg:space-x-4">
-        <CardBasic className="grow">
+        <PlainCard className="grow">
           Sekhudin
-        </CardBasic>
+        </PlainCard>
 
-        <CardBasic className="grow">
+        <PlainCard className="grow">
           Sekhudin
-        </CardBasic>
+        </PlainCard>
 
-        <CardBasic className="grow">
+        <PlainCard className="grow">
           Sekhudin
-        </CardBasic>
+        </PlainCard>
       </section>
 
-      <CardBasic className="grow h-full lg:rounded-b-none">
+      <PlainCard className="grow h-full lg:rounded-b-none">
         Sekhudin
-      </CardBasic>
+      </PlainCard>
     </section>
   )
 }

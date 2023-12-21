@@ -5,9 +5,9 @@ import { Exception } from './type';
 export * from './http.exception';
 
 export type HttpErrorDetail = Exception.HttpErrorDetail;
-export function catchError(error: any): Exception.Catch {
+export function catchError(error: any, desc?: string): Exception.Catch {
   let title: string = "error";
-  let description: string = "internal server error";
+  let description: string = desc || "internal server error";
 
   if(error instanceof HttpException){
     title = error.message;

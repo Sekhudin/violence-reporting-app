@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
 import { CardArticleEduksi } from "src/component/molecules/card/article/edukasi";
-import { ArticleService } from 'src/service/article/article.service';
+import { Button, ButtonProps } from "src/component/ui/button";
+import { TooltipAnchor } from "src/component/molecules/tooltip/achor";
+import { useArticleSlice } from 'src/component/context/use-ctx';
 import { cn } from "src/util";
 
 export const TitleCardListArticleEdukasi = ({ children, className }: { className?: string } & React.PropsWithChildren) => (
@@ -9,21 +11,29 @@ export const TitleCardListArticleEdukasi = ({ children, className }: { className
     {children}
   </h2>)
 
-export function CardListArticleEdukasi({ className }: { className?: string }) {
-  const articles = [1];
+const SeeMore = ({ className, ...props }: ButtonProps) => (
+  <Button className={cn('', className)}
+    variant="blue"
+    {...props}>
+    Lihat Lainya
+  </Button>)
 
-  if (articles.length) return (
-    <ul className={cn("flex flex-wrap justify-center", className)}>{
-      [1].map((v, key) => (
+export function CardListArticleEdukasi({ className }: { className?: string }) {
+  const articles = useArticleSlice(3);
+
+  if (!articles.length) return null;
+  return (
+    <ul className={cn("relative flex flex-wrap justify-center", className)}>{
+      articles.map((v, key) => (
         <CardArticleEduksi key={key}
-          values={{
-            id: "id",
-            author_id: "Sekhudin",
-            title: "ini artikel pertama saya",
-            article: "ini adalah article pertama, isis artikel",
-            image: "/uploads/articles/-Nlz4Dxnt9iXyaf8dGgD.jpg",
-          }} />
+          className="m-4"
+          values={v} />
       ))}
+      
+      <TooltipAnchor className="absolute -bottom-12 hover:bg-transparent p-0"
+        tooltip="Artikel lainya"
+        href="/">
+        <SeeMore />
+      </TooltipAnchor>
     </ul>)
-  return "loading";
 }

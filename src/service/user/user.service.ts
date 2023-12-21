@@ -1,12 +1,11 @@
 import { onAuthStateChanged, User as AuthUser, NextOrObserver } from "firebase/auth";
-import { DataSnapshot, onValue, off, } from 'firebase/database';
-import { DatabaseService, type User, ErrorCB } from 'src/database/database';
+import { onValue, off, } from 'firebase/database';
+import { DatabaseService, type User, Snapshot, ErrorCB } from 'src/database/database';
 import { BadRequestException } from 'src/util/exception/catch';
 import { UserDto } from './user.dto';
 
-export type Snapshot = DataSnapshot;
-export type CurrentUser = AuthUser;
-export { User };
+type CurrentUser = AuthUser;
+export type { User, CurrentUser, Snapshot, ErrorCB };
 
 const db = new DatabaseService();
 export namespace UserService {
@@ -29,9 +28,18 @@ export namespace UserService {
 
 export namespace UserOn {
   export const AuthStateChange = (next:NextOrObserver<CurrentUser>) => onAuthStateChanged(db.auth, next);
-  // export const Value =(cb: (ds:DataSnapshot)=>unknown)=> onValue(db.user.userRef(),cb);
+  export const Value =(cb: (ds:Snapshot)=>unknown, eCb?: ErrorCB)=> onValue(db.user.dbRef('users'),cb, eCb);
 }
 
 export namespace UserOff {
+  export const Value =(cb: (ds:Snapshot, prevId?: string | null)=>unknown) => off(db.cases.dbRef('users'), 'value', cb);
+}
 
+export namespace UserUtil {
+  export function returnData(ds:Snapshot): User.Expose[] | []{
+    const result = ds.toJSON();
+    if(!result) return [];
+    const articles = Object.values(result) as User.Expose[];
+    return articles;
+  }
 }
