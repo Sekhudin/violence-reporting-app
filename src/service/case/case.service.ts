@@ -1,12 +1,12 @@
 import { DataSnapshot, onValue, off, } from 'firebase/database';
-import { DatabaseService } from 'src/database/database';
-import { type Case } from 'src/database/collection/case.entity';
+import { DatabaseService, type Case, ErrorCB } from 'src/database/database';
 import { CaseDto } from './case.dto';
 
 export type Snapshot = DataSnapshot;
 export type { Case };
+
+const db = new DatabaseService();
 export namespace CaseService {
-  const db = new DatabaseService();
   export async function create({ imageFile, ...dto}: CaseDto.Create){
     return await db.cases.create(dto, imageFile);
   }
@@ -30,14 +30,21 @@ export namespace CaseService {
   export async function remove(id:string) {
     return await db.cases.removeId(id);
   }
+}
 
-  export function filterStatusCase(ds:DataSnapshot, status: Case.Status): Case.Expose[] | []{
+export namespace CaseOn {
+  export const Value =(cb: (ds:DataSnapshot)=>unknown, eCb?: ErrorCB)=> onValue(db.cases.dbRef('cases'),cb, eCb);
+}
+
+export namespace CaseOff {
+  export const Value =(cb: (ds:DataSnapshot, prevId?: string | null)=>unknown) => off(db.cases.dbRef('cases'), 'value', cb);
+}
+
+export namespace CaseUtil {
+  export function filterCase(ds:DataSnapshot, status: Case.Status): Case.Expose[] | []{
     const result = ds.toJSON();
     if(!result) return [];
     const cases = Object.values(result) as Case.Expose[];
     return cases.filter((cs) => cs.status === status);
   }
-
-  export const onCaseValue =(callback: (ds:DataSnapshot)=>unknown)=> onValue(db.cases.ref(),callback);
-  export const offValue =(callback: (ds:DataSnapshot, prevChildName?: string | null)=>unknown) => off(db.cases.ref(), 'value', callback)
 }

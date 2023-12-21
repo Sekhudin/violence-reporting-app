@@ -1,8 +1,13 @@
-import { LinksImageProps } from "src/component/molecules/links/image";
 import { Icon2 } from "src/component/static-file/icon2";
 
 export namespace PlatformConfig {
-  export const socialMedia: LinksImageProps['linkList'] = [
+  type PlatFormLink = {
+    title: string;
+    src: typeof Icon2.facebook;
+    href?:string;
+  }
+  
+  export const socialMedia: PlatFormLink[] = [
     {
       title: "@lawan.id.batam",
       src: Icon2.instagram,
@@ -25,7 +30,7 @@ export namespace PlatformConfig {
     }
   ]
 
-  export const downloadLinks: LinksImageProps['linkList'] = [
+  export const downloadLinks: PlatFormLink[] = [
     {
       title: "Lawan id",
       src: Icon2.googlePlay,

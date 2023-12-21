@@ -23,7 +23,7 @@ export function useFormCaseCreate(): UseForm<CaseDto.Create> {
     setDisabled(true);
     const result = await CaseService.create(values);
     setDisabled(false);
-    form.reset();
+    form.reset({});
     toast(HookForm.successMessage("Aduan berhasil dikirim"));
     return result;
    } catch (error:any) {

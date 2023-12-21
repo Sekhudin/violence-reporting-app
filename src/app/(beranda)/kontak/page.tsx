@@ -1,10 +1,10 @@
-import { LinksImage } from 'src/component/molecules/links/image';
-import { ContactsMap } from 'src/component/molecules/contacts/map';
+import { ContactsMap } from 'src/component/atoms/contacts/map';
+import { AppSocialMedia } from 'src/component/molecules/special/app-social-media';
 import { Constant } from './page.constant';
 
 export default function Page() {
   return (
-    <main className='min-h-screen max-w-[100vw] overflow-x-hidden relative flex flex-col items-center bg-white pb-24'>
+    <>
       <section className="py-5 flex flex-col px-12 lg:px-24 xl:px-32 2xl:px-44">
         <h2 className="text-center text-lg md:text-2xl lg:text-3xl
           md:px-12 lg:px-24 2xl:px-56">
@@ -16,13 +16,8 @@ export default function Page() {
           <h2 className="text-center font-semibold text-lg md:text-2xl mb-4">
             Kunjungi Kami di:
           </h2>
-          <LinksImage
-            withLabel={true}
-            className='grid grid-cols-2 justify-items-center gap-4 lg:gap-0 lg:flex lg:flex-wrap lg:space-x-4'
-            itemsClassName='flex flex-col items-center group'
-            imageClassName='w-12 lg:w-14 group-hover:scale-90 duration-500'
-            labelClassName='text-sm lg:text-base'
-            linkList={Constant.socialMedia} />
+          <AppSocialMedia withLabel
+            className='grid grid-cols-2 grid-rows-2 md:grid-cols-4 md:grid-rows-1 gap-4 md:gap-6' />
         </div>
       </section>
 
@@ -36,6 +31,6 @@ export default function Page() {
           itemClassName='m-4 md:m-6'
           contactList={Constant.dummyContacts} />
       </section>
-    </main>
+    </>
   )
 }

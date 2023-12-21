@@ -15,6 +15,7 @@ export function DialogArticleCreate({
   ...props
 }: DialogArticleCreateProps) {
   const [open, setOpen] = React.useState<boolean>(false);
+  IntersectionObserver
 
   return (
     <Dialog
@@ -25,7 +26,7 @@ export function DialogArticleCreate({
         {children}
       </DialogTrigger>
       <DialogContent
-        className={cn('bg-white rounded-xl w-11/12 md:max-w-full xl:max-w-6xl', className)}
+        className={cn('h-full w-full', className)}
         onPointerDownOutside={(e) => e.preventDefault()}
         onCloseAutoFocus={onClose}>
         <DialogHeader className='flex-col items-center text-center mt-4'>
@@ -35,8 +36,9 @@ export function DialogArticleCreate({
           </DialogDescription>
         </DialogHeader>
         <FormArticleCreate
-          itemClassName='my-4'
-          submitClassName='mt-4'
+          itemClassName='px-4'
+          submitClassName='absolute z-10 bottom-0 left-0'
+          forceMsgBox
           rows={18}
           {...props} />
       </DialogContent>

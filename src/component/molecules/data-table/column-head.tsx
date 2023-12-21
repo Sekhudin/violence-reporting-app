@@ -1,4 +1,3 @@
-"use client"
 import React from "react";
 import { ArrowUpDown } from "lucide-react";
 import { HeaderContext } from "@tanstack/react-table";
@@ -18,7 +17,8 @@ function OrderButton<DT extends Record<string, any>, DV = unknown>({ ctx, childr
 
   return (
     <Button
-      className={cn("hover:bg-transparent hover:opacity-90 hover:text-white", className)}
+      className={cn("hover:bg-transparent hover:opacity-90 hover:text-white",
+        className)}
       variant="ghost"
       onClick={clickHandler}>
       {children}
@@ -37,10 +37,7 @@ export function ColumnHead<DT extends Record<string, any>, DV = unknown>({
   switch (headerType) {
     case "order":
       return (
-        <OrderButton
-          className={cn("", className)}
-          ctx={ctx}
-          {...props}>
+        <OrderButton ctx={ctx} className={cn("", className)} {...props}>
           {header}
         </OrderButton>
       )

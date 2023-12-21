@@ -23,7 +23,7 @@ export function useFormUserLogin():UseForm<UserDto.Login>{
    try {
     setDisabled(true);
     const result = await UserService.signInEmailPwd(values);
-    form.reset();
+    form.reset({});
     router.push("/dashboard");
     setDisabled(false);
     toast(HookForm.templateMessage('login', result.values.name));

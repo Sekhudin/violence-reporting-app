@@ -29,9 +29,11 @@ import {
 import { BadRequestException, ForbiddenException, InternalServerErrorException, UnAuthorizedException } from "src/util/exception/catch";
 import { User } from './user.entity';
 import { Firebase } from './_type'
+import { ApiBase } from './_api';
 
-export class DatabaseCollection implements Firebase.Collection.Base {
+export class DatabaseCollection extends ApiBase implements Firebase.Collection.Base {
   constructor(config: FirebaseOptions){
+    super();
     this._app = initializeApp(config);
     this._auth = getAuth(this._app);
     this._db = getDatabase(this._app);
@@ -51,10 +53,78 @@ export class DatabaseCollection implements Firebase.Collection.Base {
   private readonly cases!: DatabaseReference;
   private readonly users!: DatabaseReference;
 
-  private refTo: Firebase.Functions.CollectionReference = (collectionName)=> {
-    return ref(this._db, collectionName)
+  dbRef: Firebase.Functions.DBRef<Firebase.Collection.Name | 'db'> = (type, path) => {
+    if (type === 'db'){
+      const db = ref(this._db);
+      if(!path) return db;
+      return child(db, path);
+    }
+    const collection = this.refTo(type);
+    if(!path) return collection;
+    return child(collection, path);
+  }
+  
+  storageRef(path?: string | undefined): StorageReference {
+    if(!path) return sgRef(this.storage);
+    return sgRef(this.storage, path);
   }
 
+  getAuth(): FirebaseAuth { return this._auth; }
+  async viewFile(fullpath:string): Promise<string> {
+    const result = await getDownloadURL(this.storageRef(fullpath));
+    return result;
+  }
+
+    /**
+   * @description Function Utility before saving, upload data, etc
+   */
+    protected getId(collectionName: Firebase.Collection.Name): string {
+        let document: ThenableReference | null = null;
+        switch (collectionName) {
+          case 'articles':
+            document = push(this.articles, '/');
+            break;
+          case 'cases':
+            document = push(this.cases, '/');
+            break;
+          case 'users':
+            throw new InternalServerErrorException("canot generate id");
+        }
+      if(!document || !document.key) throw new InternalServerErrorException("failed to generate id");
+      return document.key;
+    }
+  
+    protected async uploadFile(file: File | null, fullpath: string): Promise<UploadResult> {
+      if(!file) throw new BadRequestException("failed, empty file");
+      const result = await uploadBytes(this.storageRef(fullpath), file);
+      return result;
+    }
+  
+    /**
+     * @description Database References Utility Functions
+     */
+    private refTo: Firebase.Functions.CollectionReference = (collectionName)=> {
+      return ref(this._db, collectionName)
+    }
+  
+    protected articleRef(path?: string): DatabaseReference {
+      if(!path) return this.articles;
+      return child(this.articles, path);
+    }
+  
+    protected caseRef(path?: string): DatabaseReference {
+      if(!path) return this.cases;
+      return child(this.cases, path);
+    }
+  
+    protected userRef(path?: string): DatabaseReference {
+      if(!path) return this.users;
+      return child(this.users, path);
+    }
+
+  /**
+   * @description Autentication Functions
+   */
   protected async signUpAccount(email:string, password:string): Promise<Record<'id' | 'hashedPassword', string>>{
     const { user } = await createUserWithEmailAndPassword(this._auth, email, password);
     const id = user.uid;
@@ -83,70 +153,21 @@ export class DatabaseCollection implements Firebase.Collection.Base {
     return uid;
   }
 
-  getAuth(): FirebaseAuth { return this._auth; }
-  getId(collectionName: Firebase.Collection.Name): string {
-      let document: ThenableReference | null = null;
-      switch (collectionName) {
-        case 'articles':
-          document = push(this.articles, '/');
-          break;
-        case 'cases':
-          document = push(this.cases, '/');
-          break;
-        case 'users':
-          throw new InternalServerErrorException("canot generate id");
-      }
-    if(!document || !document.key) throw new InternalServerErrorException("failed to generate id");
-    return document.key;
-  }
-
-  async uploadFile(file: File | null, fullpath: string): Promise<UploadResult> {
-    if(!file) throw new BadRequestException("failed, empty file");
-    const result = await uploadBytes(this.storageRef(fullpath), file);
-    return result;
-  }
-
-  async viewFile(fullpath:string): Promise<string> {
-    const result = await getDownloadURL(this.storageRef(fullpath));
-    return result;
-  }
-
-  storageRef(path?: string | undefined): StorageReference {
-    if(!path) return sgRef(this.storage);
-    return sgRef(this.storage, path);
-  }
-
-  createRef(ref: DatabaseReference, path: string): DatabaseReference {
-    return child(ref, path);
-  }
-
-  articleRef(path?: string): DatabaseReference {
-    if(!path) return this.articles;
-    return child(this.articles, path);
-  }
-
-  caseRef(path?: string): DatabaseReference {
-    if(!path) return this.cases;
-    return child(this.cases, path);
-  }
-
-  userRef(path?: string): DatabaseReference {
-    if(!path) return this.users;
-    return child(this.users, path);
-  }
-
-  WithUser(): FirebaseUser {
+  /**
+   * @description Function Protection Service (BY USER ROLE)
+   */
+  protected WithUser(): FirebaseUser {
     const currentUser = this._auth.currentUser;
     if(!currentUser) throw new ForbiddenException();
     return currentUser;
   }
 
-  IsUser(): boolean {
+  protected IsUser(): boolean {
     this.WithUser();
     return true;
   }
 
-  async WithSuperAdmin(): Promise<User.Expose>{
+  protected async WithSuperAdmin(): Promise<User.Expose>{
     const { uid } = this.WithUser()
     const q = query(this.userRef(uid));
     const result = await get(q);
@@ -156,7 +177,7 @@ export class DatabaseCollection implements Firebase.Collection.Base {
     return expose;
   }
 
-  async IsSuperAdmin(): Promise<boolean> {
+  protected async IsSuperAdmin(): Promise<boolean> {
     const user = await this.WithSuperAdmin();
     const isSuperAdmin: boolean = user.role.includes('super admin');
     if(!isSuperAdmin) throw new UnAuthorizedException();
@@ -164,20 +185,3 @@ export class DatabaseCollection implements Firebase.Collection.Base {
   }
 
 }
-
-// protected async apiUploadImage(file: File, fullpath:string){
-//   const form = new FormData();
-//   form.append('image', file);
-//   form.append('fullpath', fullpath);
-//   try {
-//     const request = await fetch("/api", {
-//       method: "post",
-//       body: form
-//     })
-//     const result = await request.json() as Type.ResApiRoute;
-//     if(!this.successCode.includes(result.code)) throw new InternalServerErrorException("Gambar gagal diupload");
-//     return result;
-//   } catch (error) {
-//     throw new InternalServerErrorException()
-//   }
-// }

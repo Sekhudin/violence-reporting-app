@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from "src/component/ui/dropdown-menu";
-import { DialogCasePdfIncoming } from 'src/component/organisms/dialog/case/pdf-incoming';
+import { DialogCasePdf } from 'src/component/organisms/dialog/case/pdf';
 import { Case } from 'src/service/case/case.service';
 import { BaseCaseActionProps } from './type';
 
@@ -43,7 +43,7 @@ export function ActionFinishedCase<DT extends Case.Expose, DV = unknown>({
           <DropdownMenuItem
             className="cursor-pointer p-0"
             onSelect={(e) => e.preventDefault()}>
-            <DialogCasePdfIncoming
+            <DialogCasePdf
               values={ctx.row.original}
               onClose={closeHandler} />
           </DropdownMenuItem>

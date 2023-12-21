@@ -8,7 +8,7 @@ import {
   DataTableHeader,
   DataTableSearchbox,
   DataTableNextPrev
-} from 'src/component/molecules/data-table/table';
+} from 'src/component/molecules/data-table';
 import {
   ColumnFiltersState,
   SortingState,
@@ -21,7 +21,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { ScrollArea, ScrollBar } from 'src/component/ui/scroll-area';
-import { useCaseFilterContext, CaseDetail, CaseStatus } from 'src/component/context/case.context';
+import { useCaseFilter, CaseDetail, CaseStatus } from 'src/component/context/use-ctx';
 import { cn, FunStr } from "src/util";
 import { getColumns } from './column';
 
@@ -46,7 +46,7 @@ export function DataTableCases({
   const [rowSelection, setRowSelection] = React.useState({});
   const [pagination, setPagination] = React.useState<PaginationState>({ pageSize, pageIndex: 0 });
 
-  const { data, isEmpty } = useCaseFilterContext(status);
+  const { data, isEmpty } = useCaseFilter(status);
   const columns = getColumns({ status });
   const table = useReactTable({
     data,

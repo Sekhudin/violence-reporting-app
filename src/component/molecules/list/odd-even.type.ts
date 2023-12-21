@@ -1,5 +1,3 @@
-import { ListOddEven } from "./odd-even";
-
 export namespace Props {
   type Text = {
     text: string;

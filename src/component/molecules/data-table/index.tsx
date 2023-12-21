@@ -1,10 +1,10 @@
+import { Table as DataTable } from "src/component/ui/table";
 import { ColumnDef } from '@tanstack/react-table';
+import { cn } from 'src/util';
 import { ColumnHead } from './column-head';
 import { ColumnCell } from './column-cell';
 import { ColumnProps, ColumnExtraDef } from './type';
-import { cn } from 'src/util';
 
-export { ColumnHead, ColumnCell };
 export function column<DT extends Record<string, any>, DV = unknown>({
   accessorKey,
   header,
@@ -33,3 +33,11 @@ export function column<DT extends Record<string, any>, DV = unknown>({
   }
   return column as ColumnDef<DT, DV>
 }
+
+export { DataTable };
+export * from './comp-column-selector';
+export * from './comp-search-box';
+export * from './comp-next-prev';
+export * from './comp-table-empty';
+export * from './comp-table-header';
+export * from './comp-table-body';

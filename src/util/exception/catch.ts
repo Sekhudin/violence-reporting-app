@@ -4,6 +4,7 @@ import { FunStr } from 'src/util/str';
 import { Exception } from './type';
 export * from './http.exception';
 
+export type HttpErrorDetail = Exception.HttpErrorDetail;
 export function catchError(error: any): Exception.Catch {
   let title: string = "error";
   let description: string = "internal server error";
@@ -29,7 +30,8 @@ export function catchError(error: any): Exception.Catch {
       variant: "error",
       title: FunStr.capitalFirst(title),
       description: FunStr.capitalFirst(description)
-    }
+    },
+    errorDetail: { code: 500, message: title, description }
   }
 
 }

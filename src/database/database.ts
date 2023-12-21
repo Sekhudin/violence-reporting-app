@@ -3,7 +3,9 @@ import { FirebaseConfig } from 'src/config/firebase';
 import { ArticleCollectionService } from './collection/article';
 import { CaseCollectionService } from './collection/case';
 import { UserCollectionService } from './collection/user';
+export * from './collection/_entity';
 
+export type ErrorCB = (err: Error ) => unknown;
 export class DatabaseService {
   readonly article!: ArticleCollectionService;
   readonly cases!: CaseCollectionService;

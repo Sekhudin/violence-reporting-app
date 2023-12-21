@@ -1,11 +1,9 @@
-"use client"
-import { useEffect } from "react";
-import { CardBasic } from "src/component/molecules/card/basic";
+import { CardBasic } from "src/component/atoms/card/basic";
 
 export default function Page() {
 
   return (
-    <main className="h-full flex flex-col space-y-2 lg:space-y-4">
+    <section className="h-full flex flex-col space-y-2 lg:space-y-4">
       <CardBasic>
         Sekhudin
       </CardBasic>
@@ -27,6 +25,6 @@ export default function Page() {
       <CardBasic className="grow h-full lg:rounded-b-none">
         Sekhudin
       </CardBasic>
-    </main>
+    </section>
   )
 }

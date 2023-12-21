@@ -41,15 +41,16 @@ export const ItemTextArea = React.forwardRef<HTMLDivElement, ItemTextAreaProps>(
       </FormControl>
 
       {description && (<FormDescription className={cn(`${error && "hidden"} font-light`,
-        desClassName)}>
+        desClassName, 'text-xs md:text-sm pb-1')}>
         {description}
       </FormDescription>)}
 
-      {forceMsgBox && !error && (<FormDescription className={cn(`invisible font-light`, `${desClassName} invisible`)}>
+      {forceMsgBox && !error && !description && (<FormDescription className={cn(`invisible font-light`,
+        `${desClassName} invisible`, 'text-xs md:text-sm pb-1')}>
         forceLabelBox
       </FormDescription>)}
 
-      <FormMessage className={cn("font-light", msgClassName)} />
+      <FormMessage className={cn("font-light", msgClassName, 'text-xs md:text-sm pb-1')} />
     </FormItem>
   )
 })

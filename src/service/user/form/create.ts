@@ -21,7 +21,7 @@ export function useFormUserCreate():UseForm<UserDto.Create>{
    try {
     setDisabled(true);
     const result = await UserService.creaateAdmin(values);
-    form.reset();
+    form.reset({});
     setDisabled(false);
     toast(HookForm.successMessage("Admin baru berhasil ditambahkan"))
     return result;

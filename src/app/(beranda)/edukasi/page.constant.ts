@@ -1,7 +1,7 @@
 import type { ListOddEvenProps } from 'src/component/molecules/list/odd-even';
 import type { ListImageProps } from 'src/component/molecules/list/image';
 import type { ListAccordionProps } from 'src/component/molecules/list/accordion';
-import type { CardArticleProps } from 'src/component/molecules/card/article';
+import type { CardArticleProps } from 'src/component/atoms/card/article';
 import { Article } from 'src/component/static-file/article';
 import { Illus } from 'src/component/static-file/illustration';
 

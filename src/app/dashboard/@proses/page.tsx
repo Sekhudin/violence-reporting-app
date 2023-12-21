@@ -1,11 +1,11 @@
-import { CardBasic } from "src/component/molecules/card/basic";
+import { CardBasic } from "src/component/atoms/card/basic";
 import { DataTableCases } from "src/component/organisms/data-table/case";
-import { CaseContextProvider } from 'src/component/context/case.context';
+import { CaseProvider } from 'src/component/context/provider';
 
 export default async function Page() {
   return (
-    <CaseContextProvider>
-      <main className="h-full flex flex-col items-center space-y-2 lg:space-y-4">
+    <CaseProvider>
+      <section className="h-full flex flex-col items-center space-y-2 lg:space-y-4">
         <CardBasic className="grow h-full lg:rounded-b-none w-fit md:w-full">
           <DataTableCases
             className="max-w-[83vw] sm:max-w-[90vw] md:max-w-[90vw]
@@ -15,7 +15,7 @@ export default async function Page() {
             subtitle="case of violence is being processed"
             pageSize={10} />
         </CardBasic>
-      </main>
-    </CaseContextProvider>
+      </section>
+    </CaseProvider>
   )
 }

@@ -1,5 +1,4 @@
 "use client"
-import React from 'react';
 import { Form, FormField } from "src/component/ui/form";
 import { useFormArticleCreate } from "src/service/article/form/create";
 import { ScrollArea } from 'src/component/ui/scroll-area';
@@ -16,69 +15,79 @@ export type FormArticleCreateProps = {
   rows?: number
 }
 
-export function FormArticleCreate({ className, itemClassName, submitClassName, forceMsgBox, rows }: FormArticleCreateProps) {
+export function FormArticleCreate({
+  className,
+  itemClassName,
+  submitClassName,
+  forceMsgBox,
+  rows
+}: FormArticleCreateProps) {
   const [form, onSubmit, onValidationError, disable,] = useFormArticleCreate();
 
   return (
-    <>
+    <ScrollArea>
       <Form {...form}>
         <form
           method="POST"
           className={cn('flex flex-col', className)}
           onSubmit={form.handleSubmit(onSubmit, onValidationError)}>
-          <ScrollArea className='relative flex flex-col max-h-[70vh]'>
-            <FormField
-              name="title"
-              control={form.control}
-              render={({ field }) => (
+          <FormField
+            name="title"
+            control={form.control}
+            render={({ field }) => (
+              <ItemInput
+                itemClassName={cn('', itemClassName)}
+                label="Judul Artikel"
+                placeholder="judul artikel"
+                forceMsgBox={forceMsgBox}
+                {...field} />
+            )} />
+
+          <FormField
+            name="article"
+            control={form.control}
+            render={({ field }) => (
+              <ItemTextArea
+                forceMsgBox={forceMsgBox}
+                itemClassName={cn('', itemClassName)}
+                desClassName=""
+                rows={rows}
+                label="Isi Artikel"
+                placeholder="Type here..."
+                {...field} />
+            )} />
+
+          <FormField
+            name="image"
+            control={form.control}
+            render={({ field }) => {
+              const { onChange, ...inputProps } = field;
+              return (
                 <ItemInput
-                  itemClassName={cn('px-4', itemClassName)}
-                  label="Judul Artikel"
-                  placeholder="judul artikel"
-                  {...field} />
-              )} />
-
-            <FormField
-              name="article"
-              control={form.control}
-              render={({ field }) => (
-                <ItemTextArea
-                  forceMsgBox={forceMsgBox}
-                  itemClassName={cn('px-4', itemClassName)}
-                  desClassName=""
-                  rows={rows}
-                  label="Isi Artikel"
-                  placeholder="Type here..."
-                  {...field} />
-              )} />
-
-            <FormField
-              name="image"
-              control={form.control}
-              render={({ field }) => {
-                const { onChange, ...inputProps } = field;
-                return (
-                  <ItemInput
-                    className={`file:text-cyan-800 file:hover:cursor-pointer
+                  className={`file:text-cyan-800 file:hover:cursor-pointer
                     file:font-semibold font-light bg-cyan-800/10`}
-                    itemClassName={cn('px-4', itemClassName)}
-                    type="file"
-                    accept="image/jpeg, image/jpg, image/png"
-                    label="Gambar Illustrasi"
-                    placeholder="jika ada"
-                    forceMsgBox={forceMsgBox}
-                    onChange={(e) => {
-                      field.onChange(e);
-                      const image = FunComponent.getImageFile(e);
-                      form.setValue('imageFile', image)
-                    }}
-                    {...inputProps} />
-                )
-              }} />
-          </ScrollArea>
-
+                  itemClassName={cn('', itemClassName)}
+                  type="file"
+                  accept="image/jpeg, image/jpg, image/png"
+                  label="Gambar Illustrasi"
+                  placeholder="jika ada"
+                  forceMsgBox={forceMsgBox}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    const image = FunComponent.getImageFile(e);
+                    form.setValue('imageFile', image)
+                  }}
+                  {...inputProps} />
+              )
+            }} />
+          {submitClassName && submitClassName.includes("absolute") && (
+            <>
+              <div className="h-16 w-full absolute bottom-0 z-10 bg-white" />
+              <div className="h-16 w-full bg-white" />
+            </>
+          )}
           <Button
-            className={cn('grow', submitClassName)}
+            className={cn('', submitClassName)}
             variant="blue"
             type="submit"
             disabled={disable} >
@@ -86,6 +95,6 @@ export function FormArticleCreate({ className, itemClassName, submitClassName, f
           </Button>
         </form>
       </Form>
-    </>
+    </ScrollArea>
   )
 }

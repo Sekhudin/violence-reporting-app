@@ -1,6 +1,5 @@
-import { Auth as FirebaseAuth, User as AuthUser } from "firebase/auth";
 import { DataSnapshot, DatabaseReference } from "firebase/database";
-import { StorageReference, UploadResult, ref } from "firebase/storage";
+import { StorageReference } from "firebase/storage";
 
 export namespace Firebase {
   export namespace Case {
@@ -19,22 +18,7 @@ export namespace Firebase {
     export type SnapShoot = DataSnapshot;
 
     export interface Base {
-      createRef(ref: DatabaseReference, path:string): DatabaseReference;
-      articleRef(path?: string): DatabaseReference;
-      caseRef(path?: string): DatabaseReference;
-      userRef(path?: string): DatabaseReference;
       storageRef(path?:string): StorageReference;
-
-      uploadFile(file: File | null, fullpath:string): Promise<UploadResult>;
-      viewFile(fullpath:string):Promise<string>;
-
-      getId(collectionName: Name): string;
-      getAuth(): FirebaseAuth;
-
-      WithUser(): AuthUser;
-      IsUser(): boolean;
-      WithSuperAdmin(): Promise<any>;
-      IsSuperAdmin(): Promise<boolean>;
     }
 
     export interface Service {
@@ -52,6 +36,8 @@ export namespace Firebase {
   }
 
   export namespace Functions {
+   export type DBRef<T extends string>= ( type:T, path?: string ) => DatabaseReference;
+
     export type CollectionReference = (collectionName: Collection.Name)=> DatabaseReference;
     export type DocumentRefrence = (db: DatabaseReference, path:string)=> DatabaseReference;
     export type Transformer<T extends Record<string, any>> = (snapShoot: DataSnapshot) => Collection.Data<T>;
@@ -59,10 +45,5 @@ export namespace Firebase {
     export type GetExtension = (file:File)=>string;
     export type RenameFile = (file: File, newName:string) => string;
     export type SavePath = (file: File, folder: Folder.Upload, name: string)=> { fullpath: string, folder: string, filename: string }
-  }
-
-  export namespace Observer {
-    export type Callback = (snapshot: DataSnapshot) => unknown;
-    export type ErrorCallback = (e: Error) => unknown;
   }
 }

@@ -10,10 +10,6 @@ export class CaseCollectionService extends DatabaseCollection implements Firebas
     super(config);
   }
 
-  ref(id?:string){
-    return this.caseRef(id);
-  }
-
   async create(dto: Case.Create, imageFile: File | null): Promise<Firebase.Collection.Data<Case.Expose>> {
     const id = this.getId('cases');
 

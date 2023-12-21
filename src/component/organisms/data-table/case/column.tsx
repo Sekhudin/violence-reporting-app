@@ -1,4 +1,4 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { ColumnDef } from '@tanstack/react-table';
 import { column } from 'src/component/molecules/data-table';
 import { Case } from 'src/service/case/case.service';
 import { CaseDropdownAction } from './action';

@@ -23,6 +23,6 @@
       "public/*": ["./public/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/component/molecules/card/image.tsx", "src/component/molecules/form-item/combo-box.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/component/atoms/card/image.tsx", "src/component/molecules/form-item/combo-box.tsx"],
   "exclude": ["node_modules"],
 }

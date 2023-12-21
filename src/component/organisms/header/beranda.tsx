@@ -1,34 +1,25 @@
-"use client"
 import React from 'react';
 import Image from 'next/image';
-import { useMotionValueEvent, useScroll } from 'framer-motion';
-import { NavigationMenuBeranda } from 'src/component/organisms/navigation-menu/beranda';
+import { NavMenuBeranda } from 'src/component/molecules/nav-menu/beranda';
 import { PngLogo } from 'src/component/static-file/logo';
+import { cn } from 'src/util';
 
-export function HeaderBeranda() {
-  const { scrollY } = useScroll()
-  const [minScroll, setMinScroll] = React.useState<boolean>(false);
+export function HeaderBerandaGap({ className }: { className?: string }) {
+  return (<div className={cn('relative w-full bg-white h-[60px] lg:h-[70px]', className)} />)
+}
 
-  const styleOnScolling = (axisY: number) => {
-    if (axisY > 30) {
-      setMinScroll(true)
-    } else {
-      setMinScroll(false)
-    }
-  }
-
-  useMotionValueEvent(scrollY, "change", styleOnScolling)
+export function HeaderBeranda({ className }: { className?: string }) {
   return (
-    <header className={`sticky top-0 z-50 ${minScroll && 'drop-shadow-md'}`}>
-      <div className='flex items-center justify-between px-12 py-2 bg-white'>
+    <div className={cn(`bg-white/20 backdrop-blur-md`, className)}>
+      <div className='h-[60px] lg:h-[70px] flex items-center justify-between px-12'>
         <a href="/">
           <Image
             className='w-12 lg:w-14'
             src={PngLogo.large}
             alt="Logo" />
         </a>
-        <NavigationMenuBeranda />
+        <NavMenuBeranda />
       </div>
-    </header>
+    </div>
   )
 }

@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription } from 'src/component/ui/dialog';
 import { FormUserCreate, FormUserCreateProps } from 'src/component/organisms/form/user/create';
@@ -24,7 +25,7 @@ export function DialogUserCreate({
         {children}
       </DialogTrigger>
       <DialogContent
-        className={cn('w-11/12 max-w-md bg-white rounded-xl', className)}
+        className={cn(`w-full sm:max-w-lg h-[85vh]`, className)}
         onPointerDownOutside={(e) => e.preventDefault()}
         onCloseAutoFocus={onClose}>
         <DialogHeader className='flex-col items-center text-center mt-4'>
@@ -34,8 +35,9 @@ export function DialogUserCreate({
           </DialogDescription>
         </DialogHeader>
         <FormUserCreate
-          itemClassName='my-4'
-          submitClassName='mt-4'
+          itemClassName='px-4'
+          submitClassName='mt-4 mx-4'
+          forceMsgBox
           {...props} />
       </DialogContent>
     </Dialog>

@@ -6,37 +6,36 @@ import {
   TooltipTrigger,
 } from "src/component/ui/tooltip";
 import { cn } from "src/util";
-
-type Side = "top" | "right" | "bottom" | "left";
-type Align = "start" | "center" | "end";
-export type TooltipButtonProps = {
-  text: string;
-  position?: [Side, Align];
-  defaultOpen?: boolean;
-  contentClassName?: string;
-} & ButtonProps;
+import { getAlignSide } from './util';
+import { BaseTooltipProps } from './type';
 
 export function TooltipButton({
   children,
-  text,
+  tooltip,
   position,
-  contentClassName,
-  ...btnProps
-}: TooltipButtonProps) {
-  const side: Side = position?.[0] || 'left';
-  const align: Align = position?.[1] || 'start';
-
+  className,
+  tooltipClassName,
+  contentAsChild,
+  ...props
+}: BaseTooltipProps & ButtonProps) {
+  const { align, side } = getAlignSide(position)
   return (
     <TooltipProvider delayDuration={500}>
       <Tooltip defaultOpen={false}>
         <TooltipTrigger asChild>
-          <Button {...btnProps}>
+          <Button
+            className={cn('hover:bg-cyan-900/20 rounded-lg py-1 px-2', className)}
+            variant={"ghost"}
+            {...props}>
             {children}
           </Button>
         </TooltipTrigger>
 
-        <TooltipContent side={side} align={align}>
-          <p className={cn("", contentClassName)}>{text}</p>
+        <TooltipContent
+          asChild={contentAsChild}
+          side={side}
+          align={align}>
+          <p className={cn("text-sm font-light", tooltipClassName)}>{tooltip}</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>

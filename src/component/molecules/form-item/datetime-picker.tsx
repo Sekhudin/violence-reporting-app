@@ -3,10 +3,9 @@ import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns"
 import { Button } from "src/component/ui/button";
 import { Calendar, CalendarSingleProps } from "src/component/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "src/component/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger, PopoverClose } from "src/component/ui/popover";
 import { FormControl, FormDescription, FormItem, FormLabel, FormMessage, useFormField } from "src/component/ui/form";
 import { cn } from "src/util";
-import { PopoverClose } from "@radix-ui/react-popover";
 
 export type ItemDateTimePickerProps = CalendarSingleProps & {
   label?: string;
@@ -66,10 +65,8 @@ export const ItemDateTimePicker = React.forwardRef<HTMLDivElement, ItemDateTimeP
             components={{
               DayContent: ({ date }) =>
               (
-                <PopoverClose asChild>
-                  <div className={`w-full h-full flex justify-center items-center bg-transparent rounded-md`}>
-                    {format(date, 'dd')}
-                  </div>
+                <PopoverClose className={`w-full h-full flex justify-center items-center bg-transparent rounded-md`}>
+                  {format(date, 'dd')}
                 </PopoverClose>
               )
             }}
@@ -78,15 +75,16 @@ export const ItemDateTimePicker = React.forwardRef<HTMLDivElement, ItemDateTimeP
       </Popover>
 
       {description && (<FormDescription className={cn(`${error && "hidden"} font-light`,
-        desClassName)}>
+        desClassName, 'text-xs md:text-sm pb-1')}>
         {description}
       </FormDescription>)}
 
-      {forceMsgBox && !error && (<FormDescription className={cn(`invisible font-light`, `${desClassName} invisible`)}>
+      {forceMsgBox && !error && !description && (<FormDescription className={cn(`invisible font-light`,
+        `${desClassName} invisible`, 'text-xs md:text-sm pb-1')}>
         forceLabelBox
       </FormDescription>)}
 
-      <FormMessage className={cn("font-light", msgClassName)} />
+      <FormMessage className={cn("font-light", msgClassName, 'text-xs md:text-sm pb-1')} />
     </FormItem>
   )
 })

@@ -53,38 +53,44 @@ export const ItemPassword = React.forwardRef<HTMLDivElement, ItemPasswordProps>(
         {label}
       </FormLabel>)}
 
-      <div className={cn(`flex items-center w-full space-x-3 rounded-md border border-input bg-background text-sm ring-offset-background
-        disabled:cursor-not-allowed disabled:opacity-50 px-3 py-2 overflow-hidden ${focus && 'ring-2 ring-offset-2 ring-blue-500'}
+      <div className={cn(`flex items-center w-full space-x-3 rounded-md border
+        border-input bg-background text-sm ring-offset-background
+        disabled:cursor-not-allowed disabled:opacity-50 px-3 py-2
+        overflow-hidden ${focus && 'ring-2 ring-offset-2 ring-blue-500'}
         ${focus && error && 'ring-2 ring-offset-2 ring-pink-500'}`, className)}>
         <FormControl>
           <Input
             type={type}
             onFocus={blurFocus}
             onBlurCapture={blurFocus}
-            className={cn('h-fit p-0 m-0 border-none rounded-none ring-0 outline-none focus-visible:ring-0 shadow-none', inputClassName)}
+            className={cn(`h-fit p-0 m-0 border-none rounded-none ring-0 outline-none
+            shadow-none focus-visible:ring-0 focus-visible:ring-transparent
+            focus-visible:outline-none`, inputClassName)}
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="none"
             placeholder="email" {...props} />
         </FormControl>
 
-        <Toggle className={cn(`block w-fit h-fit p-0 m-0 rounded-none bg-transparent hover:bg-transparent
-          active:bg-transparent data-[state=on]:bg-transparent`, toggleClassName)}
+        <Toggle className={cn(`block w-fit h-fit p-0 m-0 rounded-none
+          bg-transparent hover:bg-transparent active:bg-transparent
+          data-[state=on]:bg-transparent`, toggleClassName)}
           onPressedChange={toggleHandler}>
           {type === 'password' ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
         </Toggle>
       </div>
 
       {description && (<FormDescription className={cn(`${error && "hidden"} font-light`,
-        desClassName)}>
+        desClassName, 'text-xs md:text-sm pb-1')}>
         {description}
       </FormDescription>)}
 
-      {forceMsgBox && !error && (<FormDescription className={cn(`invisible font-light`, `${desClassName} invisible`)}>
+      {forceMsgBox && !error && !description && (<FormDescription className={cn(`invisible font-light`,
+        `${desClassName} invisible`, 'text-xs md:text-sm pb-1')}>
         forceLabelBox
       </FormDescription>)}
-      
-      <FormMessage className={cn("font-light", msgClassName)} />
+
+      <FormMessage className={cn("font-light", msgClassName, 'text-xs md:text-sm pb-1')} />
     </FormItem>
   )
 })

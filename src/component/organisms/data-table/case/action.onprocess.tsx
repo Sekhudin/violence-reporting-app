@@ -11,8 +11,8 @@ import {
   DropdownMenuTrigger
 } from "src/component/ui/dropdown-menu";
 import { AlertActionCancel } from 'src/component/molecules/alert-dialog/action-cancel';
-import { Barierloader } from 'src/component/molecules/barier/loader';
-import { DialogCasePdfIncoming } from 'src/component/organisms/dialog/case/pdf-incoming';
+import { Barierloader } from 'src/component/atoms/barier/loader';
+import { DialogCasePdf } from 'src/component/organisms/dialog/case/pdf';
 import { CaseService, Case } from 'src/service/case/case.service';
 import { BaseCaseActionProps } from './type';
 
@@ -69,7 +69,7 @@ export function ActionOnProcessCase<DT extends Case.Expose, DV = unknown>({
           <DropdownMenuItem
             className="text-xs lg:text-sm font-light cursor-pointer p-0"
             onSelect={(e) => e.preventDefault()}>
-            <DialogCasePdfIncoming
+            <DialogCasePdf
               values={ctx.row.original}
               onClose={closeHandler} />
           </DropdownMenuItem>

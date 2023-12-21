@@ -1,13 +1,13 @@
 import Image from 'next/image'
-import { DialogUserLogin } from 'src/component/organisms/dialog/user/login';
 import { Button } from 'src/component/ui/button';
-import { Constant } from './page.constant';
+import { DialogUserLogin } from 'src/component/organisms/dialog/user/login';
+import { Police } from 'src/component/static-file/police'
 import css from './style.module.css';
 
 export default function Page() {
   return (
-    <main className='min-h-screen max-w-[100vw] overflow-x-hidden relative bg-white flex flex-col pb-24'>
-      <section className={`${css['section_1']} sticky top-0 flex flex-none justify-center items-center`}>
+    <>
+      <section className={`${css['section_1']} sticky top-[60px] flex flex-none justify-center items-center`}>
         <div className={`${css['container_section']} text-center`}>
           <h1>Kepolisian Republik Indonesia</h1>
           <DialogUserLogin forceMsgBox>
@@ -33,10 +33,10 @@ export default function Page() {
         <div className='flex-none flex justify-center lg:justify-start'>
           <Image
             className='object-cover w-[450px]'
-            src={Constant.illustrationImage}
+            src={Police.file03}
             alt="polsek-image" />
         </div>
       </section>
-    </main>
+    </>
   )
 }

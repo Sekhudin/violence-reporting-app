@@ -21,7 +21,7 @@ export function useFormArticleCreate():UseForm<ArticleDto.Create>{
    try {
     setDisabled(true);
     const article = await ArticleService.create(values);
-    form.reset();
+    form.reset({});
     toast(HookForm.successMessage("Artikel berhasil ditambahkan"));
     setDisabled(false);
     return article;
