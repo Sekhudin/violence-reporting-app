@@ -10,15 +10,14 @@ export const TitleCardListUserContact = ({ children, className }: { className?: 
   </h2>)
 
 export function CardListUserContact({ className }: { className?: string }) {
-  const users = useUserSlice(3);
+  const { slice, loading, error } = useUserSlice(3);
 
-  if (!users.length) return null;
   return (
-    <ul className={cn("relative flex flex-wrap justify-center", className)}>{
-      users.map((v, key) => (
+    <div className={cn("relative flex flex-wrap justify-center", className)}>{
+      slice.map((v, key) => (
         <CardUserContact key={key}
           className="m-4"
           values={v} />
       ))}
-    </ul>)
+    </div>)
 }

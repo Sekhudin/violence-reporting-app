@@ -14,23 +14,32 @@ type DictionaryMinWidth = Record<ScreenType, number>;
 type ScreenType = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
 type BaseUseScreen = (screen: ScreenType, defaultValue?: boolean) => [
   boolean | undefined,
-  React.Dispatch<React.SetStateAction<boolean | undefined>>,
+  (v:boolean)=> void,
 ];
 
-export const useMinScreen: BaseUseScreen = (screen, defaultValue) => {
-  const [isValidScreen, setIsValidScreen] = React.useState<boolean | undefined>(defaultValue);
-  const minWidth = minWidthDictionary[screen];
+type BaseUseScreenAs = ([type, valueIfTrue]: [ScreenType, boolean], defaultValue?: boolean) => [
+  boolean | undefined,
+  (v:boolean)=> void,
+];
+
+export const useMinScreenAs: BaseUseScreenAs = ([screenType, valueIfTrue], defaultValue) => {
+  const [result, setResult] = React.useState<boolean | undefined>(defaultValue);
+  const minWidth = minWidthDictionary[screenType];
 
   const screenHandler = React.useCallback(() => {
     const innerWidth = window.innerWidth;
-    if (innerWidth < minWidth) {
-      setIsValidScreen(false);
+    if (innerWidth >= minWidth) {
+      setResult(valueIfTrue);
     }
 
-    if (innerWidth >= minWidth) {
-      setIsValidScreen(true);
+    if (innerWidth < minWidth) {
+      setResult(!valueIfTrue);
     }
-  }, [minWidth])
+  }, [minWidth, valueIfTrue]);
+
+  const setValueHandler = React.useCallback((v: boolean)=> {
+    setResult(v);
+  }, []);
 
   React.useEffect(() => {
     window.addEventListener("resize", screenHandler);
@@ -38,23 +47,27 @@ export const useMinScreen: BaseUseScreen = (screen, defaultValue) => {
       window.removeEventListener("resize", screenHandler);
     }
   }, [screenHandler]);
-  return [isValidScreen, setIsValidScreen];
+  return [result, setValueHandler];
 }
 
-export const useMaxScreen: BaseUseScreen = (screen, defaultValue) => {
-  const [isValidScreen, setIsValidScreen] = React.useState<boolean | undefined>(defaultValue);
-  const maxWidth = minWidthDictionary[screen];
+export const useMaxScreenAs: BaseUseScreenAs = ([screenType, valueIfTrue], defaultValue) => {
+  const [result, setResult] = React.useState<boolean | undefined>(defaultValue);
+  const maxWidth = minWidthDictionary[screenType];
 
   const screenHandler = React.useCallback(() => {
     const innerWidth = window.innerWidth;
     if (innerWidth < maxWidth) {
-      setIsValidScreen(true);
+      setResult(valueIfTrue);
     }
 
     if (innerWidth >= maxWidth) {
-      setIsValidScreen(false);
+      setResult(!valueIfTrue);
     }
-  }, [maxWidth])
+  }, [maxWidth, valueIfTrue])
+
+  const setValueHandler = React.useCallback((v: boolean)=> {
+    setResult(v);
+  }, []);
 
   React.useEffect(() => {
     window.addEventListener("resize", screenHandler);
@@ -62,5 +75,5 @@ export const useMaxScreen: BaseUseScreen = (screen, defaultValue) => {
       window.removeEventListener("resize", screenHandler);
     }
   }, [screenHandler]);
-  return [isValidScreen, setIsValidScreen];
+  return [result, setValueHandler];
 }

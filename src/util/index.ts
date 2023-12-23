@@ -7,3 +7,9 @@ export * from './date';
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export namespace Vutil {
+  export function isEmptyList(v: unknown[]): boolean{
+    return v.length === 0;
+  }
+}

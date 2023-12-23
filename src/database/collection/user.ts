@@ -65,6 +65,12 @@ export class UserCollectionService extends DatabaseCollection {
     return Helper.transformAs<User.Expose>(result);
   }
 
+  async findUserById(id:string): Promise<Firebase.Collection.Data<User.Expose>>{
+    const q = query(this.userRef(id));
+    const result = await get(q);
+    return Helper.transform<User.Expose>(result);
+  }
+
   async update(dto: User.Update): Promise<Firebase.Collection.Data<User.Expose>> {
     const { uid } = this.WithUser();
     const clean = Helper.clean(dto);

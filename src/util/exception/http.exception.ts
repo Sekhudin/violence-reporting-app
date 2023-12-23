@@ -9,7 +9,7 @@ const HttpCode: Exception.HttpCode = {
   INTERNAL_SERVER_ERROR: { code: 500, message: "internal server error" }
 }
 
-export class HttpException implements Exception.HttpMessage {
+export class HttpException implements Exception.HttpException {
   readonly code!:number;
   readonly message!:string;
   readonly description!: string;

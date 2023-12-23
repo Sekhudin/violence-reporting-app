@@ -1,7 +1,6 @@
 import { onAuthStateChanged, User as AuthUser, NextOrObserver } from "firebase/auth";
 import { onValue, off, } from 'firebase/database';
-import { DatabaseService, type User, Snapshot, ErrorCB } from 'src/database/database';
-import { BadRequestException } from 'src/util/exception/catch';
+import { DatabaseService, type User, Snapshot, ErrorCB, PayloadFrom } from 'src/database/database';
 import { UserDto } from './user.dto';
 
 type CurrentUser = AuthUser;
@@ -14,16 +13,16 @@ export namespace UserService {
   }
 
   export async function creaateAdmin({ imageFile, ...dto}: UserDto.Create) {
-    if(!imageFile) throw new BadRequestException("Photo tidak ditemukan")
     return await db.user.create(dto, imageFile);
   }
 
   export async function createSuperAdmin({imageFile, ...dto}: UserDto.Create) {
-    db.user.dbRef('db');
     return await db.user.createSuperAdmin(dto, imageFile);
   }
 
-  export const onAuthStateChange = (next:NextOrObserver<CurrentUser>) => onAuthStateChanged(db.auth, next);
+  export async function findUserById(id:string) {
+    return await db.user.findUserById(id);
+  }
 }
 
 export namespace UserOn {
@@ -41,5 +40,10 @@ export namespace UserUtil {
     if(!result) return [];
     const articles = Object.values(result) as User.Expose[];
     return articles;
+  }
+
+  export function payload(dp: PayloadFrom<User.Expose>){
+    const { values } = dp;
+    return values;
   }
 }

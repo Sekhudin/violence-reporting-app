@@ -19,21 +19,21 @@ const SeeMore = ({ className, ...props }: ButtonProps) => (
   </Button>)
 
 export function CardListArticleEdukasi({ className }: { className?: string }) {
-  const articles = useArticleSlice(3);
+  const { slice, loading, error } = useArticleSlice(3);
 
-  if (!articles.length) return null;
+  if (!slice.length) return null;
   return (
-    <ul className={cn("relative flex flex-wrap justify-center", className)}>{
-      articles.map((v, key) => (
+    <div className={cn("relative flex flex-wrap justify-center", className)}>{
+      slice.map((v, key) => (
         <CardArticleEduksi key={key}
           className="m-4"
           values={v} />
       ))}
-      
+
       <TooltipAnchor className="absolute -bottom-12 hover:bg-transparent p-0"
         tooltip="Artikel lainya"
         href="/">
         <SeeMore />
       </TooltipAnchor>
-    </ul>)
+    </div>)
 }

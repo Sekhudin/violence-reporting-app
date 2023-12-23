@@ -5,25 +5,25 @@ export default function Page() {
   return (
     <section className="h-full flex flex-col space-y-2 lg:space-y-4">
       <PlainCard>
-        Sekhudin
+        -
       </PlainCard>
 
       <section className="flex space-x-2 lg:space-x-4">
         <PlainCard className="grow">
-          Sekhudin
+          -
         </PlainCard>
 
         <PlainCard className="grow">
-          Sekhudin
+          -
         </PlainCard>
 
         <PlainCard className="grow">
-          Sekhudin
+          -
         </PlainCard>
       </section>
 
       <PlainCard className="grow h-full lg:rounded-b-none">
-        Sekhudin
+        -
       </PlainCard>
     </section>
   )

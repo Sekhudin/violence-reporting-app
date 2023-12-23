@@ -10,8 +10,8 @@ export function HeaderBerandaGap({ className }: { className?: string }) {
 
 export function HeaderBeranda({ className }: { className?: string }) {
   return (
-    <div className={cn(`bg-white/20 backdrop-blur-md`, className)}>
-      <div className='h-[60px] lg:h-[70px] flex items-center justify-between px-12'>
+    <div className={cn(`bg-white backdrop-blur-md px-12`, className)}>
+      <div className='h-[60px] lg:h-[70px] flex items-center justify-between'>
         <a href="/">
           <Image
             className='w-12 lg:w-14'

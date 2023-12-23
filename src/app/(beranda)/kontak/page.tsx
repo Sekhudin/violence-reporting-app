@@ -16,13 +16,14 @@ export default function Page() {
           <h2 className="text-center font-semibold text-lg md:text-2xl mb-4">
             Kunjungi Kami di:
           </h2>
-          <AppSocialMedia withLabel
-            className='grid grid-cols-2 grid-rows-2 md:grid-cols-4 md:grid-rows-1 gap-4 md:gap-6' />
+          <AppSocialMedia className='grid grid-cols-2 grid-rows-2 md:grid-cols-4
+            md:grid-rows-1 gap-4 md:gap-6'
+            withLabel={true} />
         </div>
       </section>
 
 
-      <section className="flex flex-col items-center mx-6 md:mx-24">
+      <section className="flex flex-col items-center mx-6 md:mx-24 pt-20 pb-40">
         <TitleCardListUserContact>
           Kontak Polsek Wilayah:
         </TitleCardListUserContact>

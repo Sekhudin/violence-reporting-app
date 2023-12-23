@@ -1,22 +1,29 @@
 "use client"
 import React from "react";
-import { type User } from 'src/service/user/user.service';
+import { type User, CurrentUser } from 'src/service/user/user.service';
+import { HooksWithStatus } from 'src/util/exception/catch';
 
-export type AuthorizedCtx = {
-  isAuthorized: boolean;
-  isBarierShow: boolean;
-}
+export type AuthCtx = {
+  authUser: CurrentUser | null;
+  user: User.Expose | null;
+  redirected: boolean;
+  setRedirected: (v:boolean)=> void;
+} & HooksWithStatus;
 
-export const AuthorizedContext = React.createContext<AuthorizedCtx>({
-  isAuthorized: false,
-  isBarierShow: true
+export const AuthContext = React.createContext<AuthCtx>({
+  authUser: null,
+  user: null,
+  redirected: false,
+  loading: false,
+  setRedirected: ()=> {},
 });
 
-export type UserList = User.Expose[];
+type UserList = User.Expose[];
 export type UserCtx = {
   users: UserList | [];
-}
+} & HooksWithStatus;
 
 export const UserContext = React.createContext<UserCtx>({
-  users: []
+  users: [],
+  loading: false
 })

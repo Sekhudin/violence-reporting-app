@@ -1,6 +1,7 @@
 "use client"
 import React from "react";
-import { CaseOn, CaseOff, CaseUtil, Snapshot } from 'src/service/case/case.service';
+import { useError } from "src/component/hooks/use-error";
+import { CaseOn, CaseOff, CaseUtil, Snapshot, ErrorCB } from 'src/service/case/case.service';
 import { CaseContext, CaseCtx } from './ctx'
 
 export function CaseProvider({ children }: React.PropsWithChildren) {
@@ -8,6 +9,8 @@ export function CaseProvider({ children }: React.PropsWithChildren) {
   const [process, setProcess] = React.useState<CaseCtx['process']>([]);
   const [finish, setFinish] = React.useState<CaseCtx['finish']>([]);
   const [reject, setReject] = React.useState<CaseCtx['reject']>([]);
+  const [loading, setLoading] = React.useState<CaseCtx['loading']>(true);
+  const { error, catchError, catchErrorHandler } = useError();
 
   const caseHandler = React.useCallback((ds: Snapshot) => {
     const caseIncoming = CaseUtil.filterCase(ds, "masuk");
@@ -18,17 +21,25 @@ export function CaseProvider({ children }: React.PropsWithChildren) {
     setProcess(caseProcess);
     setFinish(caseFinish);
     setReject(caseReject);
+    setLoading(false);
   }, []);
 
+  const errorCallback = React.useCallback<ErrorCB>((err) => {
+    const { errorDetail } = catchError(err, 'FAILED_GET cases');
+    catchErrorHandler(errorDetail);
+    setLoading(false);
+  }, [catchError, catchErrorHandler]);
+
   React.useEffect(() => {
-    CaseOn.Value(caseHandler)
+    setLoading(true);
+    CaseOn.Value(caseHandler, errorCallback)
     return () => {
       CaseOff.Value(caseHandler)
     }
-  }, [caseHandler]);
+  }, [caseHandler, errorCallback]);
 
   return (
-    <CaseContext.Provider value={{ incoming, process, finish, reject }}>
+    <CaseContext.Provider value={{ incoming, process, finish, reject, loading, error }}>
       {children}
     </CaseContext.Provider>
   )

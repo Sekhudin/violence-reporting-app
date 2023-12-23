@@ -4,7 +4,6 @@ import {
   DataTable,
   DataTableColumnSelector,
   DataTableBody,
-  DataTableEmpty,
   DataTableHeader,
   DataTableSearchbox,
   DataTableNextPrev
@@ -22,34 +21,46 @@ import {
 } from "@tanstack/react-table";
 import { ScrollArea, ScrollBar } from 'src/component/ui/scroll-area';
 import { useCaseFilter, CaseDetail, CaseStatus } from 'src/component/context/use-ctx';
-import { cn, FunStr } from "src/util";
+import { cn, FunStr, Vutil } from "src/util";
 import { getColumns } from './column';
 
-export type DatatableCasesProps = {
+export type DatatableCaseProps = {
   status: CaseStatus;
   pageSize: number;
-  title: string;
-  subtitle: string;
   className?: string;
 }
 
-export function DataTableCases({
+export const DataTableCaseHeader = ({ children, className }: { className?: string } & React.PropsWithChildren) => (
+  <div className={cn(`flex flex-col items-center mb-4`, className)}>
+    {children}
+  </div>);
+
+export const DataTableCaseTitle = ({ text, className }: { text: string, className?: string }) => (
+  <h2 className={cn(`font-medium 2xl:font-semibold text-base md:text-lg lg:text-2xl`, className)}>
+    {FunStr.title(text, ['di', 'ke', 'dari'])}
+  </h2>);
+
+export const DataTableCaseSubTitle = ({ text, className }: { text: string, className?: string }) => (
+  <p className={cn(`mt-1 text-sm font-extralight lg:text-base`, className)}>
+    {FunStr.title(text, ['in', 'of', 'on'])}
+  </p>);
+
+export function DataTableCase({
   status,
   pageSize,
-  title,
-  subtitle,
-  className,
-}: DatatableCasesProps) {
+  className
+}: DatatableCaseProps) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
   const [pagination, setPagination] = React.useState<PaginationState>({ pageSize, pageIndex: 0 });
 
-  const { data, isEmpty } = useCaseFilter(status);
+  const { cases, loading, error } = useCaseFilter(status);
+  const isEmpty = Vutil.isEmptyList(cases);
   const columns = getColumns({ status });
   const table = useReactTable({
-    data,
+    data: cases,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -71,16 +82,7 @@ export function DataTableCases({
 
   return (
     <>
-      <div className="flex flex-col items-center mb-4">
-        <h2 className="font-medium 2xl:font-semibold text-base md:text-lg lg:text-2xl">
-          {FunStr.title(title, ['di', 'ke'])}
-        </h2>
-        <p className="mt-1 text-sm font-extralight lg:text-base">
-          {FunStr.title(subtitle, ['of', 'is'])}
-        </p>
-      </div>
-
-      <div className={cn("flex justify-between", className)}>
+      <div className={cn("flex justify-between")}>
         <DataTableSearchbox<CaseDetail>
           className="border-r-0 rounded-r-none lg:border-r lg:rounded-r-lg"
           containerClassName="w-full lg:w-7/12 2xl:w-5/12"
@@ -97,27 +99,24 @@ export function DataTableCases({
           isEmpty={isEmpty} />
       </div>
 
-      <ScrollArea className={cn(`relative rounded-lg border mt-4 mx-0 px-0 h-[53vh]`, className,
+      <ScrollArea type="always" className={cn(`relative border rounded-lg mt-4 mx-0 px-0`, className,
         `${isEmpty && 'md:max-w-full'}`)}>
-        <DataTableEmpty
-          text="Belum ada data"
-          isEmpty={isEmpty} />
-        {!isEmpty && (
-          <DataTable>
-            <DataTableHeader<CaseDetail>
-              className="bg-cyan-900 text-white font-medium"
-              table={table} />
-            <DataTableBody<CaseDetail>
-              evenClassName='bg-cyan-900/20 hover:bg-cyan-900/30 text-cyan-900'
-              table={table}
-              columns={columns} />
-          </DataTable>
-        )}
+        <DataTable
+          loading={loading}
+          isEmpty={isEmpty}>
+          <DataTableHeader<CaseDetail>
+            className="bg-cyan-900 text-white font-medium"
+            table={table} />
+          <DataTableBody<CaseDetail>
+            evenClassName='bg-cyan-900/20 hover:bg-cyan-900/30 text-cyan-900'
+            table={table}
+            columns={columns} />
+        </DataTable>
         <ScrollBar orientation="horizontal" className="" />
       </ScrollArea>
 
       <DataTableNextPrev<CaseDetail>
-        className={cn("", className)}
+        className={cn("")}
         prev={{ title: "Prev" }}
         next={{ title: "Next" }}
         table={table}

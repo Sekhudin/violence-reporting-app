@@ -10,7 +10,7 @@ export function DataTableHeader<DT extends Record<string, any>>({ table, classNa
   return (
     <TableHeader>
       {table.getHeaderGroups().map((headerGroup) => (
-        <TableRow key={headerGroup.id} className="sticky top-0 bg-pink-400">
+        <TableRow key={headerGroup.id} className="">
           {headerGroup.headers.map((header) => (
             <TableHead key={header.id} className={cn('', className)}>
               {!header.isPlaceholder && flexRender(header.column.columnDef.header, header.getContext())}

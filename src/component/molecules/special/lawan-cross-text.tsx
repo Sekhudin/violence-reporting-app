@@ -15,7 +15,7 @@ const ContainerCrossText = ({ children, className }: { className?: string } & Re
   </div>)
 
 export const LawanCrossText = ({ className }: LawanCrossTextProps) => (
-  <div className={cn("relative max-w-[100vw] overflow-x-hidden overflow-y-visible py-6 pb-24 xl:pb-28", className)}>
+  <div className={cn("relative h-fit max-w-[100vw] overflow-hidden py-6 pb-24 xl:pb-28", className)}>
     <ContainerCrossText className="from-cyan-900 to-cyan-600 text-white -rotate-6 lg:-rotate-3">
       {CrossText}
     </ContainerCrossText>
