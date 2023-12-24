@@ -3,7 +3,6 @@ import React from "react";
 import { BarierAuth } from "src/component/atoms/barier/auth";
 import { useError } from "src/component/hooks/use-error";
 import { UserOn, UserService, UserUtil, CurrentUser } from 'src/service/user/user.service';
-import { FloatButtonDashboard } from "src/component/organisms/float-button/dashboard";
 import { AuthContext, AuthCtx } from './ctx';
 
 export function AuthProvider({ children }: React.PropsWithChildren) {
@@ -46,7 +45,6 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
     }}>
       {children}
       <BarierAuth />
-      {/* <FloatButtonDashboard className={!loading && isDashboardPage ? 'block' : 'hidden'} /> */}
     </AuthContext.Provider>
   )
 }

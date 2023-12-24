@@ -1,4 +1,5 @@
 "use client"
+import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu } from 'lucide-react';
@@ -16,7 +17,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator
 } from 'src/component/ui/dropdown-menu';
-import { useMaxScreenAs } from 'src/component/hooks/use-screen';
 import { NavigationConfig } from 'src/config/navigation';
 import { cn } from 'src/util';
 import css from './beranda.module.css';
@@ -24,7 +24,6 @@ import css from './beranda.module.css';
 export function NavMenuBeranda() {
   const pathname = usePathname();
   const navigation = NavigationConfig.berandaNavigation;
-  const [open, setOpen] = useMaxScreenAs(['md', true], false);
 
   return (
     <>
@@ -43,14 +42,11 @@ export function NavMenuBeranda() {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <DropdownMenu
-        open={open}
-        defaultOpen={false}
-        onOpenChange={setOpen}>
+      <DropdownMenu>
         <DropdownMenuTrigger className={cn(`cursor-pointer focus:outline-none p-2 md:hidden`)}>
           <Menu />
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='w-screen bg-white backdrop-blur-md
+        <DropdownMenuContent className='w-screen bg-white backdrop-blur-md md:hidden
           border-none rounded-none rounded-b-lg flex flex-col space-y-1 mt-0.5 py-2'>
           <DropdownMenuLabel className='text-base font-medium pt-4 pb-2'>
             Navigation

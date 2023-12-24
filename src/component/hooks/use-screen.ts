@@ -57,13 +57,17 @@ export const useMaxScreenAs: BaseUseScreenAs = ([screenType, valueIfTrue], defau
   const screenHandler = React.useCallback(() => {
     const innerWidth = window.innerWidth;
     if (innerWidth < maxWidth) {
-      setResult(valueIfTrue);
+      if(result !== valueIfTrue) {
+        setResult(valueIfTrue);
+      }
     }
 
     if (innerWidth >= maxWidth) {
-      setResult(!valueIfTrue);
+      if(result === valueIfTrue) {
+        setResult(!valueIfTrue);
+      }
     }
-  }, [maxWidth, valueIfTrue])
+  }, [maxWidth, result, valueIfTrue])
 
   const setValueHandler = React.useCallback((v: boolean)=> {
     setResult(v);

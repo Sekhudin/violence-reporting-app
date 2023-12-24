@@ -23,7 +23,6 @@ export function ArticleProvider({ children }: React.PropsWithChildren) {
 
   React.useEffect(() => {
     setLoading(true);
-    catchErrorHandler('dsdsd')
     ArticleOn.Value(articleHandler, errorCallback);
     return () => {
       ArticleOff.Value(articleHandler);
