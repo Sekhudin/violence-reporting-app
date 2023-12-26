@@ -23,7 +23,7 @@ export default function Page() {
       </section>
 
 
-      <section className="flex flex-col items-center mx-6 md:mx-24 pt-20 pb-40">
+      <section className="flex flex-col items-center mx-6 md:mx-24 pt-20">
         <TitleCardListUserContact>
           Kontak Polsek Wilayah:
         </TitleCardListUserContact>

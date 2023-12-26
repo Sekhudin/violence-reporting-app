@@ -21,7 +21,7 @@ export default function Page() {
       </section>
 
       <section className='relative bg-white grow block lg:flex space-x-0 lg:space-x-16
-        justify-center items-center py-20 px-12 lg:px-24 xl:px-32 2xl:px-44'>
+        justify-center items-center pt-20 px-12 lg:px-24 xl:px-32 2xl:px-44'>
         <div className="grow mb-4 text-center lg:text-start">
           <h2 className="semi_heading_2 text_blue mb-2">
             Polsek (Kepolisian Sektor)

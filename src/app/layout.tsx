@@ -23,7 +23,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}
-        className={cn(`min-h-screen overflow-hidden bg-background font-sans antialiased`, poppins.variable)}>
+        className={cn(`h-screen overflow-x-hidden
+          bg-background font-sans antialiased`, poppins.variable)}>
         {children}
         <Toaster />
       </body>

@@ -1,9 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { useRouter, usePathname } from "next/navigation";
 import { DotIcon } from 'lucide-react';
-import { useToast } from 'src/component/ui/use-toast';
-import { useAuth } from 'src/component/context/use-ctx';
 import { PngLogo } from 'src/component/static-file/logo';
 import { cn } from "src/util";
 
@@ -38,47 +35,7 @@ const Barier = ({ children, className }: { className?: string } & React.PropsWit
     {children}
   </div>)
 
-export function BarierAuth({ className }: { className?: string }) {
-  const { toast } = useToast();
-  const { authUser, user } = useAuth();
-  const [open, setOpen] = React.useState<boolean>(true);
-  const router = useRouter();
-  const pathname = usePathname();
-  const isDashboardPage: boolean = pathname.startsWith('/dashboard');
-  const isLoginPage: boolean = pathname.startsWith('/login');
-
-
-  const barierHandler = React.useCallback(() => {
-    if (authUser && user) {
-      if (isLoginPage) {
-        router.push("/dashboard");
-      }
-
-      if (isDashboardPage) {
-        setOpen(false);
-        toast({
-          title: `Hello ${user.name}`,
-          description: `Selamat datang kembali`
-        });
-      }
-    }
-
-    if (!authUser || !user) {
-      if (isDashboardPage) {
-        router.push("/login");
-      } else {
-        setOpen(false);
-      }
-    }
-
-  }, [authUser, isDashboardPage, isLoginPage, router, toast, user]);
-
-  React.useEffect(() => {
-    barierHandler();
-    return () => {
-      barierHandler();
-    }
-  }, [barierHandler]);
+export function BarierAuth({ open, className }: { className?: string, open: boolean }) {
 
   return (
     <>{open ? (

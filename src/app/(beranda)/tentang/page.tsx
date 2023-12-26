@@ -59,7 +59,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="relative grow bg-white pb-24 px-12 md:px-24 lg:px-36 2xl:px-56">
+      <section className="relative grow bg-white px-12 md:px-24 lg:px-36 2xl:px-56">
         <h3 className="text-center mb-6 semi_heading_2">
           Alur Pelaporan
         </h3>

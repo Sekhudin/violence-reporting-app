@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { CardArticleEduksi } from "src/component/molecules/card/article/edukasi";
-import { Button, ButtonProps } from "src/component/ui/button";
 import { TooltipAnchor } from "src/component/molecules/tooltip/achor";
 import { useArticleSlice } from 'src/component/context/use-ctx';
 import { cn } from "src/util";
@@ -11,12 +10,13 @@ export const TitleCardListArticleEdukasi = ({ children, className }: { className
     {children}
   </h2>)
 
-const SeeMore = ({ className, ...props }: ButtonProps) => (
-  <Button className={cn('', className)}
-    variant="blue"
-    {...props}>
-    Lihat Lainya
-  </Button>)
+const SeeMore = () => (
+  <TooltipAnchor className={`absolute -bottom-12 hover:bg-transparent p-0 
+    text-cyan-800 hover:text-cyan-900 hover:font-medium`}
+    tooltip="Artikel lainya"
+    href="/">
+    Lihat Lainnya
+  </TooltipAnchor>)
 
 export function CardListArticleEdukasi({ className }: { className?: string }) {
   const { slice, loading, error } = useArticleSlice(3);
@@ -29,11 +29,6 @@ export function CardListArticleEdukasi({ className }: { className?: string }) {
           className="m-4"
           values={v} />
       ))}
-
-      <TooltipAnchor className="absolute -bottom-12 hover:bg-transparent p-0"
-        tooltip="Artikel lainya"
-        href="/">
-        <SeeMore />
-      </TooltipAnchor>
+      <SeeMore />
     </div>)
 }

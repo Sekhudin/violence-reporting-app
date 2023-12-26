@@ -4,10 +4,6 @@ import { NavMenuBeranda } from 'src/component/molecules/nav-menu/beranda';
 import { PngLogo } from 'src/component/static-file/logo';
 import { cn } from 'src/util';
 
-export function HeaderBerandaGap({ className }: { className?: string }) {
-  return (<div className={cn('relative w-full bg-white h-[60px] lg:h-[70px]', className)} />)
-}
-
 export function HeaderBeranda({ className }: { className?: string }) {
   return (
     <div className={cn(`bg-white backdrop-blur-md px-12`, className)}>
