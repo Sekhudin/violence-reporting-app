@@ -12,70 +12,36 @@ const minWidthDictionary: DictionaryMinWidth = {
 
 type DictionaryMinWidth = Record<ScreenType, number>;
 type ScreenType = "xs" | "sm" | "md" | "lg" | "xl" | "2xl";
-type BaseUseScreen = (screen: ScreenType, defaultValue?: boolean) => [
+
+type UseScreenMax = (type: ScreenType) => [
   boolean | undefined,
   (v:boolean)=> void,
 ];
 
-type BaseUseScreenAs = ([type, valueIfTrue]: [ScreenType, boolean], defaultValue?: boolean) => [
-  boolean | undefined,
-  (v:boolean)=> void,
-];
-
-export const useMinScreenAs: BaseUseScreenAs = ([screenType, valueIfTrue], defaultValue) => {
-  const [result, setResult] = React.useState<boolean | undefined>(defaultValue);
-  const minWidth = minWidthDictionary[screenType];
+export const useMaxScreenAs: UseScreenMax = (type) => {
+  const [result, setResult] = React.useState<boolean>(false);
+  const maxWidth = minWidthDictionary[type];
 
   const screenHandler = React.useCallback(() => {
     const innerWidth = window.innerWidth;
-    if (innerWidth >= minWidth) {
-      setResult(valueIfTrue);
+    if (innerWidth <= maxWidth) {
+      setResult(true);
     }
 
-    if (innerWidth < minWidth) {
-      setResult(!valueIfTrue);
+    if (innerWidth > maxWidth) {
+      setResult(false);
     }
-  }, [minWidth, valueIfTrue]);
+  }, [maxWidth])
 
   const setValueHandler = React.useCallback((v: boolean)=> {
     setResult(v);
   }, []);
 
   React.useEffect(() => {
+    screenHandler();
     window.addEventListener("resize", screenHandler);
     return () => {
-      window.removeEventListener("resize", screenHandler);
-    }
-  }, [screenHandler]);
-  return [result, setValueHandler];
-}
-
-export const useMaxScreenAs: BaseUseScreenAs = ([screenType, valueIfTrue], defaultValue) => {
-  const [result, setResult] = React.useState<boolean | undefined>(defaultValue);
-  const maxWidth = minWidthDictionary[screenType];
-
-  const screenHandler = React.useCallback(() => {
-    const innerWidth = window.innerWidth;
-    if (innerWidth < maxWidth) {
-      if(result !== valueIfTrue) {
-        setResult(valueIfTrue);
-      }
-    }
-
-    if (innerWidth >= maxWidth) {
-      if(result === valueIfTrue) {
-        setResult(!valueIfTrue);
-      }
-    }
-  }, [maxWidth, result, valueIfTrue])
-
-  const setValueHandler = React.useCallback((v: boolean)=> {
-    setResult(v);
-  }, []);
-
-  React.useEffect(() => {
-    window.addEventListener("resize", screenHandler);
-    return () => {
+      screenHandler();
       window.removeEventListener("resize", screenHandler);
     }
   }, [screenHandler]);

@@ -5,13 +5,13 @@ import { CaseProvider } from "src/component/context/provider";
 export default async function Page() {
   return (
     <CaseProvider>
-      <PlainCard className="h-full overflow-hidden">
+      <PlainCard className="h-full w-full overflow-hidden">
         <DataTableCaseHeader>
           <DataTableCaseTitle text='kasus ditolak' />
           <DataTableCaseSubTitle text='case rejected' />
         </DataTableCaseHeader>
         <DataTableCase status="tolak"
-          className="h-[55vh]"
+          className="h-[50vh] w-full"
           pageSize={10} />
       </PlainCard>
     </CaseProvider>

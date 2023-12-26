@@ -21,37 +21,57 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   const isDashboardPage: boolean = pathname.startsWith('/dashboard');
   const isLoginPage: boolean = pathname.startsWith('/login');
 
-  const authHandler = React.useCallback(async (v: CurrentUser | null) => {
-    if (v) {
-      const result = await UserService.findUserById(v.uid);
-      const profile = UserUtil.payload(result);
-      setAuthUser(v);
-      setUser(profile);
-      setLoading(false);
-
-      if (isLoginPage) {
-        router.push("/dashboard");
-      }
-
-      if (isDashboardPage) {
-        setOpen(false);
-        toast({
-          title: `Hello ${profile.name}`,
-          description: `Selamat datang kembali`
-        });
-      }
+  const errorHandler = React.useCallback(() => {
+    if (error && isDashboardPage) {
+      router.push("/login", { scroll: false });
     }
 
-    if (!v || !v.uid) {
-      if (isDashboardPage) {
-        router.push("/login");
-      }
-
-      if (!isDashboardPage) {
-        setOpen(false);
-      }
+    if (error && !isDashboardPage) {
+      setOpen(false);
     }
+    setLoading(false);
+    return;
+  }, [error, isDashboardPage, router]);
+
+  const validHandler = React.useCallback(async (v: CurrentUser) => {
+    const result = await UserService.findUserById(v.uid);
+    const profile = UserUtil.payload(result);
+    setAuthUser(v);
+    setUser(profile);
+    setLoading(false);
+
+    if (isLoginPage) {
+      router.push("/dashboard", { scroll: false });
+      return;
+    }
+
+    if (isDashboardPage) {
+      setOpen(false);
+      toast({
+        title: `Hello ${profile.name}`,
+        description: `Selamat datang kembali`
+      });
+    }
+    return;
   }, [isDashboardPage, isLoginPage, router, toast]);
+
+  const invalidHandler = React.useCallback(() => {
+    if (isDashboardPage) {
+      router.push("/login", { scroll: false });
+    }
+
+    if (!isDashboardPage) {
+      setOpen(false);
+    }
+    setLoading(false);
+    return;
+  }, [isDashboardPage, router]);
+
+  const handler = React.useCallback(async (v: CurrentUser | null) => {
+    if (error) return errorHandler();
+    if (!v) return invalidHandler();
+    if (v) return await validHandler(v);
+  }, [error, errorHandler, invalidHandler, validHandler]);
 
   const setRedirectedHandler = React.useCallback((v: boolean) => {
     setRedirected(v);
@@ -59,11 +79,11 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
 
   React.useEffect(() => {
     setLoading(true);
-    UserOn.AuthStateChange(authHandler);
+    UserOn.AuthStateChange(handler);
     return () => {
-      UserOn.AuthStateChange(authHandler);
+      UserOn.AuthStateChange(handler);
     }
-  }, [authHandler])
+  }, [handler])
 
   return (
     <AuthContext.Provider value={{

@@ -10,8 +10,8 @@ export function TabsDashboard({
   children,
   className
 }: { defaultValue: TabName, className?: string } & React.PropsWithChildren) {
-  return (<Tabs className={cn(`flex flex-col lg:flex-row
-    bg-background lg:bg-transparent`, className)}
+  return (<Tabs className={cn(`flex flex-col-reverse lg:flex-row
+    space-x-0 space-y-0 w-screen h-full`, className)}
     defaultValue={defaultValue}>
     {children}
   </Tabs>)

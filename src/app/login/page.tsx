@@ -6,7 +6,6 @@ import { PngLogo } from "src/component/static-file/logo";
 import { Police } from "src/component/static-file/police";
 
 export default function Page() {
-
   return (
     <AuthProvider>
       <ModalDemo />

@@ -26,7 +26,6 @@ export function useFormUserLogin():UseForm<UserDto.Login>{
     form.reset({});
     router.push("/dashboard");
     setDisabled(false);
-    toast(HookForm.templateMessage('login', result.values.name));
     return result;
    } catch (error:any) {
     const { forToast } = catchError(error);

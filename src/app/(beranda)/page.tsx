@@ -16,7 +16,8 @@ import { cn } from 'src/util';
 
 
 const FirstSection = ({ className, ...props }: Omit<React.HTMLAttributes<HTMLElement>, 'children'>) => (
-  <section className={cn('sticky top-0 flex flex-col items-center px-12 md:px-24', className)} {...props}>
+  <section className={cn(`sticky top-[60px] lg:top-[70px] flex flex-col
+    items-center px-12 md:px-24`, className)} {...props}>
     <h2 className='mt-6 font-semibold text-3xl lg:text-4xl'>Lawan!</h2>
     <TextParagraph className='md:max-w-xl'>
       Membantu membela kesejahteraan korban tindak
@@ -29,7 +30,7 @@ const FirstSection = ({ className, ...props }: Omit<React.HTMLAttributes<HTMLEle
   </section>);
 
 const DownloadLink = () => (
-  <ul className='mt-4 flex justify-center lg:justify-start'>{PlatformConfig.downloadLinks.map((v, key) => (
+  <div className='mt-4 flex justify-center lg:justify-start'>{PlatformConfig.downloadLinks.map((v, key) => (
     <TooltipAnchor key={key}
       className='group hover:bg-transparent p-0'
       tooltip={v.title}
@@ -38,11 +39,11 @@ const DownloadLink = () => (
         src={v.src}
         alt={v.title} />
     </TooltipAnchor>
-  ))}</ul>)
+  ))}</div>)
 
 const DownloadApplication = ({ className }: { className?: string }) => (
-  <div className={cn(`flex flex-col lg:flex-row items-center lg:justify-center px-6 md:px-12 lg:px-24`,
-    className)}>
+  <div className={cn(`flex flex-col lg:flex-row items-center
+    lg:justify-center px-6 md:px-12 lg:px-24`, className)}>
     <Image
       src={Mockup.file01}
       alt="images" />
@@ -79,12 +80,11 @@ export default function Page() {
             <span className='text-red-500'>{" bermaksud buruk "}</span>
             yang untuk tujuan yang menguntungkan
           </p>
-          <Link href="/edukasi" className='rounded-lg mt-6' scroll={false}>
-            <Button className='w-9/12 md:w-fit truncate hover:bg-amber-500 hover:text-white
-              px-12 text-xl font-medium max-w-xs space-x-1 button_amber'>
-              Pelajari
-            </Button>
-          </Link>
+          <AnchorButton href='/edukasi'
+            className='w-9/12 md:w-fit truncate hover:bg-amber-500 hover:text-white
+              px-12 text-xl font-medium max-w-xs space-x-1 mt-2 button_amber'>
+            Pelajari
+          </AnchorButton>
         </div>
 
         <div className='hidden lg:block'>
@@ -110,8 +110,10 @@ export default function Page() {
               alt='images' />
           </div>
 
-          <div className='w-full md:1/2 flex flex-col items-center md:items-start xl:items-center space-y-4 py-6 md:text-white'>
-            <p className='max-w-sm md:max-w-md lg:max-w-lg text-center md:text-left font-medium text-lg md:text-xl lg:text-2xl pr-4'>
+          <div className='w-full md:1/2 flex flex-col items-center md:items-start xl:items-center
+            space-y-4 py-6 md:text-white'>
+            <p className='max-w-sm md:max-w-md lg:max-w-lg text-center md:text-left font-medium
+              text-lg md:text-xl lg:text-2xl pr-4'>
               {`" Kekerasan bagaikan rumput liar yang tidak akan mati dimusim kemarau "`}
             </p>
             <DialogCaseCreate forceMsgBox>

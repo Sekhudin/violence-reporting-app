@@ -1,6 +1,4 @@
-import { HeaderDashboard, HeaderBerandaGap } from 'src/component/organisms/header/dashboard';
-import { FooterDashboard, FooterDashboardGap } from 'src/component/organisms/footer/dashboard';
-import { FloatButtonDashboard } from 'src/component/organisms/float-button/dashboard';
+import { HeaderDashboard } from 'src/component/organisms/header/dashboard';
 import {
   TabsDashboard,
   TabsDashboardTrigger,
@@ -8,38 +6,24 @@ import {
   TabsDashboardContent
 } from 'src/component/organisms/tabs/dashboard';
 import { AuthProvider } from 'src/component/context/provider';
+import React from 'react';
 
-type LayoutProps = {
-  children: React.ReactNode;
-  masuk: React.ReactNode;
-  proses: React.ReactNode;
-  selesai: React.ReactNode;
-  tolak: React.ReactNode;
-}
+type LayoutProps = Record<'children' | 'masuk' | 'proses' | 'selesai' | 'tolak', React.ReactNode>;
 
-export default function Layout({
-  children: dashboard,
-  masuk,
-  proses,
-  selesai,
-  tolak
-}: LayoutProps) {
+export default function Layout({ children: dashboard, ...v }: LayoutProps) {
 
   return (
     <AuthProvider>
-      <HeaderDashboard />
-      <HeaderBerandaGap />
-
-      <TabsDashboard defaultValue="dashboard">
-        <TabsDashboardTrigger />
-        <TabsDashboardTriggerMobile />
-        <TabsDashboardContent
-          content={{ dashboard, masuk, proses, selesai, tolak }} />
-      </TabsDashboard>
-
-      <FloatButtonDashboard />
-      <FooterDashboardGap />
-      <FooterDashboard />
+      <main className='relative h-screen w-screen overflow-hidden
+        flex bg-gray-100 pt-[60px] lg:pt-[70px]'>
+        <HeaderDashboard />
+        <TabsDashboard defaultValue='masuk'>
+          <TabsDashboardTrigger />
+          <TabsDashboardTriggerMobile />
+          <TabsDashboardContent
+            content={{ dashboard, ...v }} />
+        </TabsDashboard>
+      </main>
     </AuthProvider>
   )
 }

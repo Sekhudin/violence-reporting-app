@@ -62,7 +62,7 @@ export default function Page() {
         </div>
       </section>
 
-      <section className="relative z-10 py-12 bg-pink-300 px-6 md:px-12">
+      <section className="relative bg-white py-12 px-6 md:px-12">
         <TitleCardListArticleEdukasi>
           Artikel
         </TitleCardListArticleEdukasi>
