@@ -9,7 +9,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
       <ScrollArea className='relative h-screen bg-background flex flex-col'>
         <HeaderBeranda className='fixed top-0 inset-x-0 z-50' />
         {children}
-        <FooterBeranda className='flex-auto bg-pink-600' />
+        <FooterBeranda className='flex-auto' />
       </ScrollArea>
     </>
   )

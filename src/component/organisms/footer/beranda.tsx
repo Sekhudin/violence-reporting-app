@@ -68,7 +68,6 @@ const FooterDownloadLinks = ({ className }: { className?: string }) => (
 export function FooterBeranda({ className }: { className?: string }) {
   return (
     <div className={cn(``, className)}>
-      <div className='grow'>Sekhduin</div>
       <footer className={cn(`relative text-white bg_blue px-6 py-10
         lg:px-12 lg:py-16 2xl:px-20 2xl:py-24`)}>
         <div className='grid grid-cols-2 md:grid-cols-4 gap-4 xl:gap-6 pb-10 lg:pb-12'>
