@@ -41,6 +41,7 @@ const Barier = ({ children, className }: { className?: string } & React.PropsWit
 export function BarierAuth({ className }: { className?: string }) {
   const { toast } = useToast();
   const { authUser, user } = useAuth();
+  const [open, setOpen] = React.useState<boolean>(true);
   const router = useRouter();
   const pathname = usePathname();
   const isDashboardPage: boolean = pathname.startsWith('/dashboard');
@@ -50,14 +51,23 @@ export function BarierAuth({ className }: { className?: string }) {
   const barierHandler = React.useCallback(() => {
     if (authUser && user) {
       if (isLoginPage) {
-        router.push("/dashboard", { scroll: false });
+        router.push("/dashboard");
       }
 
       if (isDashboardPage) {
+        setOpen(false);
         toast({
           title: `Hello ${user.name}`,
           description: `Selamat datang kembali`
         });
+      }
+    }
+
+    if (!authUser || !user) {
+      if (isDashboardPage) {
+        router.push("/login");
+      } else {
+        setOpen(false);
       }
     }
 
@@ -70,12 +80,14 @@ export function BarierAuth({ className }: { className?: string }) {
     }
   }, [barierHandler]);
 
-  if (authUser && user && isDashboardPage) return null;
   return (
-    <Barier className={cn(``, className)}>
-      <BarierLogo />
-      <BarierText />
-      <BarierAnimation />
-    </Barier>
+    <>{open ? (
+      <Barier className={cn(``, className)}>
+        <BarierLogo />
+        <BarierText />
+        <BarierAnimation />
+      </Barier>
+    ) : null
+    }</>
   )
 }

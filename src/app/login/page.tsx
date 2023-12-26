@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ModalDemo } from 'src/component/molecules/special/modal-demo';
 import { FormUserLogin } from "src/component/organisms/form/user/login";
 import { AuthProvider } from 'src/component/context/provider';
 import { PngLogo } from "src/component/static-file/logo";
@@ -8,6 +9,7 @@ export default function Page() {
 
   return (
     <AuthProvider>
+      <ModalDemo />
       <main className="relative min-h-screen md:flex md:flex-row-reverse bg-white">
         <section className="h-screen md:w-6/12 flex justify-center md:justify-start px-4 md:px-10">
           <div className="h-full w-full 2xl:w-8/12 flex flex-col space-y-6 items-center">

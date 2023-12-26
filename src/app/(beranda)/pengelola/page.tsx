@@ -1,12 +1,14 @@
-import Image from 'next/image'
+import Image from 'next/image';
 import { Button } from 'src/component/ui/button';
+import { ModalDemo } from 'src/component/molecules/special/modal-demo';
 import { DialogUserLogin } from 'src/component/organisms/dialog/user/login';
-import { Police } from 'src/component/static-file/police'
+import { Police } from 'src/component/static-file/police';
 import css from './style.module.css';
 
 export default function Page() {
   return (
     <>
+    <ModalDemo />
       <section className={`${css['section_1']} sticky top-[60px] flex flex-none justify-center items-center`}>
         <div className={`${css['container_section']} text-center`}>
           <h1>Kepolisian Republik Indonesia</h1>
