@@ -60,9 +60,9 @@ export default function Page() {
       </section>
 
       <section className="relative grow bg-white px-12 md:px-24 lg:px-36 2xl:px-56">
-        <h3 className="text-center mb-6 semi_heading_2">
+        <p className="text-center mb-6 semi_heading_2">
           Alur Pelaporan
-        </h3>
+        </p>
         <AppReportingFlow />
       </section>
     </>

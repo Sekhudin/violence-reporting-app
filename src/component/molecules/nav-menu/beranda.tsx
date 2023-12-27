@@ -32,7 +32,7 @@ export function NavmenuBeranda() {
 
       {isMobile ? (
         <Sheet modal>
-          <SheetTrigger className={cn(`cursor-pointer focus:outline-none p-2 md:hidden`)}>
+          <SheetTrigger aria-label='nav-beranda' className={cn(`cursor-pointer focus:outline-none p-2 md:hidden`)}>
             <Menu />
           </SheetTrigger>
 

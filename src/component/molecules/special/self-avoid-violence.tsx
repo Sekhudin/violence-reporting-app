@@ -21,23 +21,23 @@ export const avoidViolence: AvoidViolence = [
 
 type AvoidViolence = Record<'text' | 'label', string>[];
 export const SelfAvoidViolence = ({ className }: { className?: string }) => (
-  <ul className={cn('block', className)}>{avoidViolence.map((v, key) => {
+  <div className={cn('block', className)}>{avoidViolence.map((v, key) => {
 
     if (key % 2 === 0) return (
-      <li key={key} className={`mt-4 py-4 px-6 rounded-lg border-2 border-amber-400`}>
+      <div key={key} className={`mt-4 py-4 px-6 rounded-lg border-2 border-amber-400`}>
         <div className={`flex items-start space-x-4 text-lg font-medium`}>
           <span>{v.label}</span>
           <span>{v.text}</span>
         </div>
-      </li>);
+      </div>);
 
     if (key % 2 !== 0) return (
-      <li key={key} className={`mt-4 py-4 px-6 rounded-lg border-2 border-blue-400`}>
+      <div key={key} className={`mt-4 py-4 px-6 rounded-lg border-2 border-blue-400`}>
         <div className={`flex items-start space-x-4 text-lg font-medium`}>
           <span>{v.label}</span>
           <span>{v.text}</span>
         </div>
-      </li>)
+      </div>)
 
   })}
-  </ul>)
+  </div>)

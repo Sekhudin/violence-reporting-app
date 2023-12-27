@@ -31,9 +31,9 @@ export const AnchorButton = ({ className, children, asButton, ...props }: { asBu
 );
 
 export const TitleBorder = ({ children, className }: { className?: string } & React.PropsWithChildren) => (
-  <h3 className={cn('w-fit py-1 px-12 rounded-lg semi_heading_3', className)}>
+  <p className={cn('w-fit py-1 px-12 rounded-lg semi_heading_3', className)}>
     {children}
-  </h3>)
+  </p>)
 
 export const TextBorder = ({ children, className }: { className?: string } & React.PropsWithChildren) => (
   <p className={cn('w-fit flex flex-col items-center text-base font-normal rounded-xl p-4 md:p-6', className)}>

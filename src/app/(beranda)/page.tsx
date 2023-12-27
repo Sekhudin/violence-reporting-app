@@ -1,7 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
-import { Button } from 'src/component/ui/button';
 import { TooltipAnchor } from 'src/component/molecules/tooltip/achor';
 import { LawanCrossText } from 'src/component/molecules/special/lawan-cross-text';
 import { IllustrationDedikasiBeranda } from 'src/component/molecules/special/illustration-dedikasi-beranda';
@@ -65,7 +63,7 @@ export default function Page() {
       <FirstSection />
       <IllustrationDedikasiBeranda />
 
-      <section className='sticky top-[20%] bg-white flex justify-center
+      <section className='sticky top-0 bg-white flex justify-center
         xl:justify-around md:space-x-6 py-12 lg:py-24 px-6 2xl:px-12'>
         <Image className='object-cover rounded-xl'
           src={Illus.file08}
@@ -127,9 +125,9 @@ export default function Page() {
 
       <section className='relative h-fit bg-white'>
         <div className='pb-24 px-12 md:px-24 lg:px-36 2xl:px-56'>
-          <h3 className={'text-center mb-6 semi_heading_2'}>
+          <p className={'text-center mb-6 semi_heading_2'}>
             Alur Pelaporan
-          </h3>
+          </p>
           <AppReportingFlow />
         </div>
         <LawanCrossText />

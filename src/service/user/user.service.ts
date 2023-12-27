@@ -23,6 +23,10 @@ export namespace UserService {
   export async function findUserById(id:string) {
     return await db.user.findUserById(id);
   }
+
+  export async function signOut() {
+    return await db.user.signOut();
+  }
 }
 
 export namespace UserOn {

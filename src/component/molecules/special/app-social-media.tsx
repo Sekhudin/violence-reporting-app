@@ -6,7 +6,7 @@ import { cn } from "src/util";
 export const AppSocialMedia = ({
   className, itemClassName, withLabel
 }: { withLabel?: boolean } & Partial<Record<'className' | 'itemClassName', string>>) => (
-  <ul className={cn('flex justify-center items-start',
+  <div className={cn('flex justify-center items-start',
     className)}>{PlatformConfig.socialMedia.map((v, key) => {
 
       if (!withLabel) return (
@@ -29,4 +29,4 @@ export const AppSocialMedia = ({
         </div>
       )
     })}
-  </ul>)
+  </div>)

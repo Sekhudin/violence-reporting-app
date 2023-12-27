@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { Card, CardContent, CardFooter, } from 'src/component/ui/card';
-import { useFireStorageUrl } from "src/component/hooks/use-firebase";
+import { useImage } from "src/component/hooks/use-firebase";
 import { Article } from 'src/service/article/article.service';
 import { cn, FunStr } from "src/util";
 
@@ -29,7 +29,7 @@ export const CardArticleEduksi = React.forwardRef<HTMLDivElement, CardArticleEdu
   values: v,
   className
 }, ref) => {
-  const { loading, error, src } = useFireStorageUrl(v.image);
+  const { loading, error, src } = useImage(v.image);
   return (
     <Card ref={ref}
       className={cn(`overflow-hidden w-full sm:w-96 rounded-lg lg:rounded-xl p-4`, className)}>

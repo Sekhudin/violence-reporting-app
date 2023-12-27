@@ -4,7 +4,7 @@ import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, Dialog
 import { FormUserCreate, FormUserCreateProps } from 'src/component/organisms/form/user/create';
 import { cn } from 'src/util';
 
-export type DialogUserCreateProps = {
+type DialogUserCreateProps = {
   children: React.ReactNode;
   onClose?: (e: Event) => void;
 } & FormUserCreateProps;

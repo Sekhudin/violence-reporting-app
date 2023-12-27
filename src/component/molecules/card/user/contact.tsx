@@ -1,8 +1,8 @@
-import Image from "next/image";
 import React from "react";
+import Image from "next/image";
 import { Card, CardContent, CardFooter, } from 'src/component/ui/card';
 import { TooltipAnchor } from "src/component/molecules/tooltip/achor";
-import { useFireStorageUrl } from "src/component/hooks/use-firebase";
+import { useImage } from "src/component/hooks/use-firebase";
 import { User } from 'src/service/user/user.service';
 import { cn, FunStr } from "src/util";
 
@@ -36,7 +36,7 @@ export const CardUserContact = React.forwardRef<HTMLDivElement, CardUserContactP
   className
 }, ref) => {
 
-  const { loading, error, src } = useFireStorageUrl(v.image);
+  const { loading, error, src } = useImage(v.image);
 
   return (
     <Card ref={ref}

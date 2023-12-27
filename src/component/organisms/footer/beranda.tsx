@@ -32,7 +32,7 @@ const FooterSocialMedia = ({ className }: { className?: string }) => (
   <div className={cn('flex justify-start md:justify-center', className)}>
     <div className='flex flex-col space-y-4'>
       <p className='mb-2 font-semibold'>Kunjungi Kami:</p>
-      <ul className='flex flex-wrap'>{socialMedia.map((v, key) => (
+      <div className='flex flex-wrap'>{socialMedia.map((v, key) => (
         <TooltipAnchor
           key={key}
           className='w-14 h-14 hover:bg-transparent p-0'
@@ -40,7 +40,7 @@ const FooterSocialMedia = ({ className }: { className?: string }) => (
           href={v.href}>
           <Image src={v.src} alt={v.title} className='object-cover h-full w-full' />
         </TooltipAnchor>
-      ))}</ul>
+      ))}</div>
     </div>
   </div>
 )
@@ -49,7 +49,7 @@ const FooterDownloadLinks = ({ className }: { className?: string }) => (
   <div className={cn('flex justify-end items-end', className)}>
     <div className='flex flex-col'>
       <p className='mb-2 font-semibold'>Download:</p>
-      <ul className='flex flex-wrap'>{downloadLinks.map((v, key) => (
+      <div className='flex flex-wrap'>{downloadLinks.map((v, key) => (
         <TooltipAnchor
           key={key}
           className='group hover:bg-transparent p-0'
@@ -60,7 +60,7 @@ const FooterDownloadLinks = ({ className }: { className?: string }) => (
             src={v.src}
             alt={v.title} />
         </TooltipAnchor>
-      ))}</ul>
+      ))}</div>
     </div>
   </div>
 )
