@@ -1,6 +1,5 @@
 import React from 'react';
 import { TabsContent } from 'src/component/ui/tabs';
-import { ScrollArea, ScrollBar } from 'src/component/ui/scroll-area';
 import { cn } from 'src/util';
 import { TabName } from './trigger';
 

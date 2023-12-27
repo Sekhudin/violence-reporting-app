@@ -58,6 +58,9 @@ export function TabsDashboardTrigger({ className }: { className?: string, }) {
           <span>{v.label}</span>
         </TabsTrigger>
       ))}
+      <div className='fixed bottom-4 right-4 p-5 rounded-full rounded-br-none bg-gray-100 z-10'>
+        <FloatButtonDashboard />
+      </div>
     </TabsList>)
 }
 

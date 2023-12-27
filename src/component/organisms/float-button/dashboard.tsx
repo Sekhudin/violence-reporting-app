@@ -29,13 +29,11 @@ export function FloatButtonDashboard({
       open={open}
       onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <div className=''>
-          <Button
-            className={cn(`h-fit w-fit p-2.5 rounded-full`, className)}
-            variant="amber">
-            <PlusIcon className='w-5 h-5' />
-          </Button>
-        </div>
+        <Button
+          className={cn(`h-fit w-fit p-2.5 rounded-full`, className)}
+          variant="amber">
+          <PlusIcon className='w-5 h-5' />
+        </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
