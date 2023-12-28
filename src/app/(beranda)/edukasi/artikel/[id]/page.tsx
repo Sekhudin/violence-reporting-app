@@ -19,7 +19,7 @@ export default function Page() {
         <>
           <Skeleton className='h-10 lg:h-12 w-[80%] lg:w-[70%] 2xl:w-[60%]' />
           <Skeleton className='h-64 w-[80%] lg:w-[70%] 2xl:w-[60%] mt-6' />
-          <Skeleton className='h-96 w-[80%] lg:w-[70%] 2xl:w-[60%] mt-12' />
+          <Skeleton className='h-96 w-[80%] lg:w-[70%] 2xl:w-[60%] mt-6' />
         </>
       )}
 
@@ -34,11 +34,8 @@ export default function Page() {
             {!loading && src && (
               <Image className='object-cover'
                 src={src} alt="image"
-                objectFit='cover'
+                priority
                 fill />)}
-
-            {loading && (
-              <Skeleton className='absolute inset-0' />)}
           </div>
 
           <div className='w-[90%] lg:w-[80%] 2xl:w-[70%] mt-12 text-justify'>

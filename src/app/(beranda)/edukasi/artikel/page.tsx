@@ -1,27 +1,16 @@
-"use client"
-import { Skeleton } from 'src/component/ui/skeleton';
-import { CardArticleEdukasi } from "src/component/molecules/card/article/edukasi";
-import { useArticleSlice } from 'src/component/context/use-ctx';
+import { CardListArticleInfinite } from 'src/component/organisms/cardlist/article/infinite';
 
 export default function Page() {
-  const { slice, loading } = useArticleSlice(10);
-
   return (
-    <>
-      {loading && (
-        <div className="flex flex-wrap justify-center gap-8 px-6 lg:px-12">{
-          Array.from({ length: 5 }).map((_, key) => (
-            <Skeleton key={key} className='h-64 w-full sm:w-96 rounded-lg lg:rounded-xl' />
-          ))}</div>)}
+    <div className='w-full relative flex flex-col items-center px-6 lg:px-12'>
+      <div className='mt-6 mb-3 lg:mt-12 lg:mb-6'>
+        <p className='text-lg lg:text-2xl font-medium lg:text-center'>
+          Artikel
+        </p>
+      </div>
 
-      {!loading && (
-        <div className="flex flex-wrap justify-center gap-8 px-6 lg:px-12">{
-          slice.map((v, key) => (
-            <CardArticleEdukasi className=''
-              key={key}
-              values={v} />
-          ))}</div>
-      )}
-    </>
+      <CardListArticleInfinite
+        className='xl:w-11/12 2xl:w-10/12' />
+    </div>
   )
 }

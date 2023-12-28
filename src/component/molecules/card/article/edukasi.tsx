@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import React from "react";
 import { Card, CardContent, CardFooter, } from 'src/component/ui/card';
@@ -32,6 +33,7 @@ export const CardArticleEdukasi = React.forwardRef<HTMLDivElement, CardArticleEd
   className
 }, ref) => {
   const { loading, error, src } = useImage(v.image);
+
   return (
     <Card ref={ref}
       className={cn(`overflow-hidden w-full sm:w-96 rounded-lg lg:rounded-xl p-4`, className)}>

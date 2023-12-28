@@ -10,7 +10,8 @@ export function NavbarDashboard({ className }: { className?: string }) {
         <Image
           className="w-10 lg:w-12"
           src={PngLogo.largeWhite}
-          alt="Logo" />
+          alt="Logo"
+          priority />
       </a>
       <DropdownDashboard />
     </div>

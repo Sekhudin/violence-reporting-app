@@ -5,3 +5,7 @@ export type TypeZod<T> = {
     ? (undefined extends T[K] ? z.ZodOptional<z.ZodType<Exclude<T[K], undefined>>> : z.ZodType<T[K]>)
     : z.ZodObject<TypeZod<T[K]>>
 };
+
+export type Params<T extends Record<string, string>> = {
+  params: T
+}
