@@ -13,7 +13,7 @@ export namespace CreateFake {
     console.debug(`create user faker: seed --${n}`);
     return {
       title: faker.word.words(10),
-      article: faker.word.words(100)
+      article: faker.word.words(200)
     }
   }
 
