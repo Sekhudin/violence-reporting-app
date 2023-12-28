@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import { Card, CardContent, CardFooter, } from 'src/component/ui/card';
+import { Skeleton } from "src/component/ui/skeleton";
 import { useImage } from "src/component/hooks/use-firebase";
 import { Article } from 'src/service/article/article.service';
 import { cn, FunStr } from "src/util";
@@ -16,16 +17,17 @@ const TextTitle = ({ text, className, }: { text: string; className?: string }) =
     {FunStr.foldSentence(text, 3)}
   </h2>);
 
-const ReadMore = ({ className }: { className?: string }) => (
-  <a className={cn(`h-fit w-fit hover:bg-transparent 
+const ReadMore = ({ id, className }: { id: string; className?: string; }) => (
+  <a href={`/edukasi/artikel/${id}`}
+    className={cn(`h-fit w-fit hover:bg-transparent 
     text-cyan-800 hover:text-cyan-800 text-base font-normal hover:font-medium cursor-pointer
-    p-0 duration-500`,
-    className)}>
+      p-0 duration-500`,
+      className)}>
     Selengkapnya
   </a>);
 
 
-export const CardArticleEduksi = React.forwardRef<HTMLDivElement, CardArticleEdukasiProps>(({
+export const CardArticleEdukasi = React.forwardRef<HTMLDivElement, CardArticleEdukasiProps>(({
   values: v,
   className
 }, ref) => {
@@ -35,18 +37,23 @@ export const CardArticleEduksi = React.forwardRef<HTMLDivElement, CardArticleEdu
       className={cn(`overflow-hidden w-full sm:w-96 rounded-lg lg:rounded-xl p-4`, className)}>
       <CardContent className="text-base p-0">
         <div className="h-64 overflow-hidden bg-white/20 backdrop-blur-md rounded-lg lg:rounded-xl">
-          <Image className={`w-full h-full object-cover`}
-            src={src}
-            width={500}
-            height={500}
-            loading="lazy"
-            alt="article" />
+          {!loading && (
+            <Image className={`w-full h-full object-cover`}
+              src={src}
+              width={500}
+              height={500}
+              loading="lazy"
+              alt="article" />)}
+
+          {loading && (
+            <Skeleton className="h-full w-full" />
+          )}
         </div>
 
         <TextTitle text={v.title} />
         <div className="text-justify">
           {FunStr.foldSentence(FunStr.capitalFirst(v.article), 10) + " "}
-          <ReadMore />
+          <ReadMore id={v.id} />
         </div>
       </CardContent>
 
@@ -55,4 +62,4 @@ export const CardArticleEduksi = React.forwardRef<HTMLDivElement, CardArticleEdu
     </Card>
   )
 });
-CardArticleEduksi.displayName = "CardArticleEduksi";
+CardArticleEdukasi.displayName = "CardArticleEdukasi";

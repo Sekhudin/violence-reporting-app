@@ -5,33 +5,35 @@ import { Exception } from './type';
 export * from './http.exception';
 
 export type HooksWithStatus = { loading: boolean; error?: HttpException | null; }
-export function catchError(error: any, desc?: string): Exception.Catch {
-  let title: string = "error";
+export function catchError(e: any, desc?: string): Exception.Catch {
+  let code: number = 500;
+  let message: string = "error";
   let description: string = desc || "internal server error";
 
-  if(error instanceof HttpException){
-    title = error.message;
-    description = error.description;
+  if(e instanceof HttpException){
+    code = e.code;
+    message = e.message;
+    description = e.description;
   }
 
-  if(error instanceof FirebaseError){
-    const { code } = error;
-    if(code.includes("auth")){
-      title = "autentication failed";
+  if(e instanceof FirebaseError){
+    if(e.code.includes("auth")){
+      message = "autentication failed";
       description = "terja kesalahan saat autentikasi";
-      if(code.includes("invalid")){
+      if(e.code.includes("invalid")){
         description = "email atau password tidak cocok/tidak terdaftar";
       }
     }
   }
 
-  return {
+  const result: Exception.Catch = {
     forToast: {
       variant: "error",
-      title: FunStr.capitalFirst(title),
+      title: FunStr.capitalFirst(message),
       description: FunStr.capitalFirst(description)
     },
-    errorDetail: { code: 500, message: title, description }
+    errorDetail: { code, message, description }
   }
 
+  return result;
 }

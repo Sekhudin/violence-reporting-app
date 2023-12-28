@@ -8,6 +8,10 @@ export namespace ArticleService {
   export async function create({ imageFile, ...dto}: ArticleDto.Create){
     return await db.article.create(dto, imageFile);
   }
+
+  export async function findById(id:string) {
+    return await db.article.findId(id);
+  }
 }
 
 export namespace ArticleOn {

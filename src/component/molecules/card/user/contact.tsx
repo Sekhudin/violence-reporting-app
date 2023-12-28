@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { Skeleton } from "src/component/ui/skeleton";
 import { Card, CardContent, CardFooter, } from 'src/component/ui/card';
 import { TooltipAnchor } from "src/component/molecules/tooltip/achor";
 import { useImage } from "src/component/hooks/use-firebase";
@@ -43,12 +44,15 @@ export const CardUserContact = React.forwardRef<HTMLDivElement, CardUserContactP
       className={cn(`w-64 sm:w-96 overflow-hidden rounded-lg lg:rounded-xl p-2`, className)}>
       <CardContent className="flex items-center text-base space-x-0 sm:space-x-4 p-0">
         <div className="w-24 h-24 rounded-full overflow-hidden hidden sm:block">
-          <Image className={`w-full h-full object-cover`}
-            src={src}
-            width={500}
-            height={500}
-            loading="lazy"
-            alt={v.name} />
+          {!loading && (
+            <Image className={`w-full h-full object-cover`}
+              src={src}
+              width={500}
+              height={500}
+              loading="lazy"
+              alt={v.name} />)}
+
+          {loading && (<Skeleton className="w-full h-full" />)}
         </div>
 
         <div className="h-20 grow flex flex-col justify-between">
