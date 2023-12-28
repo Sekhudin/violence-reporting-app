@@ -72,7 +72,8 @@ export function TabsDashboardTriggerMobile({ className }: { className?: string, 
           <TabsTrigger key={key}
             className='data-[state=active]:bg-cyan-900 data-[state=active]:text-white
           data-[state=inactive]:hover:bg-gray-100 rounded-none duration-500 px-3 py-1.5'
-            value={v.value}>
+            value={v.value}
+            aria-label={v.value}>
             <ChildTriggerWithTooltip tooltip={v.label}>
               <v.IconComponent className='h-7 w-7' />
             </ChildTriggerWithTooltip>

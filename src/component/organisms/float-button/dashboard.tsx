@@ -31,7 +31,8 @@ export function FloatButtonDashboard({
       <DropdownMenuTrigger asChild>
         <Button
           className={cn(`h-fit w-fit p-2.5 rounded-full`, className)}
-          variant="amber">
+          variant="amber"
+          aria-label="float-btn">
           <PlusIcon className='w-5 h-5' />
         </Button>
       </DropdownMenuTrigger>

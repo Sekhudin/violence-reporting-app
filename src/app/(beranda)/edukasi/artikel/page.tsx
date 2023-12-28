@@ -1,7 +1,7 @@
 "use client"
 import { Skeleton } from 'src/component/ui/skeleton';
 import { CardArticleEdukasi } from "src/component/molecules/card/article/edukasi";
-import { useArticle, useArticleSlice } from 'src/component/context/use-ctx';
+import { useArticleSlice } from 'src/component/context/use-ctx';
 
 export default function Page() {
   const { slice, loading } = useArticleSlice(10);

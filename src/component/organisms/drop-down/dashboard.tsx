@@ -44,8 +44,11 @@ export function DropdownDashboard({ className }: { className?: string }) {
         onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <Avatar className="cursor-pointer">
-            <AvatarImage src={url.src} />
-            <AvatarFallback>NN</AvatarFallback>
+            <AvatarImage 
+            src={url.src} 
+            alt="user-image"
+            aria-label="user-avatar"/>
+            <AvatarFallback>U</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>
 

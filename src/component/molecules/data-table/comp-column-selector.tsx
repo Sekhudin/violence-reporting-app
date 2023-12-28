@@ -35,7 +35,8 @@ export function DataTableColumnSelector<DT extends Record<string, any>>({
         <Button
           className={cn("p-0 flex disabled:opacity-100 space-x-1", className)}
           variant="outline"
-          disabled={isEmpty}>
+          disabled={isEmpty}
+          aria-label="column-selector">
           <span className="hidden md:block text-sm lg:text-base">
             {textTrigger}
           </span>

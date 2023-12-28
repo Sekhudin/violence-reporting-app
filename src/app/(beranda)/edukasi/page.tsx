@@ -5,7 +5,6 @@ import { IllustrationEdukasiBeranda } from "src/component/molecules/special/illu
 import { AccordionViolenceLaw, TitleAccordionVlaw } from "src/component/molecules/special/accordion-violence-law";
 import { SelfAvoidViolenceIllustration } from "src/component/molecules/special/self-avoid-violence-illustration";
 import { CardListArticleEdukasi, TitleCardListArticleEdukasi } from 'src/component/organisms/cardlist/article/edukasi';
-import { ArticleProvider } from 'src/component/context/provider';
 
 export default function Page() {
   return (
@@ -66,9 +65,7 @@ export default function Page() {
         <TitleCardListArticleEdukasi>
           Artikel
         </TitleCardListArticleEdukasi>
-        <ArticleProvider>
-          <CardListArticleEdukasi />
-        </ArticleProvider>
+        <CardListArticleEdukasi />
       </section>
     </>
   )

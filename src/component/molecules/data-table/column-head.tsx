@@ -20,6 +20,7 @@ function OrderButton<DT extends Record<string, any>, DV = unknown>({ ctx, childr
       className={cn("hover:bg-transparent hover:opacity-90 hover:text-white",
         className)}
       variant="ghost"
+      aria-label="order-by"
       onClick={clickHandler}>
       {children}
       <ArrowUpDown className="ml-2 h-4 w-4" />

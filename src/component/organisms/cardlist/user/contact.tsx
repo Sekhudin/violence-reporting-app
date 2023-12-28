@@ -11,7 +11,8 @@ export const TitleCardListUserContact = ({ children, className }: { className?: 
   </h2>)
 
 export function CardListUserContact({ className }: { className?: string }) {
-  const { slice, loading, error } = useUserSlice(3);
+  const nSlice = 2;
+  const { slice, loading, error } = useUserSlice(nSlice);
 
   return (
     <div className={cn("relative flex flex-wrap justify-center", className)}>
@@ -21,7 +22,7 @@ export function CardListUserContact({ className }: { className?: string }) {
           values={v} />
       ))}
 
-      {loading && Array.from({ length: 3 }).map((_, key) => (
+      {loading && Array.from({ length: nSlice }).map((_, key) => (
         <Skeleton key={key} className='h-24 sm:h-28 w-64 sm:w-96 rounded-lg lg:rounded-xl m-4' />
       ))}
     </div>)

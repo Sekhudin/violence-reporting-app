@@ -56,7 +56,10 @@ export function ActionIncomingCase<DT extends Case.Expose, DV = unknown>({
         open={open}
         onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-fit w-fit p-2">
+          <Button
+            variant="ghost"
+            className="h-fit w-fit p-2"
+            aria-label='case-action'>
             <MoreHorizontal className="h-6 w-6" />
           </Button>
         </DropdownMenuTrigger>

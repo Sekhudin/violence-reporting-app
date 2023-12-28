@@ -1,6 +1,5 @@
 import { AppSocialMedia } from 'src/component/molecules/special/app-social-media';
 import { CardListUserContact, TitleCardListUserContact } from 'src/component/organisms/cardlist/user/contact';
-import { UserProvider } from 'src/component/context/provider';
 
 export default function Page() {
   return (
@@ -27,9 +26,7 @@ export default function Page() {
         <TitleCardListUserContact>
           Kontak Polsek Wilayah:
         </TitleCardListUserContact>
-        <UserProvider>
-          <CardListUserContact />
-        </UserProvider>
+        <CardListUserContact />
       </section>
     </>
   )

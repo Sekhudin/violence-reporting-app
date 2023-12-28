@@ -10,6 +10,7 @@ export function ArticleProvider({ children }: React.PropsWithChildren) {
   const { error, catchError, catchErrorHandler } = useError();
 
   const articleHandler = React.useCallback((ds: Snapshot) => {
+    // console.log('article :>> ');
     const result = ArticleUtil.returnData(ds);
     setArticles(result);
     setLoading(false);

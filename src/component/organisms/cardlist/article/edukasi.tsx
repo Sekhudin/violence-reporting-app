@@ -20,7 +20,8 @@ const SeeMore = () => (
   </TooltipAnchor>)
 
 export function CardListArticleEdukasi({ className }: { className?: string }) {
-  const { slice, loading, error } = useArticleSlice(3);
+  const nSlice = 3;
+  const { slice, loading, error } = useArticleSlice(nSlice);
 
   return (
     <div className={cn("relative flex flex-wrap justify-center", className)}>
@@ -30,7 +31,7 @@ export function CardListArticleEdukasi({ className }: { className?: string }) {
           values={v} />
       ))}
 
-      {loading && Array.from({ length: 3 }).map((_, key) => (
+      {loading && Array.from({ length: nSlice }).map((_, key) => (
         <Skeleton key={key} className='h-80 w-full sm:w-96 rounded-lg lg:rounded-xl m-4' />
       ))}
       <SeeMore />
