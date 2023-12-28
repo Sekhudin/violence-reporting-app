@@ -13,9 +13,10 @@ export type CaseType = CaseDto.Type;
 export function useFormCaseCreate(): UseForm<CaseDto.Create> {
   const [disabled, setDisabled] = useState<boolean>(false)
   const { toast } = useToast();
+  const defaultValues = new CaseDto.Create();
   const form = useForm<CaseDto.Create>({
     resolver: zodResolver(CaseSchema.create),
-    defaultValues: new CaseDto.Create()
+    defaultValues,
   })
 
   const onSubmit = async (values: CaseDto.Create) => {
@@ -23,7 +24,7 @@ export function useFormCaseCreate(): UseForm<CaseDto.Create> {
     setDisabled(true);
     const result = await CaseService.create(values);
     setDisabled(false);
-    form.reset({});
+    form.reset(defaultValues);
     toast(HookForm.successMessage("Aduan berhasil dikirim"));
     return result;
    } catch (error:any) {

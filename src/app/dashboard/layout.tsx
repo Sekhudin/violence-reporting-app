@@ -5,7 +5,7 @@ import {
   TabsDashboardTriggerMobile,
   TabsDashboardContent
 } from 'src/component/organisms/tabs/dashboard';
-import { AuthProvider } from 'src/component/context/provider';
+import { AuthProvider,  } from 'src/component/context/provider';
 import React from 'react';
 
 type LayoutProps = Record<'children' | 'masuk' | 'proses' | 'selesai' | 'tolak', React.ReactNode>;

@@ -14,16 +14,17 @@ export function useFormUserLogin():UseForm<UserDto.Login>{
   const [disabled, setDisabled] = useState<boolean>(false)
   const router = useRouter()
   const { toast } = useToast();
+  const defaultValues = new UserDto.Login()
   const form = useForm<UserDto.Login>({
     resolver: zodResolver(UserSchema.login),
-    defaultValues: new UserDto.Login(),
+    defaultValues,
   })
 
   const onSubmit = async (values: UserDto.Login) => {
    try {
     setDisabled(true);
     const result = await UserService.signInEmailPwd(values);
-    form.reset({});
+    form.reset(defaultValues);
     router.push("/dashboard");
     setDisabled(false);
     return result;

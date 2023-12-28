@@ -12,16 +12,17 @@ import { ArticleService } from '../article.service';
 export function useFormArticleCreate():UseForm<ArticleDto.Create>{
   const [disabled, setDisabled] = useState<boolean>(false)
   const { toast } = useToast();
+  const defaultValues = new ArticleDto.Create()
   const form = useForm<ArticleDto.Create>({
     resolver: zodResolver(ArticleShcema.create),
-    defaultValues: new ArticleDto.Create()
+    defaultValues,
   })
 
   const onSubmit = async (values: ArticleDto.Create) => {
    try {
     setDisabled(true);
     const article = await ArticleService.create(values);
-    form.reset({});
+    form.reset(defaultValues);
     toast(HookForm.successMessage("Artikel berhasil ditambahkan"));
     setDisabled(false);
     return article;

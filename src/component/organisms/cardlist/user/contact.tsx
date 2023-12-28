@@ -22,7 +22,7 @@ export function CardListUserContact({ className }: { className?: string }) {
       ))}
 
       {loading && Array.from({ length: 3 }).map((_, key) => (
-        <Skeleton key={key} className='h-32 w-full sm:w-96 rounded-lg lg:rounded-xl m-4' />
+        <Skeleton key={key} className='h-24 sm:h-28 w-64 sm:w-96 rounded-lg lg:rounded-xl m-4' />
       ))}
     </div>)
 }

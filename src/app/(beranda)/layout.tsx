@@ -7,7 +7,7 @@ export default function Layout({ children }: React.PropsWithChildren) {
 
   return (
     <>
-      <ScrollArea type='always' className='relative h-screen overflow-x-hidden'>
+      <ScrollArea className='relative h-screen overflow-x-hidden'>
         <HeaderBeranda className={``} />
         {children}
         <FooterGap />

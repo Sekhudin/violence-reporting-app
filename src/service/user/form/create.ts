@@ -12,16 +12,17 @@ import { UserService } from '../user.service';
 export function useFormUserCreate():UseForm<UserDto.Create>{
   const [disabled, setDisabled] = useState<boolean>(false)
   const { toast } = useToast();
+  const defaultValues = new UserDto.Create()
   const form = useForm<UserDto.Create>({
     resolver: zodResolver(UserSchema.create),
-    defaultValues: new UserDto.Create()
+    defaultValues,
   })
 
   const onSubmit = async (values: UserDto.Create) => {
    try {
     setDisabled(true);
     const result = await UserService.creaateAdmin(values);
-    form.reset({});
+    form.reset(defaultValues);
     setDisabled(false);
     toast(HookForm.successMessage("Admin baru berhasil ditambahkan"))
     return result;
