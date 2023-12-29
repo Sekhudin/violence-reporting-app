@@ -1,23 +1,30 @@
 "use client"
 import React from "react";
-import { Loader2 } from 'lucide-react';
+import { Loader2, PackageOpen } from 'lucide-react';
 import { Skeleton } from 'src/component/ui/skeleton';
 import { CardArticleEdukasi } from "src/component/molecules/card/article/edukasi";
-import { FloatButtonToTop } from 'src/component/organisms/float-button/to-top';
 import { useIntersection } from 'src/component/hooks/use-intersection';
-import { useArticleSlice } from 'src/component/context/use-ctx';
+import { useArticleByAuthor, useArticleByAuthorSlice } from 'src/component/context/use-ctx';
 import { cn } from "src/util";
 
 
 const CardMemo = React.memo(CardArticleEdukasi)
-const CardListMemo = React.memo(({ nSlice }: { nSlice: number }) => {
-  const { slice, loading } = useArticleSlice(nSlice);
+const CardListMemo = React.memo(({ nSlice, authorId }: { nSlice: number, authorId: string }) => {
+  const { articles } = useArticleByAuthor(authorId);
+  const { slice, loading } = useArticleByAuthorSlice(nSlice, authorId);
   return (
     <div className="flex flex-wrap justify-center gap-8 xl:gap-12">
       {loading && Array.from({ length: nSlice }).map((_, key) => (
         <Skeleton key={key} className='h-64 w-full sm:w-96
           rounded-lg lg:rounded-xl' />
       ))}
+
+      {!loading && articles && articles.length === 0 && (
+        <div className="flex flex-col mt-20 items-center space-y-2 text-cyan-800">
+          <PackageOpen className="h-20 w-20 opacity-40" />
+          <p>Belum ada artikel</p>
+        </div>
+      )}
 
       {!loading &&
         slice.map((v, key) => {
@@ -33,15 +40,14 @@ const CardListMemo = React.memo(({ nSlice }: { nSlice: number }) => {
 CardListMemo.displayName = 'CardListMemo';
 
 
-export function CardListArticleInfinite({
+export function CardListArticleInfiniteAuthor({
   nItem,
+  authorId,
   className,
-  justList,
-}: { nItem: number, className?: string, justList?: boolean }) {
+}: { nItem: number, authorId: string, className?: string, }) {
   const [nSlice, setNSlice] = React.useState<number>(nItem);
   const [loading, setLoading] = React.useState<boolean>(false);
 
-  const topRef = React.useRef<HTMLDivElement>(null);
   const refList = React.useRef<HTMLDivElement>(null);
 
   const entry = useIntersection(refList, {
@@ -75,17 +81,14 @@ export function CardListArticleInfinite({
 
   return (
     <>
-      {!justList && (<>
-        <div className="h-6 lg:h-12 w-full" ref={topRef} />
-        <div className='mb-3 lg:mb-6'>
-          <p className='text-lg lg:text-2xl font-medium lg:text-center'>
-            Artikel
-          </p>
-        </div>
-      </>)}
+      <div className='mb-3 lg:mb-6'>
+        <p className='text-lg lg:text-2xl font-medium lg:text-center'>
+          Artikel Anda
+        </p>
+      </div>
 
       <div className={cn('min-h-screen w-full relative', className)}>
-        <CardListMemo nSlice={nSlice} />
+        <CardListMemo nSlice={nSlice} authorId={authorId} />
         <div
           ref={refList}
           className="h-8 w-full mt-24 flex justify-center items-center">
@@ -93,11 +96,6 @@ export function CardListArticleInfinite({
             <Loader2 className='animate-spin w-7 h-7 text-cyan-800' />
           )}
         </div>
-
-        {!justList && (
-          <FloatButtonToTop
-            topRef={topRef}
-            scrollRef={'#scroll-area-beranda'} />)}
       </div>
     </>
   )

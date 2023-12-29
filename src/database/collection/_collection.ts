@@ -1,6 +1,13 @@
 import { initializeApp, FirebaseApp, FirebaseOptions } from 'firebase/app';
-// import { getAnalytics, Analytics as FirebaseAnalytics} from 'firebase/analytics';
-import { getStorage, ref as sgRef, uploadBytes, getDownloadURL, FirebaseStorage, UploadResult, StorageReference } from 'firebase/storage';
+import { 
+  getStorage, 
+  ref as sgRef, 
+  uploadBytes, 
+  getDownloadURL, 
+  FirebaseStorage, 
+  UploadResult, 
+  StorageReference 
+} from 'firebase/storage';
 import { 
   getDatabase, 
   ref, 
@@ -38,7 +45,6 @@ export class DatabaseCollection extends ApiBase implements Firebase.Collection.B
     this._auth = getAuth(this._app);
     this._db = getDatabase(this._app);
     this.storage = getStorage(this._app);
-    // this.analythics = getAnalytics(this._app);
 
     this.articles = this.refTo('articles');
     this.cases = this.refTo('cases');
@@ -48,7 +54,6 @@ export class DatabaseCollection extends ApiBase implements Firebase.Collection.B
   private readonly _auth!: FirebaseAuth;
   private readonly _db!: FirebaseDatabase;
   private readonly storage!: FirebaseStorage;
-  // private readonly analythics!: FirebaseAnalytics;
   private readonly articles!: DatabaseReference;
   private readonly cases!: DatabaseReference;
   private readonly users!: DatabaseReference;

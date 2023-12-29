@@ -17,3 +17,28 @@ export function useArticleSlice(n:number) {
   }
   return { slice, loading, error };
 }
+
+export function useArticleByAuthor(authorID:string) {
+  const { articles, loading, error } = React.useContext(ArticleContext);
+  let byAuthor: ArticleCtx['articles'] = [];
+  if(articles.length >=1){
+    byAuthor = articles.filter((v)=>v.author_id === authorID);
+  }
+  return { articles: byAuthor, loading, error };
+}
+
+export function useArticleByAuthorSlice(n:number, authorID:string) {
+  const { articles, loading, error } = React.useContext(ArticleContext);
+  let byAuthor: ArticleCtx['articles'] = [];
+  if(articles.length >=1){
+    byAuthor = articles.filter((v)=>v.author_id === authorID);
+  }
+
+  let slice: ArticleCtx['articles'] = [];
+  if(byAuthor.length < n) {
+    slice = byAuthor;
+  } else {
+    slice = byAuthor.slice(0, n);
+  }
+  return { slice, loading, error };
+}

@@ -1,7 +1,8 @@
 "use client"
 import React from "react";
-import { AuthContext, UserContext, UserCtx } from './ctx';
+import { AuthContext, UserRole, UserContext, UserCtx } from './ctx';
 
+export type { UserRole };
 export function useAuth() {
   const ctx = React.useContext(AuthContext);
   return ctx;

@@ -17,9 +17,9 @@ export default function Layout({ children: dashboard, ...v }: LayoutProps) {
       <CaseProvider>
 
         <main className='relative h-screen w-screen overflow-hidden
-            flex bg-gray-100 pt-[60px] lg:pt-[70px]'>
+          flex bg-gray-100 pt-[60px] lg:pt-[70px]'>
           <HeaderDashboard />
-          <TabsDashboard defaultValue='masuk'>
+          <TabsDashboard defaultValue='dashboard'>
             <TabsDashboardTrigger />
             <TabsDashboardTriggerMobile />
             <TabsDashboardContent

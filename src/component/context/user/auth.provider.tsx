@@ -11,6 +11,7 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   const { toast } = useToast();
   const [authUser, setAuthUser] = React.useState<AuthCtx['authUser']>(null);
   const [user, setUser] = React.useState<AuthCtx['user']>(null);
+  const [isSuperAdmin, setIsSuperAdmin] = React.useState<AuthCtx['isSuperAdmin']>(false);
   const [redirected, setRedirected] = React.useState<AuthCtx['redirected']>(false);
   const [loading, setLoading] = React.useState<AuthCtx['loading']>(true);
   const { error, catchError, catchErrorHandler } = useError();
@@ -36,8 +37,10 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
   const validHandler = React.useCallback(async (v: CurrentUser) => {
     const result = await UserService.findUserById(v.uid);
     const profile = UserUtil.payload(result);
+    const userIsSuperAdmin = Object.values(profile.role).includes('super admin');
     setAuthUser(v);
     setUser(profile);
+    setIsSuperAdmin(userIsSuperAdmin);
     setLoading(false);
 
     if (isLoginPage) {
@@ -89,6 +92,7 @@ export function AuthProvider({ children }: React.PropsWithChildren) {
     <AuthContext.Provider value={{
       authUser,
       user,
+      isSuperAdmin,
       redirected,
       setRedirected: setRedirectedHandler,
       loading,

@@ -6,6 +6,7 @@ import { DropdownMenu } from "src/component/ui/dropdown-menu";
 import { DropdownMenuTrigger, DropdownMenuContent } from "src/component/ui/dropdown-menu";
 import { DialogArticleCreate } from 'src/component/organisms/dialog/article/create';
 import { DialogUserCreate } from 'src/component/organisms/dialog/user/create';
+import { useAuth } from 'src/component/context/use-ctx';
 import { cn } from 'src/util';
 
 export type FloatButtonDashboardProps = {
@@ -18,6 +19,7 @@ export function FloatButtonDashboard({
   itemClassName = "w-fit h-fit m-0 p-2.5 rounded-full cursor-pointer",
 }: FloatButtonDashboardProps) {
   const [open, setOpen] = React.useState<boolean>();
+  const { isSuperAdmin } = useAuth();
 
   const closeHandler = () => {
     setOpen(false);
@@ -43,13 +45,15 @@ export function FloatButtonDashboard({
         align='end'
         side='top'>
 
-        <DialogUserCreate onClose={closeHandler}>
-          <Button
-            className={cn('', itemClassName)}
-            variant="blue">
-            <UserPlusIcon className='w-6 h-6' />
-          </Button>
-        </DialogUserCreate>
+        {isSuperAdmin && (
+          <DialogUserCreate onClose={closeHandler}>
+            <Button
+              className={cn('', itemClassName)}
+              variant="blue">
+              <UserPlusIcon className='w-6 h-6' />
+            </Button>
+          </DialogUserCreate>
+        )}
 
         <DialogArticleCreate onClose={closeHandler}>
           <Button
