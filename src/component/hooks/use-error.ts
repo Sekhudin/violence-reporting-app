@@ -23,6 +23,7 @@ export const useError: UseError = ()=>{
       setError(errorDetail);
       toast(forToast);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toast]);
 
   const catchErrorHandler = React.useCallback((e?: any) => {

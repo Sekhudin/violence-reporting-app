@@ -15,4 +15,4 @@ async function seed(seedNumber:number) {
   process.exit(1);
 }
 
-seed(10);
+seed(100);

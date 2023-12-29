@@ -6,8 +6,8 @@ import { FooterBeranda, FooterGap } from 'src/component/organisms/footer/beranda
 export default function Layout({ children }: React.PropsWithChildren) {
   return (
     <>
-      <ScrollArea className='relative h-screen overflow-x-hidden'>
-        <HeaderBeranda className={`drop-shadow-md`} />
+      <ScrollArea id='scroll-area-beranda' className='relative h-screen overflow-x-hidden'>
+        <HeaderBeranda scrollRef="#scroll-area-beranda" />
         {children}
         <FooterGap />
         <FooterBeranda />
