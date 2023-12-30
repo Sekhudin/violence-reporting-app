@@ -66,7 +66,7 @@ export function TabsDashboardTrigger({ className }: { className?: string, }) {
 
 export function TabsDashboardTriggerMobile({ className }: { className?: string, }) {
   return (
-    <TabsList className={cn(`h-fit flex items-center space-x-2 lg:hidden relative bottom-2 inset-x-0 z-10`, className)}>
+    <TabsList className={cn(`h-fit flex items-center space-x-2 lg:hidden relative bottom-4 inset-x-0 z-10`, className)}>
       <div className='bg-white flex space-x-1 items-center justify-center rounded-md overflow-hidden'>
         {tabList.map((v, key) => (
           <TabsTrigger key={key}

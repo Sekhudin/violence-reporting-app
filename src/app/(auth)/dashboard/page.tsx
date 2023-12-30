@@ -20,7 +20,7 @@ const ReportCount = ({ list, text, className }: { list: unknown[], text: string,
   <div className={cn(`flex flex-wrap flex-col lg:flex-row justify-center items-center space-x-2`, className)}>
     <p className='font-semibold'>{list.length}</p>
 
-    <div className='flex space-x-1 font-light'>
+    <div className='flex space-x-1 font-light capitalize'>
       <p className='hidden lg:flex'>Laporan</p>
       <p>{text}</p>
     </div>
@@ -32,8 +32,8 @@ export default function Page() {
 
   return (
     <ArticleProvider>
-      <ScrollArea id='container-dashboard' className="h-full flex flex-col">
-        <section className='sticky top-0 z-10 bg-gray-100'>
+      <div className='h-full rounded-lg overflow-hidden flex flex-col'>
+        <section className='bg-gray-100'>
           <PlainCard>
             <div className='flex flex-wrap justify-between items-center'>
               {user && (<>
@@ -46,35 +46,40 @@ export default function Page() {
         </section>
 
         <section className="flex flex-wrap gap-2 lg:gap-4">
-          <PlainCard className="grow">
+          <PlainCard className="grow py-2 lg:py-4">
             <ReportCount
               className=''
               text='masuk'
               list={incoming} />
           </PlainCard>
 
-          <PlainCard className="grow">
+          <PlainCard className="grow py-2 lg:py-4">
             <ReportCount
               className=''
               text='diproses'
               list={process} />
           </PlainCard>
 
-          <PlainCard className="grow">
+          <PlainCard className="grow py-2 lg:py-4">
             <ReportCount
-              className=''
-              text='diproses'
+              className='max-h-full'
+              text='selesai'
               list={finish} />
           </PlainCard>
         </section>
 
-        <PlainCard className="grow h-full lg:rounded-b-none flex flex-col mt-2 lg:mt-4">
+        <ScrollArea className='rounded-lg mt-2 lg:mt-4 shadow-none p-4'>
+          <div className='sticky top-0 z-10 bg-gray-100 pb-3 lg:pb-6'>
+            <p className='text-lg lg:text-2xl font-medium lg:text-center'>
+              Artikel Anda
+            </p>
+          </div>
           {user && (
             <CardListArticleInfiniteAuthor
               nItem={10}
               authorId={user.id} />)}
-        </PlainCard>
-      </ScrollArea>
+        </ScrollArea>
+      </div>
     </ArticleProvider>
   )
 }

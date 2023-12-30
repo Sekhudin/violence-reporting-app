@@ -81,12 +81,6 @@ export function CardListArticleInfiniteAuthor({
 
   return (
     <>
-      <div className='mb-3 lg:mb-6'>
-        <p className='text-lg lg:text-2xl font-medium lg:text-center'>
-          Artikel Anda
-        </p>
-      </div>
-
       <div className={cn('min-h-screen w-full relative', className)}>
         <CardListMemo nSlice={nSlice} authorId={authorId} />
         <div

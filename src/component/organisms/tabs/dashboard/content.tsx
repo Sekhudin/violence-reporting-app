@@ -11,7 +11,7 @@ export function TabsDashboardContent({ className, content }: {
   return (
     <>{tabName.map((v, key) => (
       <TabsContent key={key}
-        className={cn(`relative h-full w-full overflow-hidden p-4`, className)}
+        className={cn(`relative h-full w-full overflow-hidden p-4 pb-6`, className)}
         value={v}>
         {content[v]}
       </TabsContent>
