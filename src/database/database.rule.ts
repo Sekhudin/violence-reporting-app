@@ -19,8 +19,8 @@ export const customRules: FirebaseRules.ConsoleRule<Firebase.Collection.Name,
   > =
 {
   "rules": {
-    ".read": true,
-    ".write": true,
+    ".read": "auth != null",
+    ".write": "auth != null",
     "articles": {
       ".indexOn": ["id", "title", "author_id"]
     },

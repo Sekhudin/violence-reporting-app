@@ -7,11 +7,11 @@ const AccountDemo = ({ className, ...v }: { className?: string } & Record<'title
   <div className={cn(`text-sm lg:text-base p-2 border rounded-lg`, className)}>
     <h3 className='mb-2 text-center font-medium capitalize'>{v.title}</h3>
     <p className='flex justify-between mb-1'> Email:
-      <span className='lowercase'>{v.email}</span>
+      <span className='normal-case'>{v.email}</span>
     </p>
 
     <p className='flex justify-between'> Password:
-      <span className='lowercase'>{v.password}</span>
+      <span className='normal-case'>{v.password}</span>
     </p>
   </div>)
 
@@ -38,7 +38,7 @@ export function ModalDemo({ className, }: { className?: string, }) {
         onPointerDownOutside={(e) => e.preventDefault()}>
         <DialogHeader className='flex flex-col items-center'>
           <DialogTitle className='text-base font-medium'>
-            Mode: {process.env.NEXT_PUBLIC_APP_MODE}
+            {`Mode : ${process.env.NEXT_PUBLIC_APP_MODE}`}
           </DialogTitle>
           <DialogDescription className='text-sm lg:text-base text-center'>
             Untuk demo gunakan akun di bawah
